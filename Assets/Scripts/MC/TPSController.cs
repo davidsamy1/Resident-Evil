@@ -18,7 +18,8 @@ public class TPSController : MonoBehaviour
     public float ADSSens;
     public UnityEngine.UI.Image crosshair;
     public LayerMask aimColliderLayerMask;
-    public Transform aimdebug;
+    public Transform aimdebug1;
+    public Transform aimdebug2;
     public Animator PlayerAnimator;
     public List<GameObject> weapons;
     public int WeaponIndex=0;
@@ -40,20 +41,33 @@ public class TPSController : MonoBehaviour
     {
 
         //handle crosshair position (later will detect the enemies)
-        Vector3 mouseWorldPosition = Vector3.zero;
 
-        Vector2 screenCenterPoint = new Vector2((Screen.width / 2f)+180, Screen.height / 2f);
-        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, 999f, aimColliderLayerMask))
+        
+        Vector3 mouseWorldPosition1 = Vector3.zero;
+        Vector3 mouseWorldPosition2 = Vector3.zero;
+
+        Vector2 screenCenterPoint = new Vector2((Screen.width / 2f), Screen.height / 2f);
+        Vector2 screenCenterPointShifted = new Vector2((Screen.width / 2f) + 180, (Screen.height / 2f)-20);
+        Ray ray1 = Camera.main.ScreenPointToRay(screenCenterPoint);
+        Ray ray2 = Camera.main.ScreenPointToRay(screenCenterPointShifted);
+
+
+        if (Physics.Raycast(ray1, out RaycastHit raycastHitBullet, 999f, aimColliderLayerMask))
         {
-            aimdebug.position = raycastHit.point;
-            mouseWorldPosition = raycastHit.point;
+            aimdebug1.position = raycastHitBullet.point;
+            mouseWorldPosition1 = raycastHitBullet.point;
+        }
+
+        if (Physics.Raycast(ray2, out RaycastHit raycastHit2, 999f, aimColliderLayerMask))
+        {
+            aimdebug2.position = raycastHit2.point;
+            mouseWorldPosition2 = raycastHit2.point;
         }
 
         //if right click (ADS)
         if (starterAssetsInputs.aim)
         {
-            StartADS(mouseWorldPosition);
+            StartADS(mouseWorldPosition2);
         }
         else
         {
