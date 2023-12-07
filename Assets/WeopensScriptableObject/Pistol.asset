@@ -18,5 +18,5 @@ MonoBehaviour:
   range: 20
   clipCapacity: 12
   currentAmmoInClip: 6
-  totalAmmoInInventory: 0
+  totalAmmoInInventory: 12
   reloadTime: 1

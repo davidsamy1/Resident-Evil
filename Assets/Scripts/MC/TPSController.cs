@@ -9,7 +9,7 @@ using System.Drawing;
 using UnityEngine.UIElements;
 using UnityEngine.Animations.Rigging;
 using System;
-
+using TMPro;
 
 public class TPSController : MonoBehaviour
 {
@@ -31,18 +31,33 @@ public class TPSController : MonoBehaviour
     public GameObject muzzleFlash;
     private bool canFire = true;
     private bool isReloading = false;
+    public GameObject BulletHole;
+    private RaycastHit BulletCollider;
+    public TMP_Text CurrentAmmo;
+    public TMP_Text InventoryAmmo;
+    public List<GameObject> WeaponsHUD;
     // Start is called before the first frame update
     private void Awake()
     {
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         thirdPersonController = GetComponent<ThirdPersonController>();
+        ResetWeaponsInfo();
 
     }
 
     // Update is called once per frame
     private void Update()
     {
-
+        if (WeaponIndex != 0)
+        {
+            CurrentAmmo.text = weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip.ToString();
+            InventoryAmmo.text = "/" + weaponsScriptableObjects[WeaponIndex - 1].totalAmmoInInventory.ToString();
+        }
+        else
+        {
+            CurrentAmmo.text = "0";
+            InventoryAmmo.text = "/" + "0";
+        }
         //handle crosshair position (later will detect the enemies)
         Vector3 mouseWorldPosition1 = Vector3.zero;
         Vector3 mouseWorldPosition2 = Vector3.zero;
@@ -57,6 +72,7 @@ public class TPSController : MonoBehaviour
         {
             aimdebug1.position = raycastHitBullet.point;
             mouseWorldPosition1 = raycastHitBullet.point;
+            BulletCollider = raycastHitBullet;
         }
 
         if (Physics.Raycast(ray2, out RaycastHit raycastHit2, 999f, aimColliderLayerMask))
@@ -113,13 +129,13 @@ public class TPSController : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.R))
             {   
-                isReloading = true;
-                reload();
+                isReloading = true; 
                 StartCoroutine(ReloadCooldown());
-               
-                
+                reload();
+
+
             }
-            if (Input.GetKey(KeyCode.Mouse0) && WeaponIndex ==3)
+            if (Input.GetKey(KeyCode.Mouse0) && weaponsScriptableObjects[WeaponIndex-1].firingMode==Weopen.FiringMode.Automatic && starterAssetsInputs.aim)
             {
                 if (canFire & !isReloading)
                 {
@@ -127,7 +143,7 @@ public class TPSController : MonoBehaviour
                     StartCoroutine(FireCooldown());
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Mouse0) && (WeaponIndex == 1 || WeaponIndex == 2 || WeaponIndex == 4))
+            if (Input.GetKeyDown(KeyCode.Mouse0) && weaponsScriptableObjects[WeaponIndex - 1].firingMode == Weopen.FiringMode.SingleShot && starterAssetsInputs.aim)
             {
                 if (canFire & !isReloading)
                 {
@@ -141,6 +157,7 @@ public class TPSController : MonoBehaviour
 
     private void StartADS(Vector3 mouseWorldPosition)
     {
+        print(BulletCollider.distance);
         //adabt the camera to the ADS camera
         ADSCamera.gameObject.SetActive(true);
         thirdPersonController.setSens(ADSSens);
@@ -202,12 +219,15 @@ public class TPSController : MonoBehaviour
     {
         //disable the current active weapon
         weapons[WeaponIndex].gameObject.SetActive(false);
+        WeaponsHUD[WeaponIndex].gameObject.SetActive(false);
 
         //set the index to be the new weapon index
         WeaponIndex = index;
 
         //enable the new active weapon
         weapons[WeaponIndex].gameObject.SetActive(true);
+        WeaponsHUD[WeaponIndex].gameObject.SetActive(true);
+
 
     }
     IEnumerator FireCooldown()
@@ -228,8 +248,18 @@ public class TPSController : MonoBehaviour
         {
             weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip -= 1;
             // weaponsScriptableObjects[WeaponIndex - 1].totalAmmoInInventory -= 1;
-            GameObject muzzleFlasheffect = Instantiate(muzzleFlash, weapons[WeaponIndex].transform.position, weapons[WeaponIndex].transform.rotation);
+            GameObject muzzleFlasheffect = Instantiate(muzzleFlash, weapons[WeaponIndex].transform.GetChild(weapons[WeaponIndex].transform.childCount - 1).position, weapons[WeaponIndex].transform.GetChild(weapons[WeaponIndex].transform.childCount - 1).rotation);
             Destroy(muzzleFlasheffect, 1f);
+
+            //handle for enemy range later
+            //check if the ray hit within the fire range of the equiped gun
+            if (BulletCollider.distance <= weaponsScriptableObjects[WeaponIndex - 1].range)
+            {
+                Instantiate(BulletHole
+                    , BulletCollider.point + (BulletCollider.normal * 0.1f)
+                    , Quaternion.FromToRotation(Vector3.up, BulletCollider.normal)
+                    );
+            }
         }
 
         //play sound
@@ -239,7 +269,7 @@ public class TPSController : MonoBehaviour
         //play recoil
 
     }
-        IEnumerator ReloadCooldown()
+    IEnumerator ReloadCooldown()
 {
     yield return new WaitForSeconds(weaponsScriptableObjects[WeaponIndex - 1].reloadTime);
     isReloading = false;
@@ -282,5 +312,14 @@ public class TPSController : MonoBehaviour
         //play animation
         //play reload
 
+    }
+
+    void ResetWeaponsInfo()
+    {
+        foreach (Weopen weapon in weaponsScriptableObjects)
+        {
+            weapon.currentAmmoInClip = weapon.clipCapacity;
+            weapon.totalAmmoInInventory=weapon.clipCapacity;
+        }
     }
 }
