@@ -22,18 +22,21 @@ public class TPSController : MonoBehaviour
     public Transform aimdebug2;
     public Animator PlayerAnimator;
     public List<GameObject> weapons;
-    public int WeaponIndex=0;
+    public int WeaponIndex = 1;
     public GameObject leon;
 
     private StarterAssetsInputs starterAssetsInputs;
     private ThirdPersonController thirdPersonController;
+    public List<Weopen> weaponsScriptableObjects;
+    public GameObject muzzleFlash;
+    private bool canFire = true;
+    private bool isReloading = false;
     // Start is called before the first frame update
     private void Awake()
     {
-        starterAssetsInputs=GetComponent<StarterAssetsInputs>();
-        thirdPersonController=GetComponent<ThirdPersonController>();
-        
-        
+        starterAssetsInputs = GetComponent<StarterAssetsInputs>();
+        thirdPersonController = GetComponent<ThirdPersonController>();
+
     }
 
     // Update is called once per frame
@@ -41,13 +44,11 @@ public class TPSController : MonoBehaviour
     {
 
         //handle crosshair position (later will detect the enemies)
-
-        
         Vector3 mouseWorldPosition1 = Vector3.zero;
         Vector3 mouseWorldPosition2 = Vector3.zero;
 
         Vector2 screenCenterPoint = new Vector2((Screen.width / 2f), Screen.height / 2f);
-        Vector2 screenCenterPointShifted = new Vector2((Screen.width / 2f) + 180, (Screen.height / 2f)-20);
+        Vector2 screenCenterPointShifted = new Vector2((Screen.width / 2f) + 180, (Screen.height / 2f) - 20);
         Ray ray1 = Camera.main.ScreenPointToRay(screenCenterPoint);
         Ray ray2 = Camera.main.ScreenPointToRay(screenCenterPointShifted);
 
@@ -65,7 +66,7 @@ public class TPSController : MonoBehaviour
         }
 
         //if right click (ADS)
-        if (starterAssetsInputs.aim)
+        if (starterAssetsInputs.aim && WeaponIndex != 0)
         {
             StartADS(mouseWorldPosition2);
         }
@@ -82,9 +83,59 @@ public class TPSController : MonoBehaviour
         */
 
         //if the equiped gun is rifle or shotgun
-        if(WeaponIndex ==2 ||WeaponIndex ==3)
+        if (WeaponIndex == 3 || WeaponIndex == 4)
         {
             PlayerAnimator.SetLayerWeight(2, 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            SetWeaponIndex(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SetWeaponIndex(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SetWeaponIndex(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SetWeaponIndex(3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SetWeaponIndex(4);
+        }
+
+        if (WeaponIndex != 0)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {   
+                isReloading = true;
+                reload();
+                StartCoroutine(ReloadCooldown());
+               
+                
+            }
+            if (Input.GetKey(KeyCode.Mouse0) && WeaponIndex ==3)
+            {
+                if (canFire & !isReloading)
+                {
+                    fire();
+                    StartCoroutine(FireCooldown());
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Mouse0) && (WeaponIndex == 1 || WeaponIndex == 2 || WeaponIndex == 4))
+            {
+                if (canFire & !isReloading)
+                {
+                    fire();
+                    StartCoroutine(FireCooldown());
+                }
+
+            }
         }
     }
 
@@ -131,7 +182,8 @@ public class TPSController : MonoBehaviour
 
     private void PlayADSAnimation()
     {
-        if(WeaponIndex == 2 || WeaponIndex == 3) {
+        if (WeaponIndex == 3 || WeaponIndex == 4)
+        {
             PlayerAnimator.SetLayerWeight(2, 1);
             PlayerAnimator.SetLayerWeight(1, 0);
         }
@@ -156,6 +208,79 @@ public class TPSController : MonoBehaviour
 
         //enable the new active weapon
         weapons[WeaponIndex].gameObject.SetActive(true);
+
+    }
+    IEnumerator FireCooldown()
+{
+    canFire = false;
+    yield return new WaitForSeconds(weaponsScriptableObjects[WeaponIndex - 1].timeBetweenShots);
+    canFire = true;
+}
+    public void fire()
+    {
+        if (weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip <= 0)
+        {
+            // reload();
+            // play sound no ammo
+
+        }
+        else
+        {
+            weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip -= 1;
+            // weaponsScriptableObjects[WeaponIndex - 1].totalAmmoInInventory -= 1;
+            GameObject muzzleFlasheffect = Instantiate(muzzleFlash, weapons[WeaponIndex].transform.position, weapons[WeaponIndex].transform.rotation);
+            Destroy(muzzleFlasheffect, 1f);
+        }
+
+        //play sound
+        //play particle effect
+        //play muzzle flash
+        //play bullet
+        //play recoil
+
+    }
+        IEnumerator ReloadCooldown()
+{
+    yield return new WaitForSeconds(weaponsScriptableObjects[WeaponIndex - 1].reloadTime);
+    isReloading = false;
+}
+    public void reload()
+    {
+        var weapon = weaponsScriptableObjects[WeaponIndex - 1];
+        if (weapon.currentAmmoInClip == weapon.clipCapacity)
+        {
+            return;
+        }
+        if (weapon.totalAmmoInInventory <= 0)
+        {
+            //play sound no ammo
+            return;
+        }
+        else
+        {
+            if (weapon.totalAmmoInInventory < weapon.clipCapacity)
+            {
+                if (weapon.currentAmmoInClip + weapon.totalAmmoInInventory < weapon.clipCapacity)// clip 30, iventory 10, current 10
+                {
+                    weapon.currentAmmoInClip += weapon.totalAmmoInInventory;
+                    weapon.totalAmmoInInventory = 0;
+                }
+                else
+                {// clip 30, iventory 20, current 10
+                    weapon.currentAmmoInClip = weapon.clipCapacity;
+                    weapon.totalAmmoInInventory -= weapon.clipCapacity - weapon.currentAmmoInClip;
+                }
+            }
+            else
+            { // clip 30, iventory 60, current 29
+                weapon.totalAmmoInInventory -= weapon.clipCapacity - weapon.currentAmmoInClip;
+                weapon.currentAmmoInClip = weapon.clipCapacity;
+
+            }
+        }
+        //play sound
+        //play animation
+        //play reload
 
     }
 }

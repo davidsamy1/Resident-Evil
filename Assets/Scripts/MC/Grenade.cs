@@ -1,13 +1,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using StarterAssets;
 using UnityEngine;
+using UnityEngine.TextCore;
 public class Grenade : MonoBehaviour
 {
     [Header("Explosion Prefab")]
-    [SerializeField] private GameObject explosionEffectPrefab; // reference to explosion effect prefab
+    [SerializeField] private GameObject explosionEffectPrefab;
+
+    [Header("Explosion Prefab")]
+    [SerializeField] private GameObject flashEffectPrefab;
     [Header("Explosion Settings")]
-    [SerializeField] private float explosionDelay = 1.75f; // delay before explosion
+    [SerializeField] private float explosionDelay = 3f; // delay before explosion
     [SerializeField] private float explosionForce = 700f; // force applied by explosion
     [SerializeField] private float explosionRadius = 5f; // radius of explosion
     [Header("Audio Effects")]
@@ -16,7 +21,8 @@ public class Grenade : MonoBehaviour
     private bool hasExploded = false;
     [Header("Grenade Prefab")]
     [SerializeField] private GameObject grenadePrefab; // reference to grenade prefab
-
+    [Header("flash Grenade Prefab")]
+    [SerializeField] private GameObject flashGrenadePrefab;
     public Transform grenadeSpawnPoint;
 
     [Header("Grenade Settings")]
@@ -25,21 +31,43 @@ public class Grenade : MonoBehaviour
     [Header("Grenade Force")]
     [SerializeField] private float throwForce = 10f; // force applied to throw the grenade
     [SerializeField] private Camera mainCamera; // reference to main camera
-    [SerializeField] private float maxForce = 15f; // maximum force applied to throw the grenade
+    [SerializeField] private float maxForce = 13f; // maximum force applied to throw the grenade
     private bool hasThrown = false;
     private GameObject createdGrenade = null;
+
 
     private bool isCharging = false; // flag to check if player is charging the throw
     private float chargeTime = 0f;
     [Header("Trajectory Settings")]
     [SerializeField] private LineRenderer trajectoryLine; // reference to the LineRenderer component
+    private bool isFlash = false;
+    private StarterAssetsInputs starterAssetsInputs;
+    public Animator PlayerAnimator;
+    private float animcountdown = 1f;
     private void Start()
     {
+        starterAssetsInputs=GetComponent<StarterAssetsInputs>();
         countdown = explosionDelay;
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if(createdGrenade != null)
+                Destroy(createdGrenade);
+            createdGrenade = Instantiate(flashGrenadePrefab, grenadeSpawnPoint.position, grenadePrefab.transform.rotation);
+            createdGrenade.transform.parent = grenadeSpawnPoint.transform;
+            isFlash = true;
+        }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            if (createdGrenade != null)
+                Destroy(createdGrenade);
+            createdGrenade = Instantiate(grenadePrefab, grenadeSpawnPoint.position, grenadePrefab.transform.rotation);
+            createdGrenade.transform.parent = grenadeSpawnPoint.transform;
+            isFlash = false;
+        }
         if (Input.GetKeyDown(throwKey))
         {
             hasExploded = false;
@@ -47,7 +75,13 @@ public class Grenade : MonoBehaviour
             isCharging = true;
             chargeTime = 0f;
             countdown = explosionDelay;
-            createdGrenade = StartThrowing();
+            StartThrowing();
+
+            PlayerAnimator.SetLayerWeight(2, 0);
+            PlayerAnimator.SetLayerWeight(1, 0);
+            PlayerAnimator.SetLayerWeight(3, 1);
+            PlayerAnimator.SetBool("HoldGrenade", true);
+            PlayerAnimator.SetBool("ThrowGrenade", false);
         }
         if (isCharging)
         {
@@ -58,25 +92,43 @@ public class Grenade : MonoBehaviour
             ReleaseThrow(createdGrenade);
             hasThrown = true;
             isCharging = false;
+            PlayerAnimator.SetBool("HoldGrenade", false);
+            PlayerAnimator.SetBool("ThrowGrenade", true);
+
         }
         if (!hasExploded)
         {
             if (hasThrown)
             {
                 countdown -= Time.deltaTime;
+                animcountdown -= Time.deltaTime;
+                if(animcountdown <= 0f)
+                {
+                    // PlayerAnimator.SetBool("ThrowGrenade", false);
+                    PlayerAnimator.SetLayerWeight(3, 0);
+                    animcountdown = 1f;
+                }
                 if (countdown <= 0f)
                 {
-                    Explode(createdGrenade);
+                    Explode(createdGrenade, isFlash);
                     hasExploded = true;
+                    hasThrown = false;
                 }
             }
         }
     }
-    void Explode(GameObject gr)
+    void Explode(GameObject gr, bool isFlash)
     {
-
-        GameObject explosionEffect = Instantiate(explosionEffectPrefab, gr.transform.position, Quaternion.identity);
-        Destroy(explosionEffect, 1f);
+        if (isFlash)
+        {
+            GameObject flashEffect = Instantiate(flashEffectPrefab, gr.transform.position, Quaternion.identity);
+            Destroy(flashEffect, 1f);
+        }
+        else
+        {
+            GameObject explosionEffect = Instantiate(explosionEffectPrefab, gr.transform.position, Quaternion.identity);
+            Destroy(explosionEffect, 1f);
+        }
         //Play Sound Effect
         //Affect Other Physics Objects
         // NearbyForceApply();
@@ -95,14 +147,14 @@ public class Grenade : MonoBehaviour
             }
         }
     }
-    GameObject StartThrowing()
+    void StartThrowing()
     {
         Vector3 offset = new Vector3(-0.05f, -0.05f, -0.05f);
-        GameObject grenade2 = Instantiate(grenadePrefab, grenadeSpawnPoint.position + offset, grenadePrefab.transform.rotation);
-        grenade2.transform.parent = grenadeSpawnPoint.transform;
+        // GameObject grenade2 = Instantiate(grenadePrefab, grenadeSpawnPoint.position + offset, grenadePrefab.transform.rotation);
+        // grenade2.transform.parent = grenadeSpawnPoint.transform;
         //Pull pin sound
         trajectoryLine.enabled = true;
-        return grenade2;
+
 
     }
     void ChargeThrow()
