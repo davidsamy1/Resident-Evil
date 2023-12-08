@@ -4,10 +4,10 @@ using TMPro;
 using UnityEngine;
 
 
-public class PlayerInteractUI : MonoBehaviour
+public class InteractionUI : MonoBehaviour
 {
     public GameObject interactUICanvas;
-    public PlayerInteract playerInteract;
+    public InteractionController playerInteract;
     public TMP_Text interactMessageText;
     
 

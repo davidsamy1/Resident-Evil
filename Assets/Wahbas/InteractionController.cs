@@ -8,7 +8,7 @@ public interface Interactable
     public abstract string GetInteractMessage();
 }
 
-public class PlayerInteract : MonoBehaviour
+public class InteractionController : MonoBehaviour
 {
 
     public GameObject player;
@@ -50,8 +50,6 @@ public class PlayerInteract : MonoBehaviour
                     closestDistance = distanceToInteractable;
                     closestInteractable = interactable;
                 }
-
-                //Destroy(collider);
 
             }
         }

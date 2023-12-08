@@ -10,6 +10,8 @@ public class StoreInteractor : MonoBehaviour, Interactable
     {   
         //pause game
         //open store screen
+
+        //Destroy(gameObject);
     }
 
     public string GetInteractMessage()
