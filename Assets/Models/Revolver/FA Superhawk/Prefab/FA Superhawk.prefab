@@ -522,6 +522,7 @@ GameObject:
   - component: {fileID: 1149044904710785868}
   - component: {fileID: 2888721650253217670}
   - component: {fileID: 2226580610092957499}
+  - component: {fileID: 1333439994631735514}
   m_Layer: 0
   m_Name: FA Superhawk
   m_TagString: Untagged
@@ -619,6 +620,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.041239604, y: 0.15039223, z: 0.32834855}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1333439994631735514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3681184141669113427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18e272c7a9a7284f8a6fa35653b343a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleType: 5
 --- !u!1 &4229797755914400660
 GameObject:
   m_ObjectHideFlags: 0
