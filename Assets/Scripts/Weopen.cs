@@ -18,4 +18,6 @@ public class Weopen : ScriptableObject
     public int currentAmmoInClip;
     public int totalAmmoInInventory;
     public float reloadTime;
+
+
 }

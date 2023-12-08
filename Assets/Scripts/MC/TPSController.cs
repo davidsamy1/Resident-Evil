@@ -28,6 +28,7 @@ public class TPSController : MonoBehaviour
     private StarterAssetsInputs starterAssetsInputs;
     private ThirdPersonController thirdPersonController;
     public List<Weopen> weaponsScriptableObjects;
+    public TMP_Text WeaponAmmo;
     public GameObject muzzleFlash;
     private bool canFire = true;
     private bool isReloading = false;
@@ -42,6 +43,7 @@ public class TPSController : MonoBehaviour
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         thirdPersonController = GetComponent<ThirdPersonController>();
         ResetWeaponsInfo();
+        WeaponAmmo.text = weaponsScriptableObjects[WeaponIndex-1].currentAmmoInClip.ToString();
 
     }
 
@@ -131,7 +133,6 @@ public class TPSController : MonoBehaviour
             {   
                 isReloading = true; 
                 StartCoroutine(ReloadCooldown());
-                reload();
 
 
             }
@@ -228,7 +229,17 @@ public class TPSController : MonoBehaviour
         weapons[WeaponIndex].gameObject.SetActive(true);
         WeaponsHUD[WeaponIndex].gameObject.SetActive(true);
 
+        SetCurrentWeaponAmmo();
 
+
+    }
+
+    void SetCurrentWeaponAmmo()
+    {
+        if (WeaponIndex == 0)
+            WeaponAmmo.text = "";
+        else
+            WeaponAmmo.text = weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip.ToString();
     }
     IEnumerator FireCooldown()
 {
@@ -256,7 +267,7 @@ public class TPSController : MonoBehaviour
             if (BulletCollider.distance <= weaponsScriptableObjects[WeaponIndex - 1].range)
             {
                 Instantiate(BulletHole
-                    , BulletCollider.point + (BulletCollider.normal * 0.1f)
+                    , BulletCollider.point + (BulletCollider.normal * 0.01f)
                     , Quaternion.FromToRotation(Vector3.up, BulletCollider.normal)
                     );
             }
@@ -267,11 +278,12 @@ public class TPSController : MonoBehaviour
         //play muzzle flash
         //play bullet
         //play recoil
-
+        SetCurrentWeaponAmmo();
     }
     IEnumerator ReloadCooldown()
 {
     yield return new WaitForSeconds(weaponsScriptableObjects[WeaponIndex - 1].reloadTime);
+    reload();
     isReloading = false;
 }
     public void reload()
@@ -296,9 +308,9 @@ public class TPSController : MonoBehaviour
                     weapon.totalAmmoInInventory = 0;
                 }
                 else
-                {// clip 30, iventory 20, current 10
-                    weapon.currentAmmoInClip = weapon.clipCapacity;
+                {// clip 30, iventory 20, current 10    
                     weapon.totalAmmoInInventory -= weapon.clipCapacity - weapon.currentAmmoInClip;
+                    weapon.currentAmmoInClip = weapon.clipCapacity;
                 }
             }
             else
@@ -311,7 +323,7 @@ public class TPSController : MonoBehaviour
         //play sound
         //play animation
         //play reload
-
+        SetCurrentWeaponAmmo();
     }
 
     void ResetWeaponsInfo()
