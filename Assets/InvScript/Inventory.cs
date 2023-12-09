@@ -6,8 +6,9 @@ public class Inventory
 {
     private List<Item> itemsList;
     public GameObject inventoryPanel;
+    public UI_Inventory ui_inventory;
     public Item Knife;
-    private int gold=100;
+    private int gold=30;
     public bool isCrafting=false;
 
 public Inventory(){
@@ -19,35 +20,35 @@ public Inventory(){
             itemsList.Add(null);
         
          }
+    }
+
+    public void populateInventory()
+    {
+        Item Pistol = Item.getPistol();
+        Pistol.equipped = true;
+        Item Pistol2 = Item.getPistol();
+        Item PistolAmmo = Item.getPistolAmmo();
+        Item GreenHerb = Item.getGreenHerb();
+        Item RedHerb = Item.getRedHerb();
+        Item redMix = Item.getRedMix();
+        Item handGrenade = Item.getHandGrenade();
 
 
-        Item Pistol=Item.getPistol();
-        Pistol.equipped=true;
-        Item Pistol2=Item.getPistol();
-        Item PistolAmmo=Item.getPistolAmmo();
-        Item GreenHerb=Item.getGreenHerb();
-        Item RedHerb=Item.getRedHerb();
-        Item redMix=Item.getRedMix();
-        Item handGrenade=Item.getHandGrenade();
-      
         this.AddItem(Pistol);
         this.AddItem(Pistol2);
-        this.AddItem(PistolAmmo);
+        this.AddItem(PistolAmmo); 
+/*        this.AddItem(GreenHerb);
         this.AddItem(GreenHerb);
         this.AddItem(RedHerb);
         this.AddItem(redMix);
-        this.AddItem(handGrenade);
+        this.AddItem(handGrenade);*/
 
-        
-        
-    
-        
-
-     
-
+/*        this.AddItem(Item.getGoldTreasure());
+        this.AddItem(Item.getRubyTreasure());
+        this.AddItem(Item.getEmeraldTreasure());*/
     }
 
-public void Craft(Item selectedItem,Item craftSelectedItem){
+    public void Craft(Item selectedItem,Item craftSelectedItem){
 /* 
 1.greenHerb + greenHerb = greenMix
 2.greenHerb + redHerb = redGreenMix
@@ -226,6 +227,7 @@ public bool AddItem(Item item){
             foreach(Item inventoryItem in itemsList){
                 if(inventoryItem!=null&&inventoryItem.itemType==item.itemType){
                     inventoryItem.quantity=inventoryItem.quantity+item.quantity;
+                    ui_inventory.RefreshInventoryItems();
                     return true;
                 }
 
@@ -240,6 +242,7 @@ public bool AddItem(Item item){
                     if (itemsList[i] == null)
                     {
                         itemsList[i] = item;
+                        ui_inventory.RefreshInventoryItems();
                         return true;
                     }
                 }
@@ -255,11 +258,14 @@ public bool AddItem(Item item){
                 for(int i=0;i<itemsList.Count;i++){
                     if(itemsList[i]==null){
                         itemsList[i]=item;
+                        ui_inventory.RefreshInventoryItems();
                         return true;
                     }
                 }
             }
         }
+
+        
          
 return false;
 
@@ -404,6 +410,92 @@ public void DiscardItem(){
     
 
 }
+
+
+public void AddPickUpItem(Item.ItemType itemType)
+    {
+        switch (itemType)
+        {
+            // Herbs
+            case Item.ItemType.greenHerb:
+                this.AddItem(Item.getGreenHerb()); break;
+            case Item.ItemType.redHerb:
+                this.AddItem(Item.getRedHerb()); break;
+
+            // Grenades & Weapons
+            case Item.ItemType.handGrenade:
+                this.AddItem(Item.getHandGrenade()); break;
+            case Item.ItemType.flashGrenade:
+                this.AddItem(Item.getFlashGrenade()); break;
+            case Item.ItemType.revolver:
+                {
+                    Debug.Log(SearchItem(Item.ItemType.cardKey));
+                    if (SearchItem(Item.ItemType.cardKey)!=null)
+                    {
+                        this.AddItem(Item.getRevolver()); 
+                    }
+                    else
+                    {
+                        // error message here
+                    }
+                    break;
+                }
+                
+
+             // Treasures
+            case Item.ItemType.goldTreasure:
+                this.AddItem(Item.getGoldTreasure()); break;
+            case Item.ItemType.emeraldTreasure:
+                this.AddItem(Item.getEmeraldTreasure()); break;
+            case Item.ItemType.rubyTreasure:
+                this.AddItem(Item.getRubyTreasure()); break;
+
+             // Keys
+            case Item.ItemType.spadeKey:
+                this.AddItem(Item.getSpadeKey()); break;
+            case Item.ItemType.emblemKey:
+                this.AddItem(Item.getEmblemKey()); break;
+            case Item.ItemType.heartKey:
+                this.AddItem(Item.getHeartKey()); break;
+            case Item.ItemType.diamondKey:
+                this.AddItem(Item.getDiamondKey()); break;
+            case Item.ItemType.cardKey:
+                this.AddItem(Item.getCardKey()); break;
+            case Item.ItemType.clubKey:
+                this.AddItem(Item.getClubKey()); break;
+
+            // Gunpowder
+            case Item.ItemType.normalGunPowder:
+                this.AddItem(Item.getNormalGunPowder()); break;
+            case Item.ItemType.highGradeGunPowder:
+                this.AddItem(Item.getHighGunPowder()); break;
+
+            // Gold
+            case Item.ItemType.gold:
+                {
+                    int randomGoldIncrement = new System.Random().Next(5, 51);// random num between [5,50]
+                    Debug.Log("Gold Added: " + randomGoldIncrement);
+                    gold += randomGoldIncrement;
+                    Debug.Log("Current Gold: " + gold);  break;
+                }
+
+        }
+
+    }
+
+
+    public Item SearchItem(Item.ItemType itemType)
+    {
+        foreach (Item item in itemsList)
+        {
+            if (item != null && item.itemType == itemType)
+            {
+                return item;
+            }
+        }
+        return null; // Item not found
+    }
+
 
 
 

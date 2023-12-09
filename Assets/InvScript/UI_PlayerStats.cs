@@ -44,6 +44,7 @@ public class UI_PlayerStats : MonoBehaviour
         GrenadeEquiped=transform.Find("Equiped").Find("grenadeEq");
         knifeEquiped=transform.Find("Equiped").Find("knifeEq");
 
+        //RefreshPlayerStates();
      
     }
 
@@ -71,7 +72,7 @@ public void RefreshPlayerStates(){
     
     */
 
-GoldText.GetComponent<TMPro.TextMeshProUGUI>().SetText("Gold : "+100);
+GoldText.GetComponent<TMPro.TextMeshProUGUI>().SetText("Gold : "+inventory.getGold());
 HealthText.GetComponent<TMPro.TextMeshProUGUI>().SetText("Health : "+100);    
 bool weaponFlag=false;
 bool revolverFlag=false;

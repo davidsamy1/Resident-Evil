@@ -10,11 +10,18 @@ public class InteractionUI : MonoBehaviour
     public GameObject interactUICanvas;
     public InteractionController interactionController;
     public TMP_Text interactMessageText;
-
+    public UIVisibility UIVisibility;
 
     private void Update()
     {
-        if (interactionController.isPlayerInGrapple)
+
+        if (UIVisibility.isStoreOpened || UIVisibility.isInventoryOpened) // Hide 'E' if inventory/store is opened
+        {
+            Hide();
+            return;
+        }
+
+        if (interactionController.isPlayerInGrapple) // Knife Interactions has higher priority than items priority
         {
             Show("Break Free");
             return;

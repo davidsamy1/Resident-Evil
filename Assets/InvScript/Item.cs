@@ -34,6 +34,7 @@ public enum ItemType{
     pistolAmmo,
     assaultRifleAmmo,
     revolverAmmo,
+    gold
 }
 
 static int id=10;

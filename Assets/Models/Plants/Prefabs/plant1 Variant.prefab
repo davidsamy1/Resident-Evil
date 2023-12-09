@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18e272c7a9a7284f8a6fa35653b343a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectibleType: 1
+  collectibleType: 5
 --- !u!1 &4909321149650273717 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 2719141494e987a4c9debd52358c13f6,

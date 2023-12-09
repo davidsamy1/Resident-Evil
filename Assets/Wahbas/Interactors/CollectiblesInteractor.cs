@@ -6,35 +6,25 @@ using System.Text;
 
 public class CollectiblesInteractor : MonoBehaviour, Interactable
 {
-    public enum CollectiblesType
-    {
-        Gold,
-        GreenHerb,
-        RedHerb,
-        NormalGunpowder,
-        HighGradeGunpowder,
-        HandGrenade,
-        FlashGrenade,
-        Revolver,
-        GoldBarTreasure,
-        RubyTreasure,
-        EmeraldTreasure,
-        EmblemKey,
-        KeyCardKey,
-        SpadeKey,
-        HeartKey
-
-    }
-    public CollectiblesType collectibleType;
+    
+    public Item.ItemType collectibleType;
     public void Interact()
     {
-        // check if inventory has place (depending on the type) ---- revolver has an extra check
-        // Add if possible 
-        // error message if not possible
-        // destroy after finishing
-
+        Inventory inventory = InventoryCreator.getInstance();
         Debug.Log("Interacted with " + formatCollectibleTypeName(collectibleType));
-        Destroy(gameObject);
+
+        // Valid if Not Revolver OR Revolver with Key Card in Inventory
+        if (collectibleType!= Item.ItemType.revolver || 
+            (collectibleType == Item.ItemType.revolver && inventory.SearchItem(Item.ItemType.cardKey)!=null))
+        {
+            inventory.AddPickUpItem(collectibleType);
+            Destroy(gameObject);
+        }
+        else
+        {
+            //error here
+        }
+        
     }
 
     public string GetInteractMessage()
@@ -57,7 +47,10 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
             }
             else
             {
-                formattedName.Append(currentChar);
+                if (i==0 && !char.IsUpper(currentChar)) // handle camelCase words
+                    formattedName.Append(char.ToUpper(currentChar));
+                else
+                    formattedName.Append(currentChar);
             }
         }
 

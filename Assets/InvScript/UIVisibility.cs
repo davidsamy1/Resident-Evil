@@ -6,8 +6,8 @@ using StarterAssets;
 
 public class UIVisibility : MonoBehaviour
 {
-    public GameObject inventoryUI;
-    public GameObject storeUI;
+    public GameObject inventoryUICanvas;
+    public GameObject storeUICanvas;
     public Boolean isInventoryOpened = false;
     public Boolean isStoreOpened = false;
 
@@ -35,16 +35,16 @@ public class UIVisibility : MonoBehaviour
     void ToggleInventoryVisibility()
     {
         ToggleCursorVisibility(); // cursor is visibile when UI is on and off otherwise
-        if (inventoryUI != null)
+        if (inventoryUICanvas != null)
         {   
-            if (inventoryUI.activeInHierarchy)
+            if (inventoryUICanvas.activeInHierarchy)
             {
-                inventoryUI.SetActive(false);
+                inventoryUICanvas.SetActive(false);
                 ResumeGame();
             }
             else
             {
-                inventoryUI.SetActive(true);
+                inventoryUICanvas.SetActive(true);
                 PauseGame();
             }
         }
@@ -55,16 +55,16 @@ public class UIVisibility : MonoBehaviour
     void ToggleStoreVisibility()
     {
         ToggleCursorVisibility(); // cursor is visibile when UI is on and off otherwise
-        if (storeUI != null)
+        if (storeUICanvas != null)
         {
-            if (storeUI.activeInHierarchy)
+            if (storeUICanvas.activeInHierarchy)
             {
-                storeUI.SetActive(false);
+                storeUICanvas.SetActive(false);
                 ResumeGame();
             }
             else
             {
-                storeUI.SetActive(true);
+                storeUICanvas.SetActive(true);
                 PauseGame();
             }
         }

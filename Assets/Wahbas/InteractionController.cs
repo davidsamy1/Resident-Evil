@@ -53,11 +53,6 @@ public class InteractionController : MonoBehaviour
         // script added onto object, implementing interface and interact() logic
         // canvas should be linked to this script
 
-/*        if (isPlayerinGrapple || isKnockDown)
-        {
-            return new KnifeInteractor();
-        }*/
-
         float interactRange = 1f;
         Collider[] colliderArray = Physics.OverlapSphere(player.transform.position, interactRange);
         Interactable closestInteractable = null;
