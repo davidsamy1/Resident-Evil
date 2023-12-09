@@ -26,23 +26,63 @@ public class DoorInteractor : MonoBehaviour, Interactable
     }
 
     public void Interact()
-    {   
-        if (isDoorLocked) // check if required key exists in inventory
+    {
+        Item doorKey = null;
+        Inventory inventory = InventoryCreator.getInstance();
+        Debug.Log("Door Key Needed: " + requiredKey.ToString());
+        if (isDoorLocked) 
         {
-            // sheel key from inventory
-            isDoorLocked = false;
-
-            if (doorAnimator != null)
+            switch(requiredKey)
             {
-                doorAnimator.SetTrigger("Unlock");
+                case KeyType.Emblem:
+                    {
+                        doorKey = inventory.SearchItem(Item.ItemType.emblemKey);
+                        break;
+                    }
+                case KeyType.Spade:
+                    {
+                        doorKey = inventory.SearchItem(Item.ItemType.spadeKey);
+                        break;
+                    }
+                case KeyType.Heart:
+                    {
+                        doorKey = inventory.SearchItem(Item.ItemType.heartKey);
+                        break;
+                    }
+                case KeyType.KeyCard:
+                    {
+                        doorKey = inventory.SearchItem(Item.ItemType.cardKey);
+                        break;
+                    }
             }
 
-            if (doorCollider != null)
+            if (doorKey != null)
             {
-                doorCollider.enabled = false;
+                isDoorLocked = false;
+                Debug.Log("Door Unlocked");
+
+                if (doorAnimator != null)
+                {
+                    doorAnimator.SetTrigger("Unlock");
+                }
+
+                if (doorCollider != null)
+                {
+                    doorCollider.enabled = false;
+                }
+
+                // Remove key from inventory
+                inventory.Remove(doorKey);
+
+            }
+            else
+            {
+                // error
             }
 
-            Debug.Log("Door Unlocked");
+            
+            
+            
 
             
         }

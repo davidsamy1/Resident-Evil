@@ -6,12 +6,12 @@ using System.Text;
 
 public class StoreInteractor : MonoBehaviour, Interactable
 {
-    public void Interact()
-    {   
-        //pause game
-        //open store screen
 
-        //Destroy(gameObject);
+    public UIVisibility uiVisibility;
+    public void Interact()
+    {
+        Debug.Log("Interacted with Store");
+        uiVisibility.ToggleStoreVisibility();
     }
 
     public string GetInteractMessage()

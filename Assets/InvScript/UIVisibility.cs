@@ -6,8 +6,9 @@ using StarterAssets;
 
 public class UIVisibility : MonoBehaviour
 {
-    public GameObject inventoryUICanvas;
     public GameObject storeUICanvas;
+    public GameObject inventoryUICanvas;
+
     public Boolean isInventoryOpened = false;
     public Boolean isStoreOpened = false;
 
@@ -52,24 +53,28 @@ public class UIVisibility : MonoBehaviour
         
     }
 
-    void ToggleStoreVisibility()
+    public void ToggleStoreVisibility()
     {
         ToggleCursorVisibility(); // cursor is visibile when UI is on and off otherwise
+        Debug.Log(storeUICanvas);
         if (storeUICanvas != null)
         {
             if (storeUICanvas.activeInHierarchy)
             {
                 storeUICanvas.SetActive(false);
                 ResumeGame();
+                Debug.Log("Store Not active now");
             }
             else
             {
                 storeUICanvas.SetActive(true);
                 PauseGame();
+                Debug.Log("Store active now");
+
             }
         }
         isStoreOpened = !isStoreOpened;
-        
+
     }
 
     void PauseGame()

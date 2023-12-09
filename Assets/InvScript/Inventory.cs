@@ -326,6 +326,7 @@ public Item getSelected(){
 public void Remove(Item item){
     itemsList.Remove(item);
     itemsList.Add(null);
+    ui_inventory.RefreshInventoryItems();
 
 }
 public void EquippedItem(){
