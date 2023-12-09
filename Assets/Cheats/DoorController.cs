@@ -18,17 +18,15 @@ public class DoorController : MonoBehaviour
     }
     public void OpenDoor()
     {
-        if (isOneSided)
-        {
-            if (doorAnimator != null)
-            {
-                doorAnimator.SetTrigger("Unlock");
-            }
 
-            if (doorCollider != null)
-            {
-                doorCollider.enabled = false;
-            }
+        if (doorAnimator != null)
+        {
+            doorAnimator.SetTrigger("Unlock");
+        }
+
+        if (doorCollider != null)
+        {
+            doorCollider.enabled = false;
         }
     }
 }
