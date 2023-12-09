@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -413,63 +414,52 @@ public void DiscardItem(){
 }
 
 
-public void AddPickUpItem(Item.ItemType itemType)
+public Boolean AddPickUpItem(Item.ItemType itemType)
     {
         switch (itemType)
         {
             // Herbs
             case Item.ItemType.greenHerb:
-                this.AddItem(Item.getGreenHerb()); break;
+                return this.AddItem(Item.getGreenHerb());
             case Item.ItemType.redHerb:
-                this.AddItem(Item.getRedHerb()); break;
+                return this.AddItem(Item.getRedHerb());
 
             // Grenades & Weapons
             case Item.ItemType.handGrenade:
-                this.AddItem(Item.getHandGrenade()); break;
+                return this.AddItem(Item.getHandGrenade());
             case Item.ItemType.flashGrenade:
-                this.AddItem(Item.getFlashGrenade()); break;
+                return this.AddItem(Item.getFlashGrenade()); 
             case Item.ItemType.revolver:
-                {
-                    Debug.Log(SearchItem(Item.ItemType.cardKey));
-                    if (SearchItem(Item.ItemType.cardKey)!=null)
-                    {
-                        this.AddItem(Item.getRevolver()); 
-                    }
-                    else
-                    {
-                        // error message here
-                    }
-                    break;
-                }
+                return this.AddItem(Item.getRevolver());
                 
 
              // Treasures
             case Item.ItemType.goldTreasure:
-                this.AddItem(Item.getGoldTreasure()); break;
+                return this.AddItem(Item.getGoldTreasure()); 
             case Item.ItemType.emeraldTreasure:
-                this.AddItem(Item.getEmeraldTreasure()); break;
+                return this.AddItem(Item.getEmeraldTreasure());
             case Item.ItemType.rubyTreasure:
-                this.AddItem(Item.getRubyTreasure()); break;
+                return this.AddItem(Item.getRubyTreasure()); 
 
              // Keys
             case Item.ItemType.spadeKey:
-                this.AddItem(Item.getSpadeKey()); break;
+                return this.AddItem(Item.getSpadeKey()); 
             case Item.ItemType.emblemKey:
-                this.AddItem(Item.getEmblemKey()); break;
+                return this.AddItem(Item.getEmblemKey());
             case Item.ItemType.heartKey:
-                this.AddItem(Item.getHeartKey()); break;
+                return this.AddItem(Item.getHeartKey());
             case Item.ItemType.diamondKey:
-                this.AddItem(Item.getDiamondKey()); break;
+               return this.AddItem(Item.getDiamondKey());
             case Item.ItemType.cardKey:
-                this.AddItem(Item.getCardKey()); break;
+                return this.AddItem(Item.getCardKey()); 
             case Item.ItemType.clubKey:
-                this.AddItem(Item.getClubKey()); break;
+                return this.AddItem(Item.getClubKey()); 
 
             // Gunpowder
             case Item.ItemType.normalGunPowder:
-                this.AddItem(Item.getNormalGunPowder()); break;
+                return this.AddItem(Item.getNormalGunPowder()); 
             case Item.ItemType.highGradeGunPowder:
-                this.AddItem(Item.getHighGunPowder()); break;
+                return this.AddItem(Item.getHighGunPowder());
 
             // Gold
             case Item.ItemType.gold:
@@ -477,8 +467,10 @@ public void AddPickUpItem(Item.ItemType itemType)
                     int randomGoldIncrement = new System.Random().Next(5, 51);// random num between [5,50]
                     Debug.Log("Gold Added: " + randomGoldIncrement);
                     gold += randomGoldIncrement;
-                    Debug.Log("Current Gold: " + gold);  break;
+                    Debug.Log("Current Gold: " + gold);
+                    return true;
                 }
+            default: return true;
 
         }
 

@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Text;
+using UnityEditor.Experimental.GraphView;
 
 public class CollectiblesInteractor : MonoBehaviour, Interactable
 {
     
     public Item.ItemType collectibleType;
+    private Coroutine errorMessageCoroutine;
+    public UIError uiError;
+
+    void Start()
+    {
+        uiError = FindObjectOfType<UIError>();
+
+    }
     public void Interact()
     {
         Inventory inventory = InventoryCreator.getInstance();
@@ -17,12 +26,21 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
         if (collectibleType!= Item.ItemType.revolver || 
             (collectibleType == Item.ItemType.revolver && inventory.SearchItem(Item.ItemType.cardKey)!=null))
         {
-            inventory.AddPickUpItem(collectibleType);
-            Destroy(gameObject);
+            Boolean isSuccessful = inventory.AddPickUpItem(collectibleType);
+            if (isSuccessful)
+            {
+                errorMessageCoroutine = null;
+                Destroy(gameObject);
+            }
+            else
+            {
+                showInteractErrorMessage("Inventory is full!");
+            }
+            
         }
-        else
+        else if (collectibleType == Item.ItemType.revolver && inventory.SearchItem(Item.ItemType.cardKey) == null)
         {
-            //error here
+            showInteractErrorMessage("Key Card Required!");
         }
         
     }
@@ -57,5 +75,14 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
         return formattedName.ToString();
     }
 
+    private void showInteractErrorMessage(string message)
+    {
+        if (errorMessageCoroutine != null)
+        {
+            StopCoroutine(errorMessageCoroutine); // stop if there exists an existing coroutine
+        }
+
+        errorMessageCoroutine = StartCoroutine(uiError.ShowErrorMessage(message, 2f));
+    }
 
 }

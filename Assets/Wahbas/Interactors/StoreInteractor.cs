@@ -6,7 +6,6 @@ using System.Text;
 
 public class StoreInteractor : MonoBehaviour, Interactable
 {
-
     public UIVisibility uiVisibility;
     public void Interact()
     {
