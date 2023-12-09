@@ -117,6 +117,7 @@ public class TPSController : MonoBehaviour
                 StopCoroutine(reloadCoroutine);
             PlayerAnimator.SetBool("isReload", false);
             PlayerAnimator.SetBool("PistolReload", false);
+            PlayerAnimator.SetLayerWeight(4, 0);
             isReloading = false;
             PlayerAnimator.speed = 1;
         }
@@ -127,6 +128,7 @@ public class TPSController : MonoBehaviour
                 StopCoroutine(reloadCoroutine);
             PlayerAnimator.SetBool("isReload", false);
             PlayerAnimator.SetBool("PistolReload", false);
+            PlayerAnimator.SetLayerWeight(4, 0);
             isReloading = false;
             PlayerAnimator.speed = 1;
         }
@@ -137,6 +139,7 @@ public class TPSController : MonoBehaviour
                 StopCoroutine(reloadCoroutine);
             PlayerAnimator.SetBool("isReload", false);
             PlayerAnimator.SetBool("PistolReload", false);
+            PlayerAnimator.SetLayerWeight(4, 0);
             isReloading = false;
             PlayerAnimator.speed = 1;
         }
@@ -147,6 +150,7 @@ public class TPSController : MonoBehaviour
                 StopCoroutine(reloadCoroutine);
             PlayerAnimator.SetBool("isReload", false);
             PlayerAnimator.SetBool("PistolReload", false);
+            PlayerAnimator.SetLayerWeight(4, 0);
             isReloading = false;
             PlayerAnimator.speed = 1;
         }
@@ -157,6 +161,7 @@ public class TPSController : MonoBehaviour
                 StopCoroutine(reloadCoroutine);
             PlayerAnimator.SetBool("isReload", false);
             PlayerAnimator.SetBool("PistolReload", false);
+            PlayerAnimator.SetLayerWeight(4, 0);
             isReloading = false;
             PlayerAnimator.speed = 1;
         }
@@ -167,9 +172,6 @@ public class TPSController : MonoBehaviour
             {
                 isReloading = true;
                 reload();
-
-
-
             }
             if (Input.GetKey(KeyCode.Mouse0) && weaponsScriptableObjects[WeaponIndex - 1].firingMode == Weopen.FiringMode.Automatic && starterAssetsInputs.aim)
             {
@@ -187,6 +189,14 @@ public class TPSController : MonoBehaviour
                     fire();
                     StartCoroutine(FireCooldown());
                 }
+
+            }
+        }else{
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                PlayerAnimator.SetLayerWeight(5, 1);
+                PlayerAnimator.SetBool("Stab",true);
+                StartCoroutine(Stab());
 
             }
         }
@@ -277,6 +287,14 @@ public class TPSController : MonoBehaviour
         else
             WeaponAmmo.text = weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip.ToString();
     }
+
+     IEnumerator Stab()
+    {
+
+        yield return new WaitForSeconds(1.85f);
+        PlayerAnimator.SetBool("Stab",false);
+        PlayerAnimator.SetLayerWeight(5, 0);
+    }
     IEnumerator FireCooldown()
     {
         canFire = false;
@@ -344,8 +362,9 @@ public class TPSController : MonoBehaviour
         isReloading = false;
         if (isPistol){
             PlayerAnimator.SetBool("PistolReload", false);
-            //  PlayerAnimator.SetBool("ADS", false);
-            //  PlayerAnimator.SetLayerWeight(1, 0);
+            // PlayerAnimator.SetLayerWeight(1, 1);
+            PlayerAnimator.SetLayerWeight(4, 0);
+             PlayerAnimator.SetBool("ADS", false);
              }
         else
             PlayerAnimator.SetBool("isReload", false);
@@ -373,7 +392,10 @@ public class TPSController : MonoBehaviour
             {
                 // PlayerAnimator.SetLayerWeight(1, 1);
                 PlayerAnimator.SetBool("PistolReload", true);
-               
+                if(!PlayerAnimator.GetBool("ADS")){
+                    PlayerAnimator.SetLayerWeight(1, 0);
+                    PlayerAnimator.SetLayerWeight(4, 1);
+                    }
                 PlayerAnimator.speed = 1.033f / weapon.reloadTime;
                 reloadCoroutine=StartCoroutine(ReloadCooldown(true));
             }
