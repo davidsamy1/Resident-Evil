@@ -15,8 +15,8 @@ public class DoorInteractor : MonoBehaviour, Interactable
     }
     private Boolean isDoorLocked = true;
     public KeyType requiredKey;
-    private Animator doorAnimator;
-    private Collider doorCollider;
+        private Animator doorAnimator;
+        private Collider doorCollider;
 
     // Errors
     private Coroutine errorMessageCoroutine;
