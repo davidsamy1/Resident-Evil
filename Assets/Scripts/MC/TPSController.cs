@@ -21,6 +21,7 @@ public class TPSController : MonoBehaviour
     public Transform aimdebug1;
     public Transform aimdebug2;
     public Animator PlayerAnimator;
+    // public Animator AK47Animator;
     public List<GameObject> weapons;
     public int WeaponIndex = 1;
     public GameObject leon;
@@ -37,13 +38,16 @@ public class TPSController : MonoBehaviour
     public TMP_Text CurrentAmmo;
     public TMP_Text InventoryAmmo;
     public List<GameObject> WeaponsHUD;
+    private Coroutine reloadCoroutine=null;
+
+
     // Start is called before the first frame update
     private void Awake()
     {
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         thirdPersonController = GetComponent<ThirdPersonController>();
         ResetWeaponsInfo();
-        WeaponAmmo.text = weaponsScriptableObjects[WeaponIndex-1].currentAmmoInClip.ToString();
+        WeaponAmmo.text = weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip.ToString();
 
     }
 
@@ -106,41 +110,73 @@ public class TPSController : MonoBehaviour
             PlayerAnimator.SetLayerWeight(2, 1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        if (Input.GetKeyDown(KeyCode.Alpha0) )
         {
             SetWeaponIndex(0);
+            if(reloadCoroutine != null)
+                StopCoroutine(reloadCoroutine);
+            PlayerAnimator.SetBool("isReload", false);
+            PlayerAnimator.SetBool("PistolReload", false);
+            isReloading = false;
+            PlayerAnimator.speed = 1;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha1))
+        else if (Input.GetKeyDown(KeyCode.Alpha1) )
         {
             SetWeaponIndex(1);
+            if(reloadCoroutine != null)
+                StopCoroutine(reloadCoroutine);
+            PlayerAnimator.SetBool("isReload", false);
+            PlayerAnimator.SetBool("PistolReload", false);
+            isReloading = false;
+            PlayerAnimator.speed = 1;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2) )
         {
             SetWeaponIndex(2);
+            if(reloadCoroutine != null)
+                StopCoroutine(reloadCoroutine);
+            PlayerAnimator.SetBool("isReload", false);
+            PlayerAnimator.SetBool("PistolReload", false);
+            isReloading = false;
+            PlayerAnimator.speed = 1;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.Alpha3) )
         {
             SetWeaponIndex(3);
+            if(reloadCoroutine != null)
+                StopCoroutine(reloadCoroutine);
+            PlayerAnimator.SetBool("isReload", false);
+            PlayerAnimator.SetBool("PistolReload", false);
+            isReloading = false;
+            PlayerAnimator.speed = 1;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        else if (Input.GetKeyDown(KeyCode.Alpha4) )
         {
             SetWeaponIndex(4);
+            if(reloadCoroutine != null)
+                StopCoroutine(reloadCoroutine);
+            PlayerAnimator.SetBool("isReload", false);
+            PlayerAnimator.SetBool("PistolReload", false);
+            isReloading = false;
+            PlayerAnimator.speed = 1;
         }
 
         if (WeaponIndex != 0)
         {
-            if (Input.GetKeyDown(KeyCode.R))
-            {   
-                isReloading = true; 
-                StartCoroutine(ReloadCooldown());
+            if (Input.GetKeyDown(KeyCode.R) && !isReloading)
+            {
+                isReloading = true;
+                reload();
+
 
 
             }
-            if (Input.GetKey(KeyCode.Mouse0) && weaponsScriptableObjects[WeaponIndex-1].firingMode==Weopen.FiringMode.Automatic && starterAssetsInputs.aim)
+            if (Input.GetKey(KeyCode.Mouse0) && weaponsScriptableObjects[WeaponIndex - 1].firingMode == Weopen.FiringMode.Automatic && starterAssetsInputs.aim)
             {
                 if (canFire & !isReloading)
                 {
                     fire();
+                    // AK47Animator.SetBool("fire", true);
                     StartCoroutine(FireCooldown());
                 }
             }
@@ -158,7 +194,7 @@ public class TPSController : MonoBehaviour
 
     private void StartADS(Vector3 mouseWorldPosition)
     {
-        print(BulletCollider.distance);
+        // print(BulletCollider.distance);
         //adabt the camera to the ADS camera
         ADSCamera.gameObject.SetActive(true);
         thirdPersonController.setSens(ADSSens);
@@ -190,8 +226,8 @@ public class TPSController : MonoBehaviour
         ADSCamera.gameObject.SetActive(false);
         thirdPersonController.setSens(NormalSens);
         crosshair.gameObject.SetActive(false);
-
-        PlayerAnimator.SetLayerWeight(1, 0);
+        if(!isReloading)
+            PlayerAnimator.SetLayerWeight(1, 0);
         PlayerAnimator.SetLayerWeight(2, 0);
         PlayerAnimator.SetBool("ADS", false);
 
@@ -242,11 +278,12 @@ public class TPSController : MonoBehaviour
             WeaponAmmo.text = weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip.ToString();
     }
     IEnumerator FireCooldown()
-{
-    canFire = false;
-    yield return new WaitForSeconds(weaponsScriptableObjects[WeaponIndex - 1].timeBetweenShots);
-    canFire = true;
-}
+    {
+        canFire = false;
+        yield return new WaitForSeconds(weaponsScriptableObjects[WeaponIndex - 1].timeBetweenShots);
+        // AK47Animator.SetBool("fire", false);
+        canFire = true;
+    }
     public void fire()
     {
         if (weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip <= 0)
@@ -280,50 +317,82 @@ public class TPSController : MonoBehaviour
         //play recoil
         SetCurrentWeaponAmmo();
     }
-    IEnumerator ReloadCooldown()
-{
-    yield return new WaitForSeconds(weaponsScriptableObjects[WeaponIndex - 1].reloadTime);
-    reload();
-    isReloading = false;
-}
+    IEnumerator ReloadCooldown(bool isPistol)
+    {
+        yield return new WaitForSeconds(weaponsScriptableObjects[WeaponIndex - 1].reloadTime);
+        var weapon = weaponsScriptableObjects[WeaponIndex - 1];
+        if (weapon.totalAmmoInInventory < weapon.clipCapacity)
+        {
+            if (weapon.currentAmmoInClip + weapon.totalAmmoInInventory < weapon.clipCapacity)// clip 30, iventory 10, current 10
+            {
+                weapon.currentAmmoInClip += weapon.totalAmmoInInventory;
+                weapon.totalAmmoInInventory = 0;
+            }
+            else
+            {// clip 30, iventory 20, current 10    
+                weapon.totalAmmoInInventory -= weapon.clipCapacity - weapon.currentAmmoInClip;
+                weapon.currentAmmoInClip = weapon.clipCapacity;
+            }
+        }
+        else
+        { // clip 30, iventory 60, current 29
+            weapon.totalAmmoInInventory -= weapon.clipCapacity - weapon.currentAmmoInClip;
+            weapon.currentAmmoInClip = weapon.clipCapacity;
+
+        }
+        SetCurrentWeaponAmmo();
+        isReloading = false;
+        if (isPistol){
+            PlayerAnimator.SetBool("PistolReload", false);
+            //  PlayerAnimator.SetBool("ADS", false);
+            //  PlayerAnimator.SetLayerWeight(1, 0);
+             }
+        else
+            PlayerAnimator.SetBool("isReload", false);
+
+        PlayerAnimator.speed = 1;
+        reloadCoroutine = null;
+    }
     public void reload()
     {
         var weapon = weaponsScriptableObjects[WeaponIndex - 1];
         if (weapon.currentAmmoInClip == weapon.clipCapacity)
         {
+            isReloading = false;
             return;
         }
-        if (weapon.totalAmmoInInventory <= 0)
+        else if (weapon.totalAmmoInInventory <= 0)
         {
             //play sound no ammo
+            isReloading = false;
             return;
         }
         else
         {
-            if (weapon.totalAmmoInInventory < weapon.clipCapacity)
+            if (WeaponIndex == 1 || WeaponIndex == 2)
             {
-                if (weapon.currentAmmoInClip + weapon.totalAmmoInInventory < weapon.clipCapacity)// clip 30, iventory 10, current 10
-                {
-                    weapon.currentAmmoInClip += weapon.totalAmmoInInventory;
-                    weapon.totalAmmoInInventory = 0;
-                }
-                else
-                {// clip 30, iventory 20, current 10    
-                    weapon.totalAmmoInInventory -= weapon.clipCapacity - weapon.currentAmmoInClip;
-                    weapon.currentAmmoInClip = weapon.clipCapacity;
-                }
+                // PlayerAnimator.SetLayerWeight(1, 1);
+                PlayerAnimator.SetBool("PistolReload", true);
+               
+                PlayerAnimator.speed = 1.033f / weapon.reloadTime;
+                reloadCoroutine=StartCoroutine(ReloadCooldown(true));
             }
             else
-            { // clip 30, iventory 60, current 29
-                weapon.totalAmmoInInventory -= weapon.clipCapacity - weapon.currentAmmoInClip;
-                weapon.currentAmmoInClip = weapon.clipCapacity;
+            {
+                PlayerAnimator.SetBool("isReload", true);
 
+                // AnimatorStateInfo stateInfo = PlayerAnimator.GetCurrentAnimatorStateInfo(2);
+                // float animationDuration = stateInfo.length;
+                // AnimatorClipInfo[] m_CurrentClipInfo = PlayerAnimator.GetCurrentAnimatorClipInfo(2);
+                // float animationDuration = m_CurrentClipInfo[0].clip.length;
+                // print(animationDuration);
+                PlayerAnimator.speed = 3.115f / weapon.reloadTime;
+
+                reloadCoroutine=StartCoroutine(ReloadCooldown(false));
             }
         }
         //play sound
-        //play animation
-        //play reload
-        SetCurrentWeaponAmmo();
+
     }
 
     void ResetWeaponsInfo()
@@ -331,7 +400,7 @@ public class TPSController : MonoBehaviour
         foreach (Weopen weapon in weaponsScriptableObjects)
         {
             weapon.currentAmmoInClip = weapon.clipCapacity;
-            weapon.totalAmmoInInventory=weapon.clipCapacity;
+            weapon.totalAmmoInInventory = weapon.clipCapacity;
         }
     }
 }

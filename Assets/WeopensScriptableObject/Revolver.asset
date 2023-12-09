@@ -19,4 +19,4 @@ MonoBehaviour:
   clipCapacity: 6
   currentAmmoInClip: 6
   totalAmmoInInventory: 6
-  reloadTime: 3
+  reloadTime: 4

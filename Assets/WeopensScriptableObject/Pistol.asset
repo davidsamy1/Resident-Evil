@@ -17,6 +17,6 @@ MonoBehaviour:
   timeBetweenShots: 0.2
   range: 20
   clipCapacity: 12
-  currentAmmoInClip: 6
+  currentAmmoInClip: 12
   totalAmmoInInventory: 12
-  reloadTime: 1
+  reloadTime: 2
