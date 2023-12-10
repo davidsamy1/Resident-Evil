@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3307632127339174431}
   - component: {fileID: 6862852426408863264}
   - component: {fileID: 2477818725844940424}
+  - component: {fileID: 1667724460621400620}
   m_Layer: 0
   m_Name: FlashGrenade
   m_TagString: Untagged
@@ -107,3 +108,17 @@ CapsuleCollider:
   m_Height: 0.5265309
   m_Direction: 1
   m_Center: {x: -0.019008402, y: 0.05081728, z: 0.026313804}
+--- !u!114 &1667724460621400620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8591973470335352159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18e272c7a9a7284f8a6fa35653b343a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleType: 14
+  uiError: {fileID: 0}

@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - CinemachineTarget
+  - amount
+  - image
+  - Revolver
+  - EquippedRevolver
   layers:
   - Default
   - TransparentFX
