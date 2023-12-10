@@ -16,6 +16,8 @@ public class HealthBarController : MonoBehaviour
     public Material SegmentActiveMaterial;
     private StarterAssetsInputs starterAssetsInputs;
 
+    public Animator PlayerAnimator;
+
     public enum HPLevel
     {
         Low,
@@ -41,15 +43,29 @@ public class HealthBarController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.KeypadPlus)) {
             PlayerHealthSetter(PlayerHealthGetter() + 4);
-            print("plus");
+
         }
 
         if (Input.GetKeyDown(KeyCode.KeypadMinus))
         {
             PlayerHealthSetter(PlayerHealthGetter() - 1);
-            print("Minus");
+            PlayerAnimator.SetLayerWeight(6,1);
+        
+            if(PlayerHealthGetter()>0){
+                PlayerAnimator.SetTrigger("hit");
+                Invoke("setWeight",1.6f);
+                }
+            else{
+                PlayerAnimator.SetTrigger("death");
+                PlayerDeath = true;
+                starterAssetsInputs.enabled = false;
+            }
+
         }
 
+    }
+    void setWeight(){
+        PlayerAnimator.SetLayerWeight(6,0);
     }
 
     void ToggleSegmentActivity(int SegmentIndex,bool active)
@@ -106,6 +122,7 @@ public class HealthBarController : MonoBehaviour
             if(PlayerHealth>8)
                 PlayerHealth = 8;
             AdabtHPLevel();
+           
         }
         PlayerDeath=PlayerHealth==0 ? true : false;
     }

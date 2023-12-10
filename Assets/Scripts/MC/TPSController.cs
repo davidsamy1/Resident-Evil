@@ -315,16 +315,17 @@ public class TPSController : MonoBehaviour
             weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip -= 1;
             // weaponsScriptableObjects[WeaponIndex - 1].totalAmmoInInventory -= 1;
             GameObject muzzleFlasheffect = Instantiate(muzzleFlash, weapons[WeaponIndex].transform.GetChild(weapons[WeaponIndex].transform.childCount - 1).position, weapons[WeaponIndex].transform.GetChild(weapons[WeaponIndex].transform.childCount - 1).rotation);
-            Destroy(muzzleFlasheffect, 1f);
+            Destroy(muzzleFlasheffect, 0.5f);
 
             //handle for enemy range later
             //check if the ray hit within the fire range of the equiped gun
             if (BulletCollider.distance <= weaponsScriptableObjects[WeaponIndex - 1].range)
             {
-                Instantiate(BulletHole
+                GameObject bulletHole=Instantiate(BulletHole
                     , BulletCollider.point + (BulletCollider.normal * 0.01f)
                     , Quaternion.FromToRotation(Vector3.up, BulletCollider.normal)
                     );
+                    Destroy(bulletHole, 7f);
             }
         }
 
