@@ -36943,6 +36943,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3681184141669113427, guid: 2a0589cbf10e9f943991f1fa7ba61ad1,
+        type: 3}
+      propertyPath: m_TagString
+      value: EquippedRevolver
+      objectReference: {fileID: 0}
     - target: {fileID: 4061650746155549929, guid: 2a0589cbf10e9f943991f1fa7ba61ad1,
         type: 3}
       propertyPath: m_LocalScale.x
