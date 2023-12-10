@@ -11938,6 +11938,7 @@ MonoBehaviour:
     type: 2}
   SegmentActiveMaterial: {fileID: 2100000, guid: 70f173037a9f24043ab72078848585be,
     type: 2}
+  PlayerAnimator: {fileID: 2056818578}
 --- !u!4 &2065817197 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5121841538300872766, guid: d57c133157fa8ed4e879cf4cbe38bdc0,
