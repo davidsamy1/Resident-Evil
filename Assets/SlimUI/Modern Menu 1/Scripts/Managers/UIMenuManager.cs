@@ -10,11 +10,8 @@ namespace SlimUI.ModernMenu{
 
 		// campaign button sub menu
         [Header("MENUS")]
-        [Tooltip("The Menu for when the MAIN menu buttons")]
         public GameObject mainMenu;
-        [Tooltip("THe first list of buttons")]
         public GameObject firstMenu;
-        [Tooltip("The Menu for when the EXIT button is clicked")]
         public GameObject exitMenu;
 
 
@@ -25,41 +22,27 @@ namespace SlimUI.ModernMenu{
         public ThemedUIData themeController;
 
         [Header("PANELS")]
-        [Tooltip("The UI Panel parenting all sub menus")]
         public GameObject mainCanvas;
-        [Tooltip("The UI Panel that holds the CONTROLS window tab")]
-        public GameObject PanelControls;
-        [Tooltip("The UI Panel that holds the VIDEO window tab")]
-        public GameObject PanelVideo;
-        [Tooltip("The UI Panel that holds the GAME window tab")]
+        public GameObject PanelTeam;
+        public GameObject PanelAsset;
         public GameObject PanelGame;
 
         // highlights in settings screen
         [Header("SETTINGS SCREEN")]
-        [Tooltip("Highlight Image for when GAME Tab is selected in Settings")]
-        public GameObject lineGame;
-        [Tooltip("Highlight Image for when VIDEO Tab is selected in Settings")]
-        public GameObject lineVideo;
-        [Tooltip("Highlight Image for when CONTROLS Tab is selected in Settings")]
-        public GameObject lineControls;
-        [Tooltip("Highlight Image for when KEY BINDINGS Tab is selected in Settings")]
-        public GameObject lineKeyBindings;
+        public GameObject lineAudio;
+        public GameObject lineTeam;
+        public GameObject lineAsset;
 
         [Header("LOADING SCREEN")]
-		[Tooltip("If this is true, the loaded scene won't load until receiving user input")]
 		public bool waitForInput = true;
         public GameObject loadingMenu;
-		[Tooltip("The loading bar Slider UI element in the Loading Screen")]
         public Slider loadingBar;
         public TMP_Text loadPromptText;
 		public KeyCode userPromptKey;
 
 		[Header("SFX")]
-        [Tooltip("The GameObject holding the Audio Source component for the HOVER SOUND")]
         public AudioSource hoverSound;
-        [Tooltip("The GameObject holding the Audio Source component for the AUDIO SLIDER")]
         public AudioSource sliderSound;
-        [Tooltip("The GameObject holding the Audio Source component for the SWOOSH SOUND when switching to the Settings Screen")]
         public AudioSource swooshSound;
 
 		void Start(){
@@ -100,11 +83,6 @@ namespace SlimUI.ModernMenu{
             StartCoroutine(LoadAsynchronously("Mina"));
             exitMenu.SetActive(false);
         }
-		
-		public void PlayCampaignMobile(){
-			exitMenu.SetActive(false);
-			mainMenu.SetActive(false);
-		}
 
 		public void ReturnMenu(){
 			exitMenu.SetActive(false);
@@ -126,50 +104,31 @@ namespace SlimUI.ModernMenu{
 		}
 
 		void DisablePanels(){
-			PanelControls.SetActive(false);
-			PanelVideo.SetActive(false);
+            PanelTeam.SetActive(false);
+            PanelAsset.SetActive(false);
 			PanelGame.SetActive(false);
-			lineGame.SetActive(false);
-			lineControls.SetActive(false);
-			lineVideo.SetActive(false);
-			lineKeyBindings.SetActive(false);
+            lineAudio.SetActive(false);
+            lineAsset.SetActive(false);
+            lineTeam.SetActive(false);
 
 		}
 
-		public void GamePanel(){
+		public void AudioPanel(){
 			DisablePanels();
 			PanelGame.SetActive(true);
-			lineGame.SetActive(true);
+            lineAudio.SetActive(true);
 		}
 
-		public void VideoPanel(){
+		public void AssetPanel(){
 			DisablePanels();
-			PanelVideo.SetActive(true);
-			lineVideo.SetActive(true);
+            PanelAsset.SetActive(true);
+            lineTeam.SetActive(true);
 		}
 
-		public void ControlsPanel(){
+		public void TeamPanel(){
 			DisablePanels();
-			PanelControls.SetActive(true);
-			lineControls.SetActive(true);
-		}
-
-		public void KeyBindingsPanel(){
-			DisablePanels();
-			MovementPanel();
-			lineKeyBindings.SetActive(true);
-		}
-
-		public void MovementPanel(){
-			DisablePanels();
-		}
-
-		public void CombatPanel(){
-			DisablePanels();
-		}
-
-		public void GeneralPanel(){
-			DisablePanels();
+            PanelTeam.SetActive(true);
+            lineAsset.SetActive(true);
 		}
 
 		public void PlayHover(){
@@ -187,15 +146,6 @@ namespace SlimUI.ModernMenu{
 		// Are You Sure - Quit Panel Pop Up
 		public void AreYouSure(){
 			exitMenu.SetActive(true);
-		}
-
-		public void AreYouSureMobile(){
-			exitMenu.SetActive(true);
-			mainMenu.SetActive(false);
-		}
-
-		public void ExtrasMenu(){
-			exitMenu.SetActive(false);
 		}
 
 		public void QuitGame(){
