@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UI_InvStore : MonoBehaviour
 {
-    private Inventory inventory;
+    public Inventory inventory;
     private Transform GoldText;
 
     private UI_Store uiStore;

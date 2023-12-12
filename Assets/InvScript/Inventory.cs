@@ -8,6 +8,8 @@ public class Inventory
     private List<Item> itemsList;
     public GameObject inventoryPanel;
     public UI_Inventory ui_inventory;
+    public TPSController tpsController;
+    public HealthBarController healthBarController;
     public Item Knife;
     private int gold=30;
     public bool isCrafting=false;
@@ -15,19 +17,153 @@ public class Inventory
 public Inventory(){
         itemsList=new List<Item>();
         Knife=new Item(ItemsAssests.Instance.KnifeSprite,100,100,1,Item.ItemType.knife);
-        Knife.durability=100;
-
+        Knife.durability=10;
          while(itemsList.Count<6){
             itemsList.Add(null);
         
          }
     }
 
-    public void populateInventory()
+public void setTPSController(TPSController tpsController){
+    this.tpsController=tpsController;
+}
+public void setHealthBarController(HealthBarController healthBarController){
+    this.healthBarController=healthBarController;
+}
+
+public Item.ItemType getAmmoTypeEQ(){
+    if(tpsController.WeaponIndex==1){
+        return Item.ItemType.pistolAmmo;
+    }
+    else if(tpsController.WeaponIndex==2){
+        return Item.ItemType.revolverAmmo;
+    }
+    else if(tpsController.WeaponIndex==3){
+        return Item.ItemType.assaultRifleAmmo;
+    }
+    else if(tpsController.WeaponIndex==4){
+        return Item.ItemType.shotGunAmmo;
+    }
+    else{
+        return Item.ItemType.knife;
+    }
+}
+
+public int getWeaponIndexWithAmmoType(Item.ItemType ammoType){
+    if(ammoType==Item.ItemType.pistolAmmo){
+        return 1;
+    }
+    else if(ammoType==Item.ItemType.revolverAmmo){
+        return 2;
+    }
+    else if(ammoType==Item.ItemType.assaultRifleAmmo){
+        return 3;
+    }
+    else if(ammoType==Item.ItemType.shotGunAmmo){
+        return 4;
+    }
+    else{
+        return 0;
+    }
+
+}
+
+public int getEqWeaponAmmoInventory(){
+    return tpsController.weaponsScriptableObjects[tpsController.WeaponIndex-1].totalAmmoInInventory;
+}
+
+
+
+
+public int invToPlayerWeaponIndex(){
+    //Check on all the inventory list of items for equipped items and if this equipped item is weapon then get its type and check if it is type pistol return 1, if it is type shotgun return 2, if it is type assaultRifle return 3, if it is type revolver return 4
+    foreach(Item item in itemsList){
+        if(item!=null&&item.equipped==true){
+            if(item.itemType==Item.ItemType.pistol){
+                return 1;
+            }
+            else if(item.itemType==Item.ItemType.revolver){
+                return 2;
+            }
+            else if(item.itemType==Item.ItemType.assaultRifle){
+                return 3;
+            }
+            else if(item.itemType==Item.ItemType.shotGun){
+                return 4;
+            }
+            else if(item.itemType==Item.ItemType.knife){
+                return 0;
+            }
+        }
+    }
+    return 0;
+
+
+}
+
+
+public void setCurrentAmmoPlayerToInv(){
+    Item.ItemType ammoType=getAmmoTypeEQ();
+        int AmmoAmount=getEqWeaponAmmoInventory();
+        if(ammoType!=Item.ItemType.knife){
+        foreach(Item item in itemsList){
+            if(item!=null&&item.itemType==ammoType){
+                item.quantity=AmmoAmount;
+                if(AmmoAmount==0){
+                    Remove(item);
+                }
+                return;
+            }
+        }
+        }
+
+    
+    
+}
+
+public void IncreaseAmmoInvToPlayer(Item.ItemType ammoType,int Ammoquantity){
+    int weaponIndex=getWeaponIndexWithAmmoType(ammoType);
+    tpsController.weaponsScriptableObjects[weaponIndex-1].totalAmmoInInventory=Ammoquantity+tpsController.weaponsScriptableObjects[weaponIndex-1].totalAmmoInInventory;
+
+}
+
+public void DecreaseAmmoInvToPlayer(Item.ItemType ammoType,int Ammoquantity){
+    int weaponIndex=getWeaponIndexWithAmmoType(ammoType);
+    tpsController.weaponsScriptableObjects[weaponIndex-1].totalAmmoInInventory=0;
+    tpsController.weaponsScriptableObjects[weaponIndex-1].currentAmmoInClip= tpsController.weaponsScriptableObjects[weaponIndex-1].currentAmmoInClip;
+
+}
+
+public int[] InvToPlayerAmmo(){
+    int PistolAmmototalAmmoInInventory=0;
+    int RevolverAmmototalAmmoInInventory=0;
+    int AssaultRifleAmmototalAmmoInInventory=0;
+    int ShotGunAmmototalAmmoInInventory=0;
+    foreach(Item item in itemsList){
+        if(item!=null&&item.itemType==Item.ItemType.pistolAmmo){
+            PistolAmmototalAmmoInInventory=item.quantity;
+        }
+        else if(item!=null&&item.itemType==Item.ItemType.revolverAmmo){
+            RevolverAmmototalAmmoInInventory=item.quantity;
+        }
+        else if(item!=null&&item.itemType==Item.ItemType.assaultRifleAmmo){
+            AssaultRifleAmmototalAmmoInInventory=item.quantity;
+        }
+        else if(item!=null&&item.itemType==Item.ItemType.shotGunAmmo){
+            ShotGunAmmototalAmmoInInventory=item.quantity;
+        }
+    }
+    int [] result={PistolAmmototalAmmoInInventory,RevolverAmmototalAmmoInInventory,AssaultRifleAmmototalAmmoInInventory,ShotGunAmmototalAmmoInInventory};
+    return result;
+}
+
+
+
+public void populateInventory()
     {
         Item Pistol = Item.getPistol();
-        Pistol.equipped = true;
-        Item Pistol2 = Item.getPistol();
+        Item shotGun = Item.getShotGun();
+        Pistol.equipped=true;
         Item PistolAmmo = Item.getPistolAmmo();
         Item GreenHerb = Item.getGreenHerb();
         Item RedHerb = Item.getRedHerb();
@@ -36,8 +172,10 @@ public Inventory(){
 
 
         this.AddItem(Pistol);
-        this.AddItem(Pistol2);
-        this.AddItem(PistolAmmo); 
+        this.AddItem(PistolAmmo);
+    
+
+        // this.AddItem(PistolAmmo); 
 /*        this.AddItem(GreenHerb);
         this.AddItem(GreenHerb);
         this.AddItem(RedHerb);
@@ -49,7 +187,7 @@ public Inventory(){
         this.AddItem(Item.getEmeraldTreasure());*/
     }
 
-    public void Craft(Item selectedItem,Item craftSelectedItem){
+public void Craft(Item selectedItem,Item craftSelectedItem){
 /* 
 1.greenHerb + greenHerb = greenMix
 2.greenHerb + redHerb = redGreenMix
@@ -227,8 +365,8 @@ public bool AddItem(Item item){
         if(item.itemType==Item.ItemType.pistolAmmo||item.itemType==Item.ItemType.shotGunAmmo||item.itemType==Item.ItemType.assaultRifleAmmo||item.itemType==Item.ItemType.revolverAmmo){
             foreach(Item inventoryItem in itemsList){
                 if(inventoryItem!=null&&inventoryItem.itemType==item.itemType){
+                    IncreaseAmmoInvToPlayer(item.itemType,item.quantity);
                     inventoryItem.quantity=inventoryItem.quantity+item.quantity;
-                    ui_inventory.RefreshInventoryItems();
                     return true;
                 }
 
@@ -243,7 +381,10 @@ public bool AddItem(Item item){
                     if (itemsList[i] == null)
                     {
                         itemsList[i] = item;
-                        ui_inventory.RefreshInventoryItems();
+                        if(this.tpsController){
+                        IncreaseAmmoInvToPlayer(item.itemType,item.quantity);
+                        }
+                        
                         return true;
                     }
                 }
@@ -259,7 +400,10 @@ public bool AddItem(Item item){
                 for(int i=0;i<itemsList.Count;i++){
                     if(itemsList[i]==null){
                         itemsList[i]=item;
-                        ui_inventory.RefreshInventoryItems();
+                           if(ui_inventory!=null){
+                    // ui_inventory.RefreshInventoryItems();
+
+                    }
                         return true;
                     }
                 }
@@ -291,6 +435,12 @@ public int getItemAmount(Item.ItemType itemType){
         
     }
 
+
+public int getAmmoInWeaponAmount(Item.ItemType ammoType){
+    int weaponIndex=getWeaponIndexWithAmmoType(ammoType);
+    return tpsController.weaponsScriptableObjects[weaponIndex-1].currentAmmoInClip;
+    
+}
 
 
 
@@ -324,10 +474,37 @@ public Item getSelected(){
 }
 
 
+public void InvEquipToPlayer(Item item){
+    int [] AllAmmoData=InvToPlayerAmmo();
+    //Check the type of item of it is a pistol/revolver/AR/shotgun then set the weapon index accordingly
+    if(item.itemType==Item.ItemType.pistol){
+        tpsController.WeaponIndex=1;
+        tpsController.weaponsScriptableObjects[0].totalAmmoInInventory=AllAmmoData[0];
+    }
+    else if(item.itemType==Item.ItemType.revolver){
+        tpsController.WeaponIndex=2;
+        tpsController.weaponsScriptableObjects[1].totalAmmoInInventory=AllAmmoData[1];
+    }
+    else if(item.itemType==Item.ItemType.assaultRifle){
+        tpsController.WeaponIndex=3;
+        tpsController.weaponsScriptableObjects[2].totalAmmoInInventory=AllAmmoData[2];
+    }
+    else if(item.itemType==Item.ItemType.shotGun){
+        tpsController.WeaponIndex=4;
+        tpsController.weaponsScriptableObjects[3].totalAmmoInInventory=AllAmmoData[3];
+    }
+    else{
+        return;
+    }
+}
+
 public void Remove(Item item){
+    if(item.itemType==Item.ItemType.pistolAmmo||item.itemType==Item.ItemType.shotGunAmmo||item.itemType==Item.ItemType.assaultRifleAmmo||item.itemType==Item.ItemType.revolverAmmo){
+        DecreaseAmmoInvToPlayer(item.itemType,item.quantity);
+    }
     itemsList.Remove(item);
     itemsList.Add(null);
-    ui_inventory.RefreshInventoryItems();
+    // ui_inventory.RefreshInventoryItems();
 
 }
 public void EquippedItem(){
@@ -354,6 +531,8 @@ public void EquippedItem(){
 
     //Now we set the selected item to be equipped
     getSelected().equipped=true;
+InvEquipToPlayer(getSelected());
+   
 
     //Now set everything to be not selected
     foreach(Item item in itemsList){
@@ -368,14 +547,16 @@ public void EquippedItem(){
 
 
 public void Buy(Item item){
-    if(item.buyPrice>gold){
+    //Create new instance of the same Item
+Item itemToBuy=new Item(item.sprite,item.sellPrice,item.buyPrice,item.quantity,item.itemType);
+    if(itemToBuy.buyPrice>gold){
         Debug.Log("Not enough gold");
         return;
     }
     else{
-        bool isAdded=AddItem(item);
+        bool isAdded=AddItem(itemToBuy);
         if(isAdded==true){
-        gold=gold-item.buyPrice;
+        gold=gold-itemToBuy.buyPrice;
         }
     }
    
@@ -393,9 +574,22 @@ public void SetCraft(){
     this.isCrafting=true;
 }
 public void UseItem(){
-    //1.Check if there is a selected item in the inv
-    //2.if true then use the item and according to the item it will be sent to a different use function
-    //3.else do nothing
+        Item.ItemType SelectedItemType=getSelected().itemType;
+
+    if(SelectedItemType==Item.ItemType.greenHerb){
+        healthBarController.IncreasePlayerHealth(2);
+    }
+    else if(SelectedItemType==Item.ItemType.redGreenMix){
+             healthBarController.IncreasePlayerHealth(8);
+        
+    }
+    else if(SelectedItemType==Item.ItemType.greenMix){
+            healthBarController.IncreasePlayerHealth(6);
+
+    }
+     Remove(getSelected());
+
+    
 }
 
 public void DiscardItem(){

@@ -8,6 +8,7 @@ public class InventoryCreator
         if (inventoryInstance == null)
         {
             inventoryInstance = new Inventory();
+            inventoryInstance.populateInventory();
             Debug.Log("Inventory Instance Created");
         }
         return inventoryInstance;

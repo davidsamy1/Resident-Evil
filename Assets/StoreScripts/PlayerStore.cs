@@ -13,7 +13,7 @@ public class PlayerStore : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Inventory inventory=new Inventory();
+        Inventory inventory=InventoryCreator.getInstance();
         Store store=new Store();
         uiInvStore.setInventory(inventory);
         store.SetInventory(inventory);
@@ -21,11 +21,20 @@ public class PlayerStore : MonoBehaviour
         uiStore.setUIInvStore(uiInvStore);
         uiInvStore.setUIStore(uiStore);
         uiInvStore.RefreshStoreInvItems();
-        
-        
         uiStore.RefreshUIStore();
      
         
+    }
+
+    void OnEnable(){
+        if(uiInvStore.inventory!=null&&uiStore.UIinvStore!=null){
+
+        Debug.Log("I AM ENABLING THE STORE");
+         uiInvStore.RefreshStoreInvItems();
+        uiStore.RefreshUIStore();
+        }
+    
+    
     }
 
     // Update is called once per frame

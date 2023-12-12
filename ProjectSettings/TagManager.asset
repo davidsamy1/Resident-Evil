@@ -9,6 +9,7 @@ TagManager:
   - image
   - Revolver
   - EquippedRevolver
+  - eventSystemM
   layers:
   - Default
   - TransparentFX

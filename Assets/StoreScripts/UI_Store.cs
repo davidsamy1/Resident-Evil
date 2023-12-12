@@ -88,7 +88,7 @@ public void HandleStoreClick(Item item){
     bool isAdded=store.inventory.AddItem(ToAddItem);
     if(isAdded==true){
         UIinvStore.RefreshStoreInvItems();
-                store.RemoveFromStorage(ToAddItem);
+        store.RemoveFromStorage(ToAddItem);
 
         RefreshUIStore();
     }

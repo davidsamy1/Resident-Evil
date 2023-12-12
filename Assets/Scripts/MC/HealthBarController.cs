@@ -8,7 +8,7 @@ using UnityEngine.Rendering.HighDefinition;
 public class HealthBarController : MonoBehaviour
 {
 
-    private int PlayerHealth=8;
+    private int PlayerHealth=2;
     private HPLevel HpLevel;
     private bool PlayerDeath = false;
     public List<GameObject> HealthBarSegments;
@@ -36,6 +36,8 @@ public class HealthBarController : MonoBehaviour
         */
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         AdabtHPLevel();
+                        InventoryCreator.getInstance().setHealthBarController(this);
+
     }
 
     // Update is called once per frame
@@ -114,6 +116,10 @@ public class HealthBarController : MonoBehaviour
 
 
     }
+    public void IncreasePlayerHealth(int HP)
+    {
+        PlayerHealthSetter(PlayerHealthGetter() + HP);
+    }
 
     void PlayerHealthSetter(int HP) {
         if (HP >= 0)
@@ -127,7 +133,7 @@ public class HealthBarController : MonoBehaviour
         PlayerDeath=PlayerHealth==0 ? true : false;
     }
 
-    int PlayerHealthGetter()
+    public int PlayerHealthGetter()
     {
         return PlayerHealth;
     }

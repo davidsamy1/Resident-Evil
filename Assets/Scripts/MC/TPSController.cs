@@ -48,6 +48,8 @@ public class TPSController : MonoBehaviour
         thirdPersonController = GetComponent<ThirdPersonController>();
         ResetWeaponsInfo();
         WeaponAmmo.text = weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip.ToString();
+        InventoryCreator.getInstance().setTPSController(this);
+
 
     }
 
