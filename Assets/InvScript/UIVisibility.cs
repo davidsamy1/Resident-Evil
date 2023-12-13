@@ -8,6 +8,7 @@ public class UIVisibility : MonoBehaviour
 {
     public GameObject storeUICanvas;
     public GameObject inventoryUICanvas;
+    public GameObject pauseCanvas;
 
     public Boolean isInventoryOpened = false;
     public Boolean isStoreOpened = false;
@@ -29,6 +30,10 @@ public class UIVisibility : MonoBehaviour
             if (isStoreOpened)
             {
                 ToggleStoreVisibility();
+            }
+            if (!isInventoryOpened && !isStoreOpened)
+            {
+                PauseGameplay();
             }
         }
     }
@@ -85,6 +90,18 @@ public class UIVisibility : MonoBehaviour
     void ResumeGame()
     {
         Time.timeScale = 1f;
+    }
+
+    public void ResumeGameplay()
+    {
+        //Time.timeScale = 0f;
+        pauseCanvas.SetActive(false);
+    }
+
+    public void PauseGameplay()
+    {
+        //Time.timeScale = 1f;
+        pauseCanvas.SetActive(true);
     }
     
     void ToggleCursorVisibility()
