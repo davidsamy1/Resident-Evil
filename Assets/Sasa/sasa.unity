@@ -19433,9 +19433,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 128487136}
   maxTime: 1
-  maxDistance: 2
+  maxDistance: 1.2
   currentHealth: 5
-  attackRange: 0.5
+  attackRange: 1.2
 --- !u!195 &964209198
 NavMeshAgent:
   m_ObjectHideFlags: 0

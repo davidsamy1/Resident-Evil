@@ -51,9 +51,16 @@ public class enemyScript : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         // Check if the enemy is close to the player to initiate an attack
-        if (distanceToPlayer < attackRange && isAttack==false)
+        if (distanceToPlayer < attackRange)
         {
+           
             Attack();
+            
+        }
+        else
+        {
+            animator.SetBool("Attack", false);
+            ResumeWalking();
         }
 
         if (timer < 0.0f)
@@ -111,6 +118,7 @@ public class enemyScript : MonoBehaviour
             isHit = false;
             isKnockedDown = false;
             isAttack = false;
+            animator.SetBool("Grapple", false);
         }
     }
 
@@ -139,10 +147,23 @@ public class enemyScript : MonoBehaviour
     {
         if (!isDead)
         {
-            animator.SetTrigger("Attack");
+           
+            agent.isStopped = true;
+            animator.SetBool("Attack", true);
+            //agent.destination = player.position;
+            isAttack = true;
+            //Invoke("ResumeWalking", 1.5f); // Adjust the delay as needed
+        }
+    }
+
+    private void Grapple()
+    {
+        if (!isDead)
+        {
+            animator.SetBool("Grapple",true);
             agent.isStopped = true;
             isAttack = true;
-            Invoke("ResumeWalking", 1.5f); // Adjust the delay as needed
+            Invoke("ResumeWalking", 4.0f); // Adjust the delay as needed
         }
     }
 
