@@ -18,6 +18,10 @@ public class StoreInteractor : MonoBehaviour, Interactable
     {
         Debug.Log("Interacted with Store");
         uiVisibility.ToggleStoreVisibility();
+        if(uiVisibility.isInventoryOpened)
+        {
+            uiVisibility.ToggleInventoryVisibility();
+        }
     }
 
     public string GetInteractMessage()

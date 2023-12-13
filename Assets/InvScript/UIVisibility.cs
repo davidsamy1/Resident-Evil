@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using StarterAssets;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class UIVisibility : MonoBehaviour
 {
@@ -12,12 +14,23 @@ public class UIVisibility : MonoBehaviour
 
     public Boolean isInventoryOpened = false;
     public Boolean isStoreOpened = false;
+    public bool isPaused = false;
+    private StarterAssetsInputs starterAssetsInputs;
+    void Start()
+    {
+        starterAssetsInputs = GetComponent<StarterAssetsInputs>();
+    }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            ToggleInventoryVisibility();
+            if(!isPaused)
+                ToggleInventoryVisibility();
+            if(isStoreOpened)
+            {
+                ToggleStoreVisibility();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -33,16 +46,17 @@ public class UIVisibility : MonoBehaviour
             }
             if (!isInventoryOpened && !isStoreOpened)
             {
-                PauseGameplay();
+                TogglePauseVisibility();
             }
         }
     }
 
-    void ToggleInventoryVisibility()
+  public  void ToggleInventoryVisibility()
     {
         ToggleCursorVisibility(); // cursor is visibile when UI is on and off otherwise
+        starterAssetsInputs.cursorInputForLook = !starterAssetsInputs.cursorInputForLook;
         if (inventoryUICanvas != null)
-        {   
+        {
             if (inventoryUICanvas.activeInHierarchy)
             {
                 inventoryUICanvas.SetActive(false);
@@ -55,12 +69,13 @@ public class UIVisibility : MonoBehaviour
             }
         }
         isInventoryOpened = !isInventoryOpened;
-        
+
     }
 
     public void ToggleStoreVisibility()
     {
         ToggleCursorVisibility(); // cursor is visibile when UI is on and off otherwise
+        starterAssetsInputs.cursorInputForLook = !starterAssetsInputs.cursorInputForLook;
         Debug.Log(storeUICanvas);
         if (storeUICanvas != null)
         {
@@ -92,18 +107,31 @@ public class UIVisibility : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public void ResumeGameplay()
+  public void TogglePauseVisibility()
     {
-        //Time.timeScale = 0f;
-        pauseCanvas.SetActive(false);
+        ToggleCursorVisibility(); // cursor is visibile when UI is on and off otherwise
+        starterAssetsInputs.cursorInputForLook = !starterAssetsInputs.cursorInputForLook;
+        // if (pauseCanvas != null)
+        // {
+            if (isPaused)
+            {
+                InputSystem.EnableDevice(Keyboard.current);
+                pauseCanvas.SetActive(false);
+                ResumeGame();
+                isPaused = false;
+            }
+            else
+            {
+                InputSystem.DisableDevice(Keyboard.current);
+                pauseCanvas.SetActive(true);
+                PauseGame();
+                isPaused = true;
+            }
+            // isPaused = !isPaused;
+        // }
+      
     }
 
-    public void PauseGameplay()
-    {
-        //Time.timeScale = 1f;
-        pauseCanvas.SetActive(true);
-    }
-    
     void ToggleCursorVisibility()
     {
         Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;

@@ -15,7 +15,7 @@ public class InteractionUI : MonoBehaviour
     private void Update()
     {
 
-        if (UIVisibility.isStoreOpened || UIVisibility.isInventoryOpened) // Hide 'E' if inventory/store is opened
+        if (UIVisibility.isStoreOpened || UIVisibility.isInventoryOpened || UIVisibility.isPaused) // Hide 'E' if inventory/store is opened
         {
             Hide();
             return;

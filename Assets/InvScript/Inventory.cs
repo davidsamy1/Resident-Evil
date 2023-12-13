@@ -478,19 +478,19 @@ public void InvEquipToPlayer(Item item){
     int [] AllAmmoData=InvToPlayerAmmo();
     //Check the type of item of it is a pistol/revolver/AR/shotgun then set the weapon index accordingly
     if(item.itemType==Item.ItemType.pistol){
-        tpsController.WeaponIndex=1;
+        tpsController.SetWeaponIndex(1);
         tpsController.weaponsScriptableObjects[0].totalAmmoInInventory=AllAmmoData[0];
     }
     else if(item.itemType==Item.ItemType.revolver){
-        tpsController.WeaponIndex=2;
+        tpsController.SetWeaponIndex(2);
         tpsController.weaponsScriptableObjects[1].totalAmmoInInventory=AllAmmoData[1];
     }
     else if(item.itemType==Item.ItemType.assaultRifle){
-        tpsController.WeaponIndex=3;
+        tpsController.SetWeaponIndex(3);
         tpsController.weaponsScriptableObjects[2].totalAmmoInInventory=AllAmmoData[2];
     }
     else if(item.itemType==Item.ItemType.shotGun){
-        tpsController.WeaponIndex=4;
+        tpsController.SetWeaponIndex(4);
         tpsController.weaponsScriptableObjects[3].totalAmmoInInventory=AllAmmoData[3];
     }
     else{

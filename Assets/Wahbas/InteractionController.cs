@@ -15,10 +15,11 @@ public class InteractionController : MonoBehaviour
     public GameObject player;
     public Boolean isPlayerInGrapple = false; // link to enemy part
     public Boolean isKnockDown = false; // link after throwing grenade
+    public UIVisibility UIVisibility;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && !UIVisibility.isInventoryOpened && !UIVisibility.isPaused)
         { 
 
             if (isPlayerInGrapple)

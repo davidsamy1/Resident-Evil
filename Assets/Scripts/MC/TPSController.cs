@@ -40,6 +40,7 @@ public class TPSController : MonoBehaviour
     public List<GameObject> WeaponsHUD;
     private Coroutine reloadCoroutine=null;
 
+    public UIVisibility UIVisibility;
 
     // Start is called before the first frame update
     private void Awake()
@@ -56,6 +57,8 @@ public class TPSController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if(UIVisibility.isInventoryOpened || UIVisibility.isStoreOpened || UIVisibility.isPaused)
+            return;
         if (WeaponIndex != 0)
         {
             CurrentAmmo.text = weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip.ToString();
