@@ -9,6 +9,7 @@ TagManager:
   - image
   - Revolver
   - EquippedRevolver
+  - AI
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Water
   - UI
   - Camera
-  - 
+  - AI
   - 
   - 
   - 

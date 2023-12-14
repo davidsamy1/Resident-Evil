@@ -8,7 +8,7 @@ using UnityEngine.Rendering.HighDefinition;
 public class HealthBarController : MonoBehaviour
 {
 
-    private int PlayerHealth=8;
+    public int PlayerHealth=8;
     private HPLevel HpLevel;
     private bool PlayerDeath = false;
     public List<GameObject> HealthBarSegments;
@@ -64,8 +64,27 @@ public class HealthBarController : MonoBehaviour
         }
 
     }
-    void setWeight(){
+    public void setWeight(){
         PlayerAnimator.SetLayerWeight(6,0);
+    }
+
+    public void startHitAnimation()
+    {
+        //PlayerHealthSetter(PlayerHealthGetter() - 1);
+        PlayerAnimator.SetLayerWeight(6, 1);
+
+        if (PlayerHealthGetter() > 0)
+        {
+            PlayerAnimator.SetTrigger("hit");
+            Invoke("setWeight", 1.6f);
+        }
+        else
+        {
+            PlayerAnimator.SetTrigger("death");
+            PlayerDeath = true;
+            starterAssetsInputs.enabled = false;
+        }
+
     }
 
     void ToggleSegmentActivity(int SegmentIndex,bool active)
@@ -115,7 +134,7 @@ public class HealthBarController : MonoBehaviour
 
     }
 
-    void PlayerHealthSetter(int HP) {
+    public void PlayerHealthSetter(int HP) {
         if (HP >= 0)
         {
             PlayerHealth = HP;

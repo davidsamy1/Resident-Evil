@@ -41,6 +41,7 @@ public class TPSController : MonoBehaviour
     private Coroutine reloadCoroutine=null;
 
 
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -321,11 +322,29 @@ public class TPSController : MonoBehaviour
             //check if the ray hit within the fire range of the equiped gun
             if (BulletCollider.distance <= weaponsScriptableObjects[WeaponIndex - 1].range)
             {
-                GameObject bulletHole=Instantiate(BulletHole
-                    , BulletCollider.point + (BulletCollider.normal * 0.01f)
-                    , Quaternion.FromToRotation(Vector3.up, BulletCollider.normal)
-                    );
-                    Destroy(bulletHole, 7f);
+                if (BulletCollider.collider != null)
+
+                {
+                   enemyScript enemy =  BulletCollider.collider.gameObject.GetComponent<enemyScript>();
+                    if (enemy != null)
+                    {
+                        float damage = weaponsScriptableObjects[WeaponIndex - 1].damageAmount;
+
+                        // Apply damage to the enemy (you may replace this with your own damage logic)
+                        enemy.TakeDamage(damage);
+                    }
+                    else
+                    {
+                        GameObject bulletHole = Instantiate(BulletHole
+                            , BulletCollider.point + (BulletCollider.normal * 0.01f)
+                            , Quaternion.FromToRotation(Vector3.up, BulletCollider.normal)
+                            );
+                        Destroy(bulletHole, 7f);
+                    }
+
+                }
+
+
             }
         }
 
