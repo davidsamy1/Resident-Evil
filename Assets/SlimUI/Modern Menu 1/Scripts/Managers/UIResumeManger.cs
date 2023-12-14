@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using SlimUI.ModernMenu;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIResumeManger : MonoBehaviour
 {
@@ -62,12 +63,6 @@ public class UIResumeManger : MonoBehaviour
         }
     }
 
-    public void Resume()
-    {
-        //set time scale back to 1
-        //set the canvas active to false
-    }
-
     public void ReturnMenu()
     {
         restartMenu.SetActive(false);
@@ -89,12 +84,12 @@ public class UIResumeManger : MonoBehaviour
 
     public void Restart()
     {
-        //load the game scene again
+        SceneManager.LoadScene("Mina");
     }
 
     public void ReturnMainMenu()
     {
-        //load the main menu scene again
+        SceneManager.LoadScene("Main Menu");
     }
 
     public void PlayHover()

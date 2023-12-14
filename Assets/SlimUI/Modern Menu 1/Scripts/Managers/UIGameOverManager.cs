@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using SlimUI.ModernMenu;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIGameOverManager : MonoBehaviour
 {
@@ -58,12 +59,12 @@ public class UIGameOverManager : MonoBehaviour
 
     public void Restart()
     {
-        //load the game scene again
+        SceneManager.LoadScene("Mina");
     }
 
     public void MainMenu()
     {
-        //load the main menu scene again
+        SceneManager.LoadScene("Main Menu");
     }
 
     public void PlayHover()
