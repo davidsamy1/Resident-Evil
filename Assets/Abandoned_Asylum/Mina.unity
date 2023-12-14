@@ -17640,7 +17640,6 @@ MonoBehaviour:
   player: {fileID: 2056818572}
   isPlayerInGrapple: 0
   isKnockDown: 0
-  UIVisibility: {fileID: 2056818605}
 --- !u!4 &804650140 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4408780680536456163, guid: d57c133157fa8ed4e879cf4cbe38bdc0,
@@ -40485,7 +40484,6 @@ MonoBehaviour:
   - {fileID: 41405200}
   - {fileID: 2009900175}
   - {fileID: 733165968}
-  UIVisibility: {fileID: 2056818605}
 --- !u!114 &2056818592
 MonoBehaviour:
   m_ObjectHideFlags: 0
