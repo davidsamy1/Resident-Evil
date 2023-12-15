@@ -49,7 +49,7 @@ public class HealthBarController : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.KeypadMinus))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             PlayerHealthSetter(PlayerHealthGetter() - 1);
             PlayerAnimator.SetLayerWeight(6,1);
