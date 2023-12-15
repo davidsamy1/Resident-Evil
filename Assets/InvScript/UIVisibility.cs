@@ -18,6 +18,7 @@ public class UIVisibility : MonoBehaviour
     private StarterAssetsInputs starterAssetsInputs;
     void Start()
     {
+        //Cursor.lockState = CursorLockMode.Locked;
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
     }
 

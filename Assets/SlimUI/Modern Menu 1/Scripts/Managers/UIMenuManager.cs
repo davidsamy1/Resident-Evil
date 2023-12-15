@@ -80,8 +80,8 @@ namespace SlimUI.ModernMenu{
 		}
 
 		public void PlayCampaign(){
-            StartCoroutine(LoadAsynchronously("Mina"));
             exitMenu.SetActive(false);
+            StartCoroutine(LoadAsynchronously("Mina"));
         }
 
 		public void ReturnMenu(){

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
+using UnityEngine.SceneManagement;
 
 public class HealthBarController : MonoBehaviour
 {
@@ -61,6 +62,8 @@ public class HealthBarController : MonoBehaviour
                 PlayerAnimator.SetTrigger("death");
                 PlayerDeath = true;
                 starterAssetsInputs.enabled = false;
+                Cursor.lockState = CursorLockMode.None;
+                Invoke("LoadGameOverScene", 3f);
             }
 
         }
@@ -68,6 +71,11 @@ public class HealthBarController : MonoBehaviour
     }
     void setWeight(){
         PlayerAnimator.SetLayerWeight(6,0);
+    }
+
+    void LoadGameOverScene()
+    {
+        SceneManager.LoadScene("GameOverMenu");
     }
 
     void ToggleSegmentActivity(int SegmentIndex,bool active)
