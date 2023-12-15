@@ -15,6 +15,9 @@ public class enemyScript : MonoBehaviour
     public GameObject axeThrow;
 
 
+    public bool tryGrapple = false;
+
+
     public float maxTime = 0.0f;
     public float maxDistance = 1.0f;
     float timer = 0.0f;
@@ -66,6 +69,7 @@ public class enemyScript : MonoBehaviour
         if (distanceToPlayer < attackRange)
         {
             int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
+            randomValue = 1;
 
             if (isArmed)
             {
@@ -116,15 +120,19 @@ public class enemyScript : MonoBehaviour
         animator.SetFloat("Speed", agent.velocity.magnitude);
 
         if (Input.GetKeyDown(KeyCode.K))
-        { 
-
-            GameObject objectToThrow = Instantiate(axeThrow, new Vector3(transform.position.x, transform.position.y+1f, transform.position.z), Quaternion.identity);
-
-
-            axeThrow.SetActive(false);
+        {
+            if (isArmed)
+            {
+                GameObject objectToThrow = Instantiate(axeThrow, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
 
 
-            ThrowObject(objectToThrow, throwForce);
+                //axeThrow.SetActive(false);
+
+                Destroy(axeThrow);
+
+
+                ThrowObject(objectToThrow, throwForce);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.L))
@@ -172,6 +180,7 @@ public class enemyScript : MonoBehaviour
             isKnockedDown = false;
             animator.SetBool("Grapple", false);
             animator.SetBool("Attack", false);
+            tryGrapple = false;
         }
     }
 
@@ -206,6 +215,7 @@ public class enemyScript : MonoBehaviour
             agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
             agent.isStopped = true;
             animator.SetBool("Attack", true);
+
             Invoke("ResumeWalking", 2.0f); // Adjust the delay as needed
 
         }
@@ -215,12 +225,21 @@ public class enemyScript : MonoBehaviour
 
     private void Grapple()
     {
-        if (!isDead)
-        {
-            animator.SetBool("Grapple", true);
-            agent.isStopped = true;
 
-            Invoke("ResumeWalking", 4.0f); // Adjust the delay as needed
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        if (!isDead && distanceToPlayer < attackRange)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(player.position - agent.transform.position);
+            agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            agent.isStopped = true;
+            animator.SetBool("Grapple", true);
+            Invoke("ResumeWalking", 6.0f); // Adjust the delay as needed
+            //Invoke("GetComponentInChildren<EnemyDamageDealer>().EndDealDamage()", 4.0f)
+            tryGrapple= true;
+
+
+
+
         }
     }
 
@@ -278,11 +297,49 @@ public class enemyScript : MonoBehaviour
 
     public void StartDealDamage()
     {
-        GetComponentInChildren<EnemyDamageDealer>().StartDealDamage();
+        if (isArmed)
+        {
+            EnemyDamageDealer[] damageDealers = GetComponentsInChildren<EnemyDamageDealer>();
+
+           
+
+            foreach (EnemyDamageDealer dealer in damageDealers)
+            {
+                Debug.Log("GameObject Name: " + dealer.gameObject.name);
+                if (dealer.gameObject.name == "axe")
+                {
+                    dealer.StartDealDamage();
+                   
+                }
+                
+            }
+        }
+        else
+        {
+            Debug.Log("Not Armed");
+            GetComponentInChildren<EnemyDamageDealer>().StartDealDamage();
+        }
     }
     public void EndDealDamage()
     {
-        GetComponentInChildren<EnemyDamageDealer>().EndDealDamage();
+        if (isArmed)
+        {
+            EnemyDamageDealer[] damageDealers = GetComponentsInChildren<EnemyDamageDealer>();
+
+            foreach (EnemyDamageDealer dealer in damageDealers)
+            {
+                if (dealer.gameObject.name == "axe")
+                {
+                    dealer.EndDealDamage();
+
+                }
+                return;
+            }
+        }
+        else
+        {
+            GetComponentInChildren<EnemyDamageDealer>().EndDealDamage();
+        }
     }
 
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,11 +9,16 @@ public class EnemyDamageDealer : MonoBehaviour
     bool hasDealtDamage;
 
     public float weaponLength = 0.8f;
-    public float weaponDamage = 2;
+    public float weaponDamage;
 
+    public static bool inGrapple = false;
+
+    public enemyScript enemy;
     public bool throw1 = false;
 
     public HealthBarController HealthBarController;
+
+    public HealthBarController HealthBarPlayer;
     void Start()
     {
         canDealDamage = false;
@@ -26,21 +32,30 @@ public class EnemyDamageDealer : MonoBehaviour
         {
             
             RaycastHit hit;
-
-            Debug.Log("first");
-            //int layerMask = 1 << 8;
-            //if(hit.distance > weaponLength) { }
-            if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength))
+            if (!inGrapple)
             {
-                Debug.Log("enter first loop");
-
-                if (hit.transform.TryGetComponent(out HealthBarController HealthBarController))
+                if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength))
                 {
-                    Debug.Log("enter second loop");
-                    HealthBarController.PlayerHealthSetter((HealthBarController.PlayerHealth)-2);
-                    hasDealtDamage = true;
-                    Debug.Log("enemy hit player");
-                    HealthBarController.startHitAnimation();
+
+                    if (hit.transform.TryGetComponent(out HealthBarController HealthBarController))
+                    {
+                        if (enemy.tryGrapple)
+                        {
+                            inGrapple = true;
+                            Debug.Log("pllayer in grapple");
+                            hasDealtDamage = true;
+                            Invoke("StartHitAnimationDelayed", 6.0f);
+
+                        }
+                        else
+                        {
+                            HealthBarController.PlayerHealthSetter((HealthBarController.PlayerHealth) - (int)weaponDamage);
+                            hasDealtDamage = true;
+
+                            HealthBarController.startHitAnimation();
+                        }
+
+                    }
                 }
             }
         }
@@ -52,14 +67,15 @@ public class EnemyDamageDealer : MonoBehaviour
             Debug.Log("first");
             //int layerMask = 1 << 8;
             //if(hit.distance > weaponLength) { }
-            if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength))
+            int ThrowLength = 15;
+            if (Physics.Raycast(transform.position, -transform.up, out hit, ThrowLength))
             {
                 Debug.Log("enter first loop");
 
                 if (hit.transform.TryGetComponent(out HealthBarController HealthBarController))
                 {
                     Debug.Log("enter second loop");
-                    HealthBarController.PlayerHealthSetter((HealthBarController.PlayerHealth) - 2);
+                    HealthBarController.PlayerHealthSetter((HealthBarController.PlayerHealth) - 3);
                     //hasDealtDamage = true;
                     throw1 = false;
                     Debug.Log("enemy hit player");
@@ -79,5 +95,12 @@ public class EnemyDamageDealer : MonoBehaviour
         canDealDamage = false;
     }
 
+
+    private void StartHitAnimationDelayed()
+    {
+        HealthBarPlayer.PlayerHealthSetter((HealthBarPlayer.PlayerHealth) - 5);
+        HealthBarPlayer.startHitAnimation();
+        inGrapple = false;
+    }
 
 }
