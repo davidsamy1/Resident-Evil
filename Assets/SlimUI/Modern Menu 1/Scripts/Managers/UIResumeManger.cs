@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using SlimUI.ModernMenu;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class UIResumeManger : MonoBehaviour
@@ -22,6 +24,13 @@ public class UIResumeManger : MonoBehaviour
 
     [Header("PANELS")]
     public GameObject resumeCanvas;
+
+    [Header("LOADING SCREEN")]
+    public bool waitForInput = true;
+    public GameObject loadingMenu;
+    public Slider loadingBar;
+    public TMP_Text loadPromptText;
+    public KeyCode userPromptKey;
 
     [Header("SFX")]
     public AudioSource hoverSound;
@@ -84,7 +93,7 @@ public class UIResumeManger : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene("Mina");
+        StartCoroutine(LoadAsynchronously("Mina"));
     }
 
     public void ReturnMainMenu()
@@ -105,5 +114,36 @@ public class UIResumeManger : MonoBehaviour
     public void PlaySwoosh()
     {
         swooshSound.Play();
+    }
+
+    IEnumerator LoadAsynchronously(string sceneName)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+        operation.allowSceneActivation = false;
+        resumeCanvas.SetActive(false);
+        loadingMenu.SetActive(true);
+
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / .9f);
+            loadingBar.value = progress;
+
+            if (operation.progress >= 0.9f && waitForInput)
+            {
+                loadPromptText.text = "Press " + userPromptKey.ToString().ToUpper() + " to continue";
+                loadingBar.value = 1;
+
+                if (Input.GetKeyDown(userPromptKey))
+                {
+                    operation.allowSceneActivation = true;
+                }
+            }
+            else if (operation.progress >= 0.9f && !waitForInput)
+            {
+                operation.allowSceneActivation = true;
+            }
+
+            yield return null;
+        }
     }
 }

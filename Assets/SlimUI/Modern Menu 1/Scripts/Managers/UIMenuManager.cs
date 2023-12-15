@@ -14,7 +14,6 @@ namespace SlimUI.ModernMenu{
         public GameObject firstMenu;
         public GameObject exitMenu;
 
-
         public enum Theme {custom1, custom2, custom3};
         [Header("THEME SETTINGS")]
         public Theme theme;
