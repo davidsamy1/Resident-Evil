@@ -3,12 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using StarterAssets;
 using Cinemachine;
-using UnityEditor.ShaderGraph;
-using UnityEngine.UI;
-using System.Drawing;
-using UnityEngine.UIElements;
-using UnityEngine.Animations.Rigging;
-using System;
 using TMPro;
 
 public class TPSController : MonoBehaviour
