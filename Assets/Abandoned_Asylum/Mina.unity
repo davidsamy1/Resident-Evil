@@ -17640,6 +17640,7 @@ MonoBehaviour:
   player: {fileID: 2056818572}
   isPlayerInGrapple: 0
   isKnockDown: 0
+  UIVisibility: {fileID: 2056818605}
 --- !u!4 &804650140 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4408780680536456163, guid: d57c133157fa8ed4e879cf4cbe38bdc0,
@@ -24250,6 +24251,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 135756642000475821, guid: 64dce48905ffd9b4293e595fa6941544,
+        type: 3}
+      propertyPath: cursorLocked
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544,
         type: 3}
       propertyPath: m_RootOrder
@@ -40484,6 +40490,7 @@ MonoBehaviour:
   - {fileID: 41405200}
   - {fileID: 2009900175}
   - {fileID: 733165968}
+  UIVisibility: {fileID: 2056818605}
 --- !u!114 &2056818592
 MonoBehaviour:
   m_ObjectHideFlags: 0
