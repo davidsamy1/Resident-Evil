@@ -651,6 +651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 128487136}
   axeThrow: {fileID: 1188489074}
+  tryGrapple: 0
   maxTime: 1
   maxDistance: 0.8
   rotationSpeed: 5
@@ -29875,6 +29876,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4763008216267008161, guid: b92e432993e63b740a483cc7a150f000,
         type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1731143861}
+    - target: {fileID: 4763008216267008161, guid: b92e432993e63b740a483cc7a150f000,
+        type: 3}
       propertyPath: throw1
       value: 0
       objectReference: {fileID: 0}
@@ -29883,6 +29889,11 @@ PrefabInstance:
       propertyPath: weaponLength
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4763008216267008161, guid: b92e432993e63b740a483cc7a150f000,
+        type: 3}
+      propertyPath: HealthBarPlayer
+      value: 
+      objectReference: {fileID: 2056818599}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31353,8 +31364,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponLength: 8
   weaponDamage: 1
+  enemy: {fileID: 21953643}
   throw1: 0
   HealthBarController: {fileID: 0}
+  HealthBarPlayer: {fileID: 2056818599}
 --- !u!1 &1629595178
 GameObject:
   m_ObjectHideFlags: 0
@@ -32443,6 +32456,18 @@ MonoBehaviour:
   RevolverAmmoSprite: {fileID: 21300000, guid: c9e121cf6d20c8349a4f7e78659999cd, type: 3}
   EmptySprite: {fileID: 21300000, guid: 02252132feb65fd4aa62cbf1f8cd9ce4, type: 3}
   KnifeSprite: {fileID: 21300000, guid: 8c9069ae3698a2342bbea00d13e7085c, type: 3}
+--- !u!114 &1731143861 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5770319135076487797, guid: 8378c222b0908374b9ef63ce81c8bfbd,
+    type: 3}
+  m_PrefabInstance: {fileID: 6470403045932811788}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee0f240394db9b4880d00799ba79eaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1731672817
 GameObject:
   m_ObjectHideFlags: 0
@@ -38266,8 +38291,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponLength: 8
   weaponDamage: 1
+  enemy: {fileID: 1731143861}
   throw1: 0
   HealthBarController: {fileID: 0}
+  HealthBarPlayer: {fileID: 2056818599}
 --- !u!1 &2138257572
 GameObject:
   m_ObjectHideFlags: 0
