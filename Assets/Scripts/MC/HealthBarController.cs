@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using StarterAssets;
 using System;
 using System.Collections;
@@ -5,11 +6,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class HealthBarController : MonoBehaviour
 {
 
-    private int PlayerHealth=2;
+    private int PlayerHealth=8;
     private HPLevel HpLevel;
     private bool PlayerDeath = false;
     public List<GameObject> HealthBarSegments;
@@ -18,6 +20,7 @@ public class HealthBarController : MonoBehaviour
     private StarterAssetsInputs starterAssetsInputs;
 
     public Animator PlayerAnimator;
+    [SerializeField] private UnityEngine.UI.Image blood;
 
     public enum HPLevel
     {
@@ -129,7 +132,29 @@ public class HealthBarController : MonoBehaviour
         PlayerHealthSetter(PlayerHealthGetter() + HP);
     }
 
+
+    private IEnumerator FadeOutRedScreen()
+    {
+         // Get the current color of the image
+        Color currentColor = blood.color;
+        currentColor.a = 0.5f;
+        blood.color = currentColor;
+        float elapsedTime = 0;
+
+        while (elapsedTime < 1)
+        {
+            currentColor.a = 0.5f - (elapsedTime / 1);
+            blood.color = currentColor;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        currentColor.a = 0;
+        blood.color = currentColor;
+    }
     void PlayerHealthSetter(int HP) {
+        if(HP<PlayerHealth){
+            StartCoroutine(FadeOutRedScreen());
+        }
         if (HP >= 0)
         {
             PlayerHealth = HP;
@@ -138,7 +163,7 @@ public class HealthBarController : MonoBehaviour
             AdabtHPLevel();
            
         }
-        PlayerDeath=PlayerHealth==0 ? true : false;
+        PlayerDeath=PlayerHealth<=0 ? true : false;
     }
 
     public int PlayerHealthGetter()

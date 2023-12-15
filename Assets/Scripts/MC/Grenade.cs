@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using StarterAssets;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.TextCore;
 public class Grenade : MonoBehaviour
 {
@@ -40,10 +41,29 @@ public class Grenade : MonoBehaviour
     private float chargeTime = 0f;
     [Header("Trajectory Settings")]
     [SerializeField] private LineRenderer trajectoryLine; // reference to the LineRenderer component
+
+    [SerializeField]
     private bool isFlash = false;
+
+  [SerializeField]
+    private bool isExplodingGrenade = false;
     private StarterAssetsInputs starterAssetsInputs;
     public Animator PlayerAnimator;
     private float animcountdown = 1f;
+
+    public void isFlashSetter()
+    {
+        this.isFlash = true;
+        this.isExplodingGrenade = false;
+    }
+    public void isExplodingGrenadeSetter()
+    {
+        this.isExplodingGrenade = true;
+        this.isFlash = false;
+    }
+    public bool isFlashGetter(){
+        return this.isFlash;
+    }
     private void Start()
     {
         starterAssetsInputs=GetComponent<StarterAssetsInputs>();
@@ -52,31 +72,45 @@ public class Grenade : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        // if (Input.GetKeyDown(KeyCode.F))
+        // {
+        //     if(createdGrenade != null)
+        //         Destroy(createdGrenade);
+        //     createdGrenade = Instantiate(flashGrenadePrefab, grenadeSpawnPoint.position, grenadePrefab.transform.rotation);
+        //     createdGrenade.transform.parent = grenadeSpawnPoint.transform;
+        //     isFlash = true;
+        // }
+        // if (Input.GetKeyDown(KeyCode.G))
+        // {
+        //     if (createdGrenade != null)
+        //         Destroy(createdGrenade);
+        //     createdGrenade = Instantiate(grenadePrefab, grenadeSpawnPoint.position, grenadePrefab.transform.rotation);
+        //     createdGrenade.transform.parent = grenadeSpawnPoint.transform;
+        //     isFlash = false;
+        // }
+        if (Input.GetKeyDown(KeyCode.G) && (isExplodingGrenade || isFlash))
         {
-            if(createdGrenade != null)
-                Destroy(createdGrenade);
-            createdGrenade = Instantiate(flashGrenadePrefab, grenadeSpawnPoint.position, grenadePrefab.transform.rotation);
+            if (isFlash)
+            {
+                // if (createdGrenade != null)
+                //     Destroy(createdGrenade);
+                createdGrenade = Instantiate(flashGrenadePrefab, grenadeSpawnPoint.position, grenadePrefab.transform.rotation);
+            }
+            else if (isExplodingGrenade)
+            {
+                // if (createdGrenade != null)
+                // Destroy(createdGrenade);
+                createdGrenade = Instantiate(grenadePrefab, grenadeSpawnPoint.position, grenadePrefab.transform.rotation);
+            }
             createdGrenade.transform.parent = grenadeSpawnPoint.transform;
-            isFlash = true;
-        }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            if (createdGrenade != null)
-                Destroy(createdGrenade);
-            createdGrenade = Instantiate(grenadePrefab, grenadeSpawnPoint.position, grenadePrefab.transform.rotation);
-            createdGrenade.transform.parent = grenadeSpawnPoint.transform;
+
             isFlash = false;
-        }
-        if (Input.GetKeyDown(throwKey))
-        {
             hasExploded = false;
             hasThrown = false;
             isCharging = true;
             chargeTime = 0f;
             countdown = explosionDelay;
             StartThrowing();
-
             PlayerAnimator.SetLayerWeight(2, 0);
             PlayerAnimator.SetLayerWeight(1, 0);
             PlayerAnimator.SetLayerWeight(3, 1);
@@ -87,7 +121,7 @@ public class Grenade : MonoBehaviour
         {
             ChargeThrow();
         }
-        if (Input.GetKeyUp(throwKey))
+        if (Input.GetKeyUp(KeyCode.G) && (isFlash || isExplodingGrenade))
         {
             ReleaseThrow(createdGrenade);
             hasThrown = true;
@@ -123,16 +157,19 @@ public class Grenade : MonoBehaviour
         {
             GameObject flashEffect = Instantiate(flashEffectPrefab, gr.transform.position, Quaternion.identity);
             Destroy(flashEffect, 1f);
+            isFlash = false;
         }
         else
         {
             GameObject explosionEffect = Instantiate(explosionEffectPrefab, gr.transform.position, Quaternion.identity);
             Destroy(explosionEffect, 1f);
+            isExplodingGrenade = false;
         }
         //Play Sound Effect
         //Affect Other Physics Objects
         // NearbyForceApply();
         Destroy(gr);
+
     }
 
     void NearbyForceApply()

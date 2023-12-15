@@ -10,6 +10,7 @@ using UnityEngine.UIElements;
 using UnityEngine.Animations.Rigging;
 using System;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class TPSController : MonoBehaviour
 {
@@ -42,6 +43,15 @@ public class TPSController : MonoBehaviour
 
     public UIVisibility UIVisibility;
 
+    private int knifeDurability=10;
+
+    private bool isInvincible = false;
+    private bool isSlowMotion = false;
+    public bool isInvincibleGetter(){
+        return isInvincible;
+    }
+
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -59,6 +69,16 @@ public class TPSController : MonoBehaviour
     {
         if(UIVisibility.isInventoryOpened || UIVisibility.isStoreOpened || UIVisibility.isPaused)
             return;
+        if(Input.GetKeyDown(KeyCode.I)){
+            isInvincible = !isInvincible;
+        }
+        if(Input.GetKeyDown(KeyCode.O)){
+            isSlowMotion = !isSlowMotion;
+            if(isSlowMotion)
+                Time.timeScale = 0.5f;
+            else
+                Time.timeScale = 1f;
+        }
         if (WeaponIndex != 0)
         {
             CurrentAmmo.text = weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip.ToString();
@@ -199,6 +219,7 @@ public class TPSController : MonoBehaviour
         }else{
             if (Input.GetKeyDown(KeyCode.E))
             {
+                InputSystem.DisableDevice(Keyboard.current,false);
                 PlayerAnimator.SetLayerWeight(5, 1);
                 PlayerAnimator.SetBool("Stab",true);
                 StartCoroutine(Stab());
@@ -297,8 +318,19 @@ public class TPSController : MonoBehaviour
     {
 
         yield return new WaitForSeconds(1.85f);
+        InputSystem.EnableDevice(Keyboard.current);
+        knifeDurabilitySetter(knifeDurability-1);
         PlayerAnimator.SetBool("Stab",false);
         PlayerAnimator.SetLayerWeight(5, 0);
+    }
+    public void knifeDurabilitySetter(int value){
+        if(value < 0)
+            print("knife needs repair");
+        else
+            knifeDurability=value;
+    }
+    public int knifeDurabilityGetter(){
+        return knifeDurability;
     }
     IEnumerator FireCooldown()
     {

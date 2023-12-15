@@ -123,7 +123,7 @@ public class UIVisibility : MonoBehaviour
             }
             else
             {
-                InputSystem.DisableDevice(Keyboard.current);
+                // InputSystem.DisableDevice(Keyboard.current,false);
                 pauseCanvas.SetActive(true);
                 PauseGame();
                 isPaused = true;
