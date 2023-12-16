@@ -30,10 +30,6 @@ public class EnemyDamageDealer : MonoBehaviour
     {
         if (canDealDamage && !hasDealtDamage)
         {
-            if(!enemy.tryGrapple&& !enemy.isArmed)
-            {
-                weaponLength = weaponLength + 20;
-            }
             RaycastHit hit;
             if (!inGrapple)
             {   
@@ -63,7 +59,6 @@ public class EnemyDamageDealer : MonoBehaviour
                     }
                 }
             }
-            weaponLength = weaponLength - 20;
         }
 
         if (throw1)

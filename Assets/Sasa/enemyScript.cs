@@ -81,6 +81,8 @@ public class enemyScript : MonoBehaviour
         {
             int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
 
+            randomValue = 0;
+
 
             if (isArmed)
             {
@@ -250,7 +252,7 @@ public class enemyScript : MonoBehaviour
             agent.isStopped = true;
             animator.SetBool("Attack", true);
 
-            Invoke("ResumeWalking", 2.0f); // Adjust the delay as needed
+            Invoke("ResumeWalking", 1.0f); // Adjust the delay as needed
 
         }
     }
