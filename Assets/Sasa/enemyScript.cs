@@ -5,6 +5,7 @@ using UnityEditor.AI;
 using UnityEngine.AI;
 using StarterAssets;
 using System;
+using UnityEngine.Rendering;
 
 public class enemyScript : MonoBehaviour
 {
@@ -15,15 +16,18 @@ public class enemyScript : MonoBehaviour
     public GameObject axeThrow;
 
 
+
     public bool tryGrapple = false;
 
 
     public float maxTime = 0.0f;
     public float maxDistance = 1.0f;
     float timer = 0.0f;
+    float throwDistance;
     float attackTimer = 0.0f;
-    float attackOrgrappleCoolDown = 4.0f;
+    float attackOrgrappleCoolDown = 2.0f;
     public float rotationSpeed = 5.0f;
+    public float agentRange = 5.0f;
     // Start is called before the first frame update
 
     public float throwForce = 6f;
@@ -49,6 +53,8 @@ public class enemyScript : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         dealer = GetComponent<EnemyDamageDealer>();
+        agent.isStopped = true;
+        throwDistance = 5.0f;
     }
 
     // Update is called once per frame
@@ -65,11 +71,16 @@ public class enemyScript : MonoBehaviour
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
+   
+        if( distanceToPlayer < agentRange)
+        {
+            agent.isStopped = false;
+        }
         // Check if the enemy is close to the player to initiate an attack
         if (distanceToPlayer < attackRange)
         {
             int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
-            randomValue = 1;
+
 
             if (isArmed)
             {
@@ -97,6 +108,29 @@ public class enemyScript : MonoBehaviour
                         attackTimer = 0;
                     }
 
+                }
+            }
+
+        }
+        else if (distanceToPlayer < throwDistance && attackTimer > attackOrgrappleCoolDown)
+        {
+            int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
+            attackTimer = 0;
+            if (randomValue == 1)
+            {   
+                if (isArmed )
+                {
+                    GameObject objectToThrow = Instantiate(axeThrow, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
+
+
+                    //axeThrow.SetActive(false);
+
+                    Destroy(axeThrow);
+
+
+                    ThrowObject(objectToThrow, throwForce);
+
+                    attackTimer = 0;
                 }
             }
 
@@ -233,7 +267,7 @@ public class enemyScript : MonoBehaviour
             agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
             agent.isStopped = true;
             animator.SetBool("Grapple", true);
-            Invoke("ResumeWalking", 6.0f); // Adjust the delay as needed
+            Invoke("ResumeWalking", 10.0f); // Adjust the delay as needed
             //Invoke("GetComponentInChildren<EnemyDamageDealer>().EndDealDamage()", 4.0f)
             tryGrapple= true;
 

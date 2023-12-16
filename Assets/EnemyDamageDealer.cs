@@ -30,12 +30,16 @@ public class EnemyDamageDealer : MonoBehaviour
     {
         if (canDealDamage && !hasDealtDamage)
         {
-            
+            if(!enemy.tryGrapple&& !enemy.isArmed)
+            {
+                weaponLength = weaponLength + 20;
+            }
             RaycastHit hit;
             if (!inGrapple)
-            {
+            {   
                 if (Physics.Raycast(transform.position, -transform.up, out hit, weaponLength))
                 {
+
 
                     if (hit.transform.TryGetComponent(out HealthBarController HealthBarController))
                     {
@@ -44,11 +48,12 @@ public class EnemyDamageDealer : MonoBehaviour
                             inGrapple = true;
                             Debug.Log("pllayer in grapple");
                             hasDealtDamage = true;
-                            Invoke("StartHitAnimationDelayed", 6.0f);
+                            Invoke("StartHitAnimationDelayed", 5.0f);
 
                         }
                         else
                         {
+
                             HealthBarController.PlayerHealthSetter((HealthBarController.PlayerHealth) - (int)weaponDamage);
                             hasDealtDamage = true;
 
@@ -58,6 +63,7 @@ public class EnemyDamageDealer : MonoBehaviour
                     }
                 }
             }
+            weaponLength = weaponLength - 20;
         }
 
         if (throw1)
@@ -98,7 +104,15 @@ public class EnemyDamageDealer : MonoBehaviour
 
     private void StartHitAnimationDelayed()
     {
-        HealthBarPlayer.PlayerHealthSetter((HealthBarPlayer.PlayerHealth) - 5);
+        if((HealthBarPlayer.PlayerHealth) -5 < 0){
+            HealthBarPlayer.PlayerHealthSetter(0);
+        }
+
+        else
+        {
+            HealthBarPlayer.PlayerHealthSetter((HealthBarPlayer.PlayerHealth) - 5);
+
+        }
         HealthBarPlayer.startHitAnimation();
         inGrapple = false;
     }
