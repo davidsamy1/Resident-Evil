@@ -337,7 +337,7 @@ MonoBehaviour:
           m_CallState: 2
         - m_Target: {fileID: 1167893629}
           m_TargetAssemblyTypeName: CheckEffectsVolume, Assembly-CSharp
-          m_MethodName: updateEffects
+          m_MethodName: UpdateEffects
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -412,7 +412,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1167893629}
         m_TargetAssemblyTypeName: CheckEffectsVolume, Assembly-CSharp
-        m_MethodName: updateEffects
+        m_MethodName: UpdateEffects
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2833,7 +2833,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 204ae77320b536d459d12c2126255a73, type: 2}
-  exposedParameter: SFX
 --- !u!1 &1297078984 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 352470063020359896, guid: 0a68be1bd13d8694e8d8fe85574ac075,
