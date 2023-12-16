@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using StarterAssets;
 using System;
 using UnityEngine.Rendering;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class enemyScript : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class enemyScript : MonoBehaviour
 
 
     public bool tryGrapple = false;
+
+    bool inGrapple=false;
 
 
     public float maxTime = 0.0f;
@@ -45,7 +48,10 @@ public class enemyScript : MonoBehaviour
 
     public EnemyDamageDealer dealer;
 
- 
+    public bool isPlayerInRange;
+
+    public RoomTrigger associatedRoom;
+
     void Start()
     {
         TPSController = GetComponent<TPSController>();
@@ -55,6 +61,17 @@ public class enemyScript : MonoBehaviour
         dealer = GetComponent<EnemyDamageDealer>();
         agent.isStopped = true;
         throwDistance = 5.0f;
+
+        // Register this enemy with the room
+        if (associatedRoom != null)
+        {
+            associatedRoom.RegisterEnemy(this);
+        }
+        else
+        {
+            Debug.LogWarning("No RoomTrigger found in the scene.");
+        }
+        SetAnimatorLayer();
     }
 
     // Update is called once per frame
@@ -71,22 +88,37 @@ public class enemyScript : MonoBehaviour
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-   
-        if( distanceToPlayer < agentRange)
+
+        if (isPlayerInRange )
         {
-            agent.isStopped = false;
+            if (tryGrapple)
+            {
+                agent.isStopped = true;
+            }
+            else
+            {
+                agent.isStopped = false;
+            }
         }
+        else
+        {
+            agent.isStopped = true;
+        }
+
+
         // Check if the enemy is close to the player to initiate an attack
         if (distanceToPlayer < attackRange)
         {
             int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
-
+            randomValue = 0;
             if (isArmed)
             {
                 if (attackTimer > attackOrgrappleCoolDown)
                 {
                     Attack();
                     attackTimer = 0;
+                    attackOrgrappleCoolDown = 2.0f;
+                    inGrapple = false;
                 }
             }
             else
@@ -97,6 +129,8 @@ public class enemyScript : MonoBehaviour
                     {
                         Attack();
                         attackTimer = 0;
+                        attackOrgrappleCoolDown = 2.0f;
+                        inGrapple = false;
                     }
                 }
                 else
@@ -105,6 +139,8 @@ public class enemyScript : MonoBehaviour
                     {
                         Grapple();
                         attackTimer = 0;
+                        attackOrgrappleCoolDown = 8.0f;
+                        inGrapple = true;
                     }
 
                 }
@@ -114,7 +150,7 @@ public class enemyScript : MonoBehaviour
         else if (distanceToPlayer < throwDistance && attackTimer > attackOrgrappleCoolDown)
         {
             int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
-            attackTimer = 0;
+            attackTimer = 1;
             if (randomValue == 1)
             {   
                 if (isArmed )
@@ -140,17 +176,13 @@ public class enemyScript : MonoBehaviour
 
         if (timer < 0.0f)
         {
-            //float distance = (player.transform.position - agent.destination).sqrMagnitude;
-            //if (distance > maxDistance * maxDistance)
-            //{
-                agent.destination = player.position;
-                Quaternion lookRotation = Quaternion.LookRotation(player.position - agent.transform.position);
-                agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-
-            //}
-            timer = maxTime;
+             agent.destination = player.position;
+             Quaternion lookRotation = Quaternion.LookRotation(player.position - agent.transform.position);
+             agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+             timer = maxTime;
         }
         animator.SetFloat("Speed", agent.velocity.magnitude);
+
 
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -173,24 +205,28 @@ public class enemyScript : MonoBehaviour
             KnockdeDown();
         }
 
-        SetAnimatorLayer();
+        
 
 
     }
 
     public void TakeDamage(float damage)
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
+        if (currentHealth <= 0) { }
         else
         {
-            animator.SetTrigger("TakeDamage");
-            isHit = true;
-            agent.isStopped = true;
-            Invoke("ResumeWalking", 1.5f); // Adjust the delay as needed
+            currentHealth -= damage;
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+            else
+            {
+                animator.SetTrigger("TakeDamage");
+                isHit = true;
+                agent.isStopped = true;
+                Invoke("ResumeWalking", 1.5f); // Adjust the delay as needed
+            }
         }
 
 
@@ -201,6 +237,10 @@ public class enemyScript : MonoBehaviour
     {
         animator.SetTrigger("Die");
         isDead = true;
+        Destroy(gameObject, 5f);
+
+
+
     }
 
     private void ResumeWalking()
@@ -214,6 +254,7 @@ public class enemyScript : MonoBehaviour
             animator.SetBool("Grapple", false);
             animator.SetBool("Attack", false);
             tryGrapple = false;
+            Debug.Log("Try grapple is false");
         }
     }
 
@@ -269,6 +310,7 @@ public class enemyScript : MonoBehaviour
             Invoke("ResumeWalking", 10.0f); // Adjust the delay as needed
             //Invoke("GetComponentInChildren<EnemyDamageDealer>().EndDealDamage()", 4.0f)
             tryGrapple= true;
+            Debug.Log("Try grapple is true");
 
 
 
@@ -316,6 +358,8 @@ public class enemyScript : MonoBehaviour
                 objectToThrow.GetComponent<EnemyDamageDealer>().throw1 = true;
 
                 isArmed = false;
+
+                SetAnimatorLayer();
             }
             else
             {
@@ -330,9 +374,10 @@ public class enemyScript : MonoBehaviour
 
     public void StartDealDamage()
     {
+        EnemyDamageDealer[] damageDealers = GetComponentsInChildren<EnemyDamageDealer>();
         if (isArmed)
         {
-            EnemyDamageDealer[] damageDealers = GetComponentsInChildren<EnemyDamageDealer>();
+            
 
            
 
@@ -349,15 +394,40 @@ public class enemyScript : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not Armed");
-            GetComponentInChildren<EnemyDamageDealer>().StartDealDamage();
+            if(inGrapple)
+            {
+                foreach (EnemyDamageDealer dealer in damageDealers)
+                {
+                   
+                    if (dealer.gameObject.name == "mixamorig5:RightHand")
+                    {
+                        dealer.StartDealDamage();
+                        Debug.Log("Grapple " + dealer.gameObject.name);
+                    }
+
+                }
+            }
+            else
+            {
+                foreach (EnemyDamageDealer dealer in damageDealers)
+                {
+                    
+                    if (dealer.gameObject.name == "EnemyDamageDealer")
+                    {
+                        dealer.StartDealDamage();
+                        Debug.Log("Punch " + dealer.gameObject.name);
+
+                    }
+
+                }
+            }
         }
     }
     public void EndDealDamage()
     {
+        EnemyDamageDealer[] damageDealers = GetComponentsInChildren<EnemyDamageDealer>();
         if (isArmed)
         {
-            EnemyDamageDealer[] damageDealers = GetComponentsInChildren<EnemyDamageDealer>();
 
             foreach (EnemyDamageDealer dealer in damageDealers)
             {
@@ -371,7 +441,32 @@ public class enemyScript : MonoBehaviour
         }
         else
         {
-            GetComponentInChildren<EnemyDamageDealer>().EndDealDamage();
+            if (inGrapple)
+            {
+                foreach (EnemyDamageDealer dealer in damageDealers)
+                {
+                   
+                    if (dealer.gameObject.name == "mixamorig5:RightHand")
+                    {
+                        dealer.EndDealDamage();
+                        
+                    }
+
+                }
+            }
+            else
+            {
+                foreach (EnemyDamageDealer dealer in damageDealers)
+                {
+                   
+                    if (dealer.gameObject.name == "EnemyDamageDealer")
+                    {
+                        dealer.EndDealDamage();
+
+                    }
+
+                }
+            }
         }
     }
 
