@@ -69,11 +69,13 @@ public class UIGameOverManager : MonoBehaviour
     public void Restart()
     {
         StartCoroutine(LoadAsynchronously("Mina"));
+        Time.timeScale = 1.0f;
     }
 
     public void MainMenu()
     {
         SceneManager.LoadScene("Main Menu");
+        Time.timeScale = 1.0f;
     }
 
     public void PlayHover()

@@ -94,11 +94,13 @@ public class UIResumeManger : MonoBehaviour
     public void Restart()
     {
         StartCoroutine(LoadAsynchronously("Mina"));
+        Time.timeScale = 1.0f;
     }
 
     public void ReturnMainMenu()
     {
         SceneManager.LoadScene("Main Menu");
+        Time.timeScale = 1.0f;
     }
 
     public void PlayHover()
