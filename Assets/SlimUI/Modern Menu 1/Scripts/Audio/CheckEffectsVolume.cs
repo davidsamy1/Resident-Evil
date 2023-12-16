@@ -1,16 +1,27 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class CheckEffectsVolume : MonoBehaviour
 {
+
+    public AudioMixer audioMixer;
+    string exposedParameter = "SFXVolume";
+
     void Start()
     {
-        GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("EffectsVolume");
+        UpdateEffects();
     }
 
-    public void updateEffects()
+    float MapToRange(float value, float originalMin, float originalMax, float newMin, float newMax)
     {
-        GetComponent<AudioSource>().volume = PlayerPrefs.GetFloat("EffectsVolume");
+        return (value - originalMin) / (originalMax - originalMin) * (newMax - newMin) + newMin;
+    }
+
+    public void UpdateEffects()
+    {
+        float musicVolume = PlayerPrefs.GetFloat("EffectsVolume");
+        float mappedVolume = MapToRange(musicVolume, 0f, 1f, -80f, 0f);
+        audioMixer.SetFloat(exposedParameter, mappedVolume);
     }
 }

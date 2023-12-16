@@ -1949,6 +1949,12 @@ PrefabInstance:
       propertyPath: m_VerticalAlignment
       value: 512
       objectReference: {fileID: 0}
+    - target: {fileID: 393905815672338038, guid: 0a68be1bd13d8694e8d8fe85574ac075,
+        type: 3}
+      propertyPath: audioMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 204ae77320b536d459d12c2126255a73,
+        type: 2}
     - target: {fileID: 393923847841867220, guid: 0a68be1bd13d8694e8d8fe85574ac075,
         type: 3}
       propertyPath: m_textAlignment
@@ -2264,6 +2270,17 @@ PrefabInstance:
       propertyPath: m_VerticalAlignment
       value: 512
       objectReference: {fileID: 0}
+    - target: {fileID: 415971624532527858, guid: 0a68be1bd13d8694e8d8fe85574ac075,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1763e5c48711f433ea3e853f9f9e5ad0, type: 3}
+    - target: {fileID: 415971624532527858, guid: 0a68be1bd13d8694e8d8fe85574ac075,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 3464120448557925559, guid: 204ae77320b536d459d12c2126255a73,
+        type: 2}
     - target: {fileID: 574967820502041778, guid: 0a68be1bd13d8694e8d8fe85574ac075,
         type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2815,6 +2832,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3456fba6ae30c419390370ee5779dc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 204ae77320b536d459d12c2126255a73, type: 2}
+  exposedParameter: SFX
 --- !u!1 &1297078984 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 352470063020359896, guid: 0a68be1bd13d8694e8d8fe85574ac075,
