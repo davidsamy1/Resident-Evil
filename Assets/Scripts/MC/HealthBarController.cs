@@ -1,12 +1,9 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using StarterAssets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.HighDefinition;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class HealthBarController : MonoBehaviour
 {
