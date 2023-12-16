@@ -109,8 +109,7 @@ public class enemyScript : MonoBehaviour
         // Check if the enemy is close to the player to initiate an attack
         if (distanceToPlayer < attackRange)
         {
-            int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
-            randomValue = 0;
+            int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 10f));
             if (isArmed)
             {
                 if (attackTimer > attackOrgrappleCoolDown)
@@ -123,7 +122,7 @@ public class enemyScript : MonoBehaviour
             }
             else
             {
-                if (randomValue == 0)
+                if (randomValue <= 7)
                 {
                     if (attackTimer > attackOrgrappleCoolDown)
                     {
