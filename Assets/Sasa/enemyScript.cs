@@ -81,9 +81,6 @@ public class enemyScript : MonoBehaviour
         {
             int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
 
-            randomValue = 0;
-
-
             if (isArmed)
             {
                 if (attackTimer > attackOrgrappleCoolDown)
