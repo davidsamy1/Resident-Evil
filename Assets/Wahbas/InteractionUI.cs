@@ -23,7 +23,7 @@ public class InteractionUI : MonoBehaviour
 
         if (interactionController.isPlayerInGrapple) // Knife Interactions has higher priority than items priority
         {
-            Show("Break Free");
+            Show("Stab Enemy to Break Free");
             return;
         }
         else if (interactionController.isKnockDown)

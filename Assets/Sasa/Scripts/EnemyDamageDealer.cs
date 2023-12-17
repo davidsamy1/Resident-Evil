@@ -11,7 +11,9 @@ public class EnemyDamageDealer : MonoBehaviour
     public float weaponLength = 0.8f;
     public float weaponDamage;
 
-    public static bool inGrapple = false;
+    public InteractionController interactionController;
+
+    public bool inGrapple = false;
 
     public enemyScript enemy;
     public bool throw1 = false;
@@ -38,7 +40,7 @@ public class EnemyDamageDealer : MonoBehaviour
                 Debug.Log("enemy hit player");
                 if (enemy.tryGrapple)
                 {
-                    inGrapple = true;
+                    inGrapple = interactionController.isPlayerInGrapple= true;
                     Debug.Log("pllayer in grapple");
                     hasDealtDamage = true;
                     Invoke("StartHitAnimationDelayed", 4.0f);
@@ -101,7 +103,7 @@ public class EnemyDamageDealer : MonoBehaviour
 
         }
         HealthBarPlayer.startHitAnimation();
-        inGrapple = false;
+        inGrapple = interactionController.isPlayerInGrapple = false;
     }
 
 }
