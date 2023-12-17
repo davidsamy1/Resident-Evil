@@ -33,15 +33,16 @@ public class TPSController : MonoBehaviour
     public TMP_Text CurrentAmmo;
     public TMP_Text InventoryAmmo;
     public List<GameObject> WeaponsHUD;
-    private Coroutine reloadCoroutine=null;
+    private Coroutine reloadCoroutine = null;
 
     public UIVisibility UIVisibility;
 
-    private int knifeDurability=10;
+    private int knifeDurability = 10;
 
     private bool isInvincible = false;
     private bool isSlowMotion = false;
-    public bool isInvincibleGetter(){
+    public bool isInvincibleGetter()
+    {
         return isInvincible;
     }
 
@@ -66,14 +67,16 @@ public class TPSController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if(UIVisibility.isInventoryOpened || UIVisibility.isStoreOpened || UIVisibility.isPaused)
+        if (UIVisibility.isInventoryOpened || UIVisibility.isStoreOpened || UIVisibility.isPaused)
             return;
-        if(Input.GetKeyDown(KeyCode.I)){
+        if (Input.GetKeyDown(KeyCode.I))
+        {
             isInvincible = !isInvincible;
         }
-        if(Input.GetKeyDown(KeyCode.O)){
+        if (Input.GetKeyDown(KeyCode.O))
+        {
             isSlowMotion = !isSlowMotion;
-            if(isSlowMotion)
+            if (isSlowMotion)
                 Time.timeScale = 0.5f;
             else
                 Time.timeScale = 1f;
@@ -134,10 +137,10 @@ public class TPSController : MonoBehaviour
             PlayerAnimator.SetLayerWeight(2, 1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha0) )
+        if (Input.GetKeyDown(KeyCode.Alpha0))
         {
             SetWeaponIndex(0);
-            if(reloadCoroutine != null)
+            if (reloadCoroutine != null)
                 StopCoroutine(reloadCoroutine);
             PlayerAnimator.SetBool("isReload", false);
             PlayerAnimator.SetBool("PistolReload", false);
@@ -145,10 +148,10 @@ public class TPSController : MonoBehaviour
             isReloading = false;
             PlayerAnimator.speed = 1;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha1) )
+        else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SetWeaponIndex(1);
-            if(reloadCoroutine != null)
+            if (reloadCoroutine != null)
                 StopCoroutine(reloadCoroutine);
             PlayerAnimator.SetBool("isReload", false);
             PlayerAnimator.SetBool("PistolReload", false);
@@ -156,10 +159,10 @@ public class TPSController : MonoBehaviour
             isReloading = false;
             PlayerAnimator.speed = 1;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) )
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             SetWeaponIndex(2);
-            if(reloadCoroutine != null)
+            if (reloadCoroutine != null)
                 StopCoroutine(reloadCoroutine);
             PlayerAnimator.SetBool("isReload", false);
             PlayerAnimator.SetBool("PistolReload", false);
@@ -167,10 +170,10 @@ public class TPSController : MonoBehaviour
             isReloading = false;
             PlayerAnimator.speed = 1;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3) )
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             SetWeaponIndex(3);
-            if(reloadCoroutine != null)
+            if (reloadCoroutine != null)
                 StopCoroutine(reloadCoroutine);
             PlayerAnimator.SetBool("isReload", false);
             PlayerAnimator.SetBool("PistolReload", false);
@@ -178,10 +181,10 @@ public class TPSController : MonoBehaviour
             isReloading = false;
             PlayerAnimator.speed = 1;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha4) )
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             SetWeaponIndex(4);
-            if(reloadCoroutine != null)
+            if (reloadCoroutine != null)
                 StopCoroutine(reloadCoroutine);
             PlayerAnimator.SetBool("isReload", false);
             PlayerAnimator.SetBool("PistolReload", false);
@@ -213,15 +216,6 @@ public class TPSController : MonoBehaviour
                     fire();
                     StartCoroutine(FireCooldown());
                 }
-
-            }
-        }else{
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                InputSystem.DisableDevice(Keyboard.current,false);
-                PlayerAnimator.SetLayerWeight(5, 1);
-                PlayerAnimator.SetBool("Stab",true);
-                StartCoroutine(Stab());
 
             }
         }
@@ -261,7 +255,7 @@ public class TPSController : MonoBehaviour
         ADSCamera.gameObject.SetActive(false);
         thirdPersonController.setSens(NormalSens);
         crosshair.gameObject.SetActive(false);
-        if(!isReloading)
+        if (!isReloading)
             PlayerAnimator.SetLayerWeight(1, 0);
         PlayerAnimator.SetLayerWeight(2, 0);
         PlayerAnimator.SetBool("ADS", false);
@@ -312,23 +306,53 @@ public class TPSController : MonoBehaviour
         else
             WeaponAmmo.text = weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip.ToString();
     }
+    public void stabKnockedDownEnemy()
+    {
+        weapons[WeaponIndex].gameObject.SetActive(false);
+        weapons[0].gameObject.SetActive(true);
+        InputSystem.DisableDevice(Keyboard.current, false);
+        PlayerAnimator.SetLayerWeight(5, 1);
+        PlayerAnimator.SetBool("Stab", true);
+        StartCoroutine(Stab());
 
-     IEnumerator Stab()
+    }
+    IEnumerator Stab()
     {
 
         yield return new WaitForSeconds(1.85f);
         InputSystem.EnableDevice(Keyboard.current);
-        knifeDurabilitySetter(knifeDurability-1);
-        PlayerAnimator.SetBool("Stab",false);
+        // knifeDurabilitySetter(knifeDurability-1);
+        PlayerAnimator.SetBool("Stab", false);
         PlayerAnimator.SetLayerWeight(5, 0);
+        weapons[0].gameObject.SetActive(false);
+        weapons[WeaponIndex].gameObject.SetActive(true);
     }
-    public void knifeDurabilitySetter(int value){
-        if(value < 0)
+    public void breakGrapple()
+    {
+        weapons[WeaponIndex].gameObject.SetActive(false);
+        weapons[0].gameObject.SetActive(true);
+        InputSystem.DisableDevice(Keyboard.current, false);
+        PlayerAnimator.SetLayerWeight(5, 1);
+        PlayerAnimator.SetTrigger("BreakGrapple");
+        StartCoroutine(BreakGrapple());
+    }
+    IEnumerator BreakGrapple()
+    {
+        yield return new WaitForSeconds(2.6f);
+        InputSystem.EnableDevice(Keyboard.current);
+        PlayerAnimator.SetLayerWeight(5, 0);
+        weapons[0].gameObject.SetActive(false);
+        weapons[WeaponIndex].gameObject.SetActive(true);
+    }
+    public void knifeDurabilitySetter(int value)
+    {
+        if (value < 0)
             print("knife needs repair");
         else
-            knifeDurability=value;
+            knifeDurability = value;
     }
-    public int knifeDurabilityGetter(){
+    public int knifeDurabilityGetter()
+    {
         return knifeDurability;
     }
     IEnumerator FireCooldown()
@@ -415,12 +439,13 @@ public class TPSController : MonoBehaviour
         }
         SetCurrentWeaponAmmo();
         isReloading = false;
-        if (isPistol){
+        if (isPistol)
+        {
             PlayerAnimator.SetBool("PistolReload", false);
             // PlayerAnimator.SetLayerWeight(1, 1);
             PlayerAnimator.SetLayerWeight(4, 0);
-             PlayerAnimator.SetBool("ADS", false);
-             }
+            PlayerAnimator.SetBool("ADS", false);
+        }
         else
             PlayerAnimator.SetBool("isReload", false);
 
@@ -447,12 +472,13 @@ public class TPSController : MonoBehaviour
             {
                 // PlayerAnimator.SetLayerWeight(1, 1);
                 PlayerAnimator.SetBool("PistolReload", true);
-                if(!PlayerAnimator.GetBool("ADS")){
+                if (!PlayerAnimator.GetBool("ADS"))
+                {
                     PlayerAnimator.SetLayerWeight(1, 0);
                     PlayerAnimator.SetLayerWeight(4, 1);
-                    }
+                }
                 PlayerAnimator.speed = 1.033f / weapon.reloadTime;
-                reloadCoroutine=StartCoroutine(ReloadCooldown(true));
+                reloadCoroutine = StartCoroutine(ReloadCooldown(true));
             }
             else
             {
@@ -465,7 +491,7 @@ public class TPSController : MonoBehaviour
                 // print(animationDuration);
                 PlayerAnimator.speed = 3.115f / weapon.reloadTime;
 
-                reloadCoroutine=StartCoroutine(ReloadCooldown(false));
+                reloadCoroutine = StartCoroutine(ReloadCooldown(false));
             }
         }
         //play sound

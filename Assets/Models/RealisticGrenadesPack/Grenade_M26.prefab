@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5622436116819488514
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_Name
+      value: Grenade_M26
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0029999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0029999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0029999993
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00057
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00128
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00023
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.43360895
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5763642
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.69002753
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.060411736
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -24.611
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 227.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 68.831
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 31f3d55055bba9443b8439d272a0da30,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 848266649276031025}
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 31f3d55055bba9443b8439d272a0da30,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3773983031700066634}
+  m_SourcePrefab: {fileID: 100100000, guid: 31f3d55055bba9443b8439d272a0da30, type: 3}
+--- !u!1 &5622436116819585442 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 31f3d55055bba9443b8439d272a0da30,
+    type: 3}
+  m_PrefabInstance: {fileID: 5622436116819488514}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &848266649276031025
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622436116819585442}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.2392656
+  m_Center: {x: 0.000000481678, y: 0.054972447, z: 0.022092056}
+--- !u!114 &3773983031700066634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622436116819585442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4df614ddca55d4791b9853da1677f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionEffectPrefab: {fileID: 0}
+  flashEffectPrefab: {fileID: 0}
+  explosionDelay: 3
+  explosionForce: 700
+  explosionRadius: 5
+  grenadePrefab: {fileID: 0}
+  flashGrenadePrefab: {fileID: 0}
+  grenadeSpawnPoint: {fileID: 0}
+  throwKey: 323
+  throwDirection: {x: 0, y: 1, z: 0}
+  throwForce: 10
+  mainCamera: {fileID: 0}
+  maxForce: 13
+  trajectoryLine: {fileID: 0}
+  isFlash: 0
+  isExplodingGrenade: 0
+  PlayerAnimator: {fileID: 8795925929281348294, guid: 43c69210fa12a204ea7c458cf17e5309,
+    type: 3}
+  tpsController: {fileID: 3437755356747571813, guid: 43c69210fa12a204ea7c458cf17e5309,
+    type: 3}

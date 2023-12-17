@@ -27,8 +27,9 @@ public class EnemyInteractor : MonoBehaviour
         if (currentKnifeDurability < 2)
         {
             showInteractErrorMessage("Knife Durability is less than 2");
+            return;
         }
-
+        tpsController.breakGrapple();
         // Decrease Knife Durability by 2
         tpsController.knifeDurabilitySetter(currentKnifeDurability - 2);
  
@@ -41,10 +42,11 @@ public class EnemyInteractor : MonoBehaviour
         if (!grenade.isFlashGetter() && !grenade.isExplodingGrenadeGetter())
         {
             showInteractErrorMessage("Grenade is not Equipped");
+            return;
         }
 
         Inventory inventory = InventoryCreator.getInstance();
-/*        if (grenade.isFlashGetter())
+       if (grenade.isFlashGetter())
         {
             Item thrownFlashGrenade = inventory.SearchItem(Item.ItemType.flashGrenade);
             inventory.Remove(thrownFlashGrenade);
@@ -53,7 +55,7 @@ public class EnemyInteractor : MonoBehaviour
         {
             Item thrownFlashGrenade = inventory.SearchItem(Item.ItemType.handGrenade);
             inventory.Remove(thrownFlashGrenade);
-        }*/
+        }
     }
 
     public void InteractKnockDown()
