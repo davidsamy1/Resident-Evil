@@ -15,25 +15,37 @@ public class InteractionController : MonoBehaviour
     public GameObject player;
     //public EnemyDamageDealer enemyScript;
     public Boolean isPlayerInGrapple = false;
-    public Boolean isKnockDown = false; // link after throwing grenade
+    public Boolean isKnockDown = false;
     public UIVisibility UIVisibility;
+    public EnemyInteractor enemyInteractor;
+    public enemyScript enemyScript;
+    public TPSController tpsController;
 
     private void Update()
     {
-        
-        if (Input.GetKeyDown(KeyCode.E) && !UIVisibility.isInventoryOpened && !UIVisibility.isPaused)
-        { 
-
+        isKnockDown = isKnockedDownEnemy(); // checks if player collides with any knocked down enemies
+        if (Input.GetKeyDown(KeyCode.G) && !UIVisibility.isInventoryOpened  && !UIVisibility.isStoreOpened && !UIVisibility.isPaused)
+        {
             if (isPlayerInGrapple)
             {
-                KnifeInteractor.InteractGrapple();
-                isPlayerInGrapple = false;
+                enemyInteractor.InteractGrappleWithGrenade();
+                //isPlayerInGrapple = false;
+                return;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && !UIVisibility.isInventoryOpened && !UIVisibility.isStoreOpened && !UIVisibility.isPaused)
+        { 
+            if (isPlayerInGrapple)
+            {
+                enemyInteractor.InteractGrappleWithKnife();
+               // isPlayerInGrapple = false;
                 return;
             }
 
             if (isKnockDown)
             {
-                KnifeInteractor.InteractKnockDown();
+                enemyInteractor.InteractKnockDown();
                 isKnockDown = false;
                 return;
             }
@@ -50,11 +62,6 @@ public class InteractionController : MonoBehaviour
 
     public Interactable GetInteractableObject()
     {
-        // should return closest interactable item
-        // should do some tag comparison also
-        // box collider should be on interactable items
-        // script added onto object, implementing interface and interact() logic
-        // canvas should be linked to this script
 
         float interactRange = 1f;
         Collider[] colliderArray = Physics.OverlapSphere(player.transform.position, interactRange);
@@ -63,7 +70,7 @@ public class InteractionController : MonoBehaviour
 
         foreach (Collider collider in colliderArray)
         {
-            if (collider.TryGetComponent(out Interactable interactable) && !collider.CompareTag("EquippedRevolver"))
+            if (collider.TryGetComponent(out Interactable interactable) && !collider.CompareTag("EquippedRevolver") && !collider.CompareTag("throwGrenade"))
             {
 
                 float distanceToInteractable = Vector3.Distance(player.transform.position, collider.transform.position);
@@ -78,7 +85,14 @@ public class InteractionController : MonoBehaviour
         return closestInteractable;
     }
 
-
-
+    public Boolean isKnockedDownEnemy()
+    {
+        Collider collider = tpsController.getBulletCollider().collider;
+        if (collider!=null && collider.TryGetComponent(out enemyScript enemyScript) && collider.gameObject.tag == "KnockedDown")
+        {
+            return true;
+        }
+        return false;
+    }
 }
 

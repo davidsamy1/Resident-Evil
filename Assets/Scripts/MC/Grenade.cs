@@ -64,6 +64,12 @@ public class Grenade : MonoBehaviour
     public bool isFlashGetter(){
         return this.isFlash;
     }
+
+    public bool isExplodingGrenadeGetter()
+    {
+        return this.isExplodingGrenade;
+    }
+
     private void Start()
     {
         starterAssetsInputs=GetComponent<StarterAssetsInputs>();
@@ -94,7 +100,7 @@ public class Grenade : MonoBehaviour
             {
                 // if (createdGrenade != null)
                 //     Destroy(createdGrenade);
-                createdGrenade = Instantiate(flashGrenadePrefab, grenadeSpawnPoint.position, grenadePrefab.transform.rotation);
+                createdGrenade = Instantiate(flashGrenadePrefab, grenadeSpawnPoint.position, flashGrenadePrefab.transform.rotation);
             }
             else if (isExplodingGrenade)
             {
@@ -104,7 +110,7 @@ public class Grenade : MonoBehaviour
             }
             createdGrenade.transform.parent = grenadeSpawnPoint.transform;
 
-            isFlash = false;
+            //isFlash = false;
             hasExploded = false;
             hasThrown = false;
             isCharging = true;

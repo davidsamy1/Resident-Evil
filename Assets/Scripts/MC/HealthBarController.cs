@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class HealthBarController : MonoBehaviour
@@ -38,6 +39,7 @@ public class HealthBarController : MonoBehaviour
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         AdabtHPLevel();
         InventoryCreator.getInstance().setHealthBarController(this);
+        InputSystem.EnableDevice(Keyboard.current);
 
     }
 
@@ -71,6 +73,11 @@ public class HealthBarController : MonoBehaviour
 
         }
 
+    }
+
+    public Boolean getPlayerDeath()
+    {
+        return this.PlayerDeath;
     }
     public void setWeight()
     {
@@ -109,7 +116,7 @@ public class HealthBarController : MonoBehaviour
         Material[] materials = renderer.materials;
         Array.Resize(ref materials, materials.Length - 1);
         renderer.materials = materials;
-
+        
         Array.Resize(ref materials, materials.Length + 1);
         if (active)
             materials[materials.Length - 1] = SegmentActiveMaterial;
@@ -190,7 +197,10 @@ public class HealthBarController : MonoBehaviour
         if (PlayerDeath)
         {
             // PlayerAnimator.SetTrigger("death");
-            Invoke("LoadGameOverScene", 3f);
+            Invoke("LoadGameOverScene", 2f);
+            //LoadGameOverScene();
+            InputSystem.DisableDevice(Keyboard.current,false);
+            //InputSystem.EnableDevice(Keyboard.current);
         }
     }
 

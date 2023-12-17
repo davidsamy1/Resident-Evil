@@ -45,6 +45,11 @@ public class TPSController : MonoBehaviour
         return isInvincible;
     }
 
+    public RaycastHit getBulletCollider()
+    {
+        return BulletCollider;
+    }
+
 
     // Start is called before the first frame update
     private void Awake()

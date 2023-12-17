@@ -92,18 +92,25 @@ public class EnemyDamageDealer : MonoBehaviour
 
     private void StartHitAnimationDelayed()
     {
-        if ((HealthBarPlayer.PlayerHealth) - 5 < 0)
+        if (inGrapple)
         {
-            HealthBarPlayer.PlayerHealthSetter(0);
-        }
+            if ((HealthBarPlayer.PlayerHealth) - 5 < 0)
+            {
+                HealthBarPlayer.PlayerHealthSetter(0);
+            }
 
+            else
+            {
+                HealthBarPlayer.PlayerHealthSetter((HealthBarPlayer.PlayerHealth) - 5);
+
+            }
+            HealthBarPlayer.startHitAnimation();
+            inGrapple = interactionController.isPlayerInGrapple = false;
+        }
         else
         {
-            HealthBarPlayer.PlayerHealthSetter((HealthBarPlayer.PlayerHealth) - 5);
-
+            inGrapple = interactionController.isPlayerInGrapple = false;
         }
-        HealthBarPlayer.startHitAnimation();
-        inGrapple = interactionController.isPlayerInGrapple = false;
     }
 
 }

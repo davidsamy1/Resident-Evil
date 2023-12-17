@@ -10,6 +10,10 @@ TagManager:
   - Revolver
   - EquippedRevolver
   - eventSystemM
+  - AI
+  - UnequippedGrenade
+  - throwGrenade
+  - KnockedDown
   layers:
   - Default
   - TransparentFX
