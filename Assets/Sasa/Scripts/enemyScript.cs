@@ -7,6 +7,7 @@ using StarterAssets;
 using System;
 using UnityEngine.Rendering;
 using static UnityEngine.EventSystems.EventTrigger;
+using Unity.VisualScripting;
 
 public class enemyScript : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class enemyScript : MonoBehaviour
     float timer = 0.0f;
     float throwDistance;
     float attackTimer = 0.0f;
-    float attackOrgrappleCoolDown = 2.0f;
+    float attackOrgrappleCoolDown = 3.0f;
     public float rotationSpeed = 5.0f;
     public float agentRange = 5.0f;
     // Start is called before the first frame update
@@ -116,7 +117,7 @@ public class enemyScript : MonoBehaviour
                 {
                     Attack();
                     attackTimer = 0;
-                    attackOrgrappleCoolDown = 2.0f;
+                    attackOrgrappleCoolDown = 2.5f;
                     inGrapple = false;
                 }
             }
@@ -128,7 +129,7 @@ public class enemyScript : MonoBehaviour
                     {
                         Attack();
                         attackTimer = 0;
-                        attackOrgrappleCoolDown = 2.0f;
+                        attackOrgrappleCoolDown = 2.5f;
                         inGrapple = false;
                     }
                 }
@@ -138,7 +139,7 @@ public class enemyScript : MonoBehaviour
                     {
                         Grapple();
                         attackTimer = 0;
-                        attackOrgrappleCoolDown = 8.0f;
+                        attackOrgrappleCoolDown = 5.0f;
                         inGrapple = true;
                     }
 
@@ -187,16 +188,19 @@ public class enemyScript : MonoBehaviour
         {
             if (isArmed)
             {
-                GameObject objectToThrow = Instantiate(axeThrow, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
+                //GameObject objectToThrow = Instantiate(axeThrow, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
 
 
                 //axeThrow.SetActive(false);
 
-                Destroy(axeThrow);
+                //Destroy(axeThrow);
 
 
-                ThrowObject(objectToThrow, throwForce);
+                //ThrowObject(objectToThrow, throwForce);
+
             }
+
+            Throw();
         }
 
         if (Input.GetKeyDown(KeyCode.L))
@@ -268,6 +272,17 @@ public class enemyScript : MonoBehaviour
     }
 
 
+   private void Throw()
+    {
+        if (!isDead)
+        {
+            animator.SetTrigger("Throw");
+            Debug.Log("throw animation");
+            agent.isStopped = true;
+            Invoke("ResumeWalking", 3.0f); // Adjust the delay as needed
+        }
+    }
+
     private void KnockdeDown()
     {
         if (!isDead)
@@ -289,7 +304,7 @@ public class enemyScript : MonoBehaviour
             agent.isStopped = true;
             animator.SetBool("Attack", true);
 
-            Invoke("ResumeWalking", 1.0f); // Adjust the delay as needed
+            Invoke("ResumeWalking", 2.0f); // Adjust the delay as needed
 
         }
     }
@@ -306,7 +321,7 @@ public class enemyScript : MonoBehaviour
             agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
             agent.isStopped = true;
             animator.SetBool("Grapple", true);
-            Invoke("ResumeWalking", 10.0f); // Adjust the delay as needed
+            Invoke("ResumeWalking", 6.0f); // Adjust the delay as needed
             //Invoke("GetComponentInChildren<EnemyDamageDealer>().EndDealDamage()", 4.0f)
             tryGrapple= true;
             Debug.Log("Try grapple is true");
@@ -352,13 +367,13 @@ public class enemyScript : MonoBehaviour
                 float rotationSpeed = 10f;
                 objectRigidbody.AddTorque(UnityEngine.Random.insideUnitSphere * rotationSpeed, ForceMode.Impulse);
 
-                
+                Throw();
 
                 objectToThrow.GetComponent<EnemyDamageDealer>().throw1 = true;
 
                 isArmed = false;
 
-                SetAnimatorLayer();
+                Invoke("SetAnimatorLayer",3.0f);
             }
             else
             {

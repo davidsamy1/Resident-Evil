@@ -66,7 +66,7 @@ public class HealthBarController : MonoBehaviour
                 PlayerDeath = true;
                 starterAssetsInputs.enabled = false;
                 Cursor.lockState = CursorLockMode.None;
-                Invoke("LoadGameOverScene", 3f);
+  
             }
 
         }
@@ -186,6 +186,11 @@ public class HealthBarController : MonoBehaviour
 
         }
         PlayerDeath = PlayerHealth <= 0 ? true : false;
+        if (PlayerDeath)
+        {
+            // PlayerAnimator.SetTrigger("death");
+            Invoke("LoadGameOverScene", 3f);
+        }
     }
 
     public int PlayerHealthGetter()

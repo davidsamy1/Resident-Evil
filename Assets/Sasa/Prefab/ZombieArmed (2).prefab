@@ -73,8 +73,8 @@ GameObject:
   - component: {fileID: 6552510966713150472}
   - component: {fileID: 918009772905618148}
   - component: {fileID: 7871190523073469968}
-  - component: {fileID: 2919897910445233955}
   - component: {fileID: 7601875171343801744}
+  - component: {fileID: -4673188135209881921}
   m_Layer: 0
   m_Name: ZombieArmed (2)
   m_TagString: AI
@@ -142,32 +142,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2919897910445233955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 206172991905945932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ee0f240394db9b4880d00799ba79eaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  axeThrow: {fileID: 4839600035230332376}
-  tryGrapple: 0
-  maxTime: 2
-  maxDistance: 0.8
-  rotationSpeed: 5
-  agentRange: 10
-  throwForce: 6
-  currentHealth: 5
-  attackRange: 1.5
-  isArmed: 1
-  dealer: {fileID: 0}
-  isPlayerInRange: 0
-  associatedRoom: {fileID: 0}
 --- !u!65 &7601875171343801744
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -189,6 +163,32 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.51372147, y: 1.8258712, z: 0.58487827}
   m_Center: {x: 0.02480793, y: 0.920447, z: 0.043061584}
+--- !u!114 &-4673188135209881921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206172991905945932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee0f240394db9b4880d00799ba79eaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  axeThrow: {fileID: 0}
+  tryGrapple: 0
+  maxTime: 0
+  maxDistance: 1
+  rotationSpeed: 5
+  agentRange: 5
+  throwForce: 6
+  currentHealth: 5
+  attackRange: 0
+  isArmed: 0
+  dealer: {fileID: 0}
+  isPlayerInRange: 0
+  associatedRoom: {fileID: 0}
 --- !u!1 &349579089865900575
 GameObject:
   m_ObjectHideFlags: 0
@@ -2599,11 +2599,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4763008216267008161, guid: b92e432993e63b740a483cc7a150f000,
         type: 3}
-      propertyPath: enemy
-      value: 
-      objectReference: {fileID: 2919897910445233955}
-    - target: {fileID: 4763008216267008161, guid: b92e432993e63b740a483cc7a150f000,
-        type: 3}
       propertyPath: throw1
       value: 0
       objectReference: {fileID: 0}
@@ -2620,12 +2615,6 @@ PrefabInstance:
 --- !u!4 &4839600035229903352 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b92e432993e63b740a483cc7a150f000,
-    type: 3}
-  m_PrefabInstance: {fileID: 4839600035230299000}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4839600035230332376 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100000, guid: b92e432993e63b740a483cc7a150f000,
     type: 3}
   m_PrefabInstance: {fileID: 4839600035230299000}
   m_PrefabAsset: {fileID: 0}
