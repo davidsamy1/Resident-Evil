@@ -13,4 +13,12 @@ public class InventoryCreator
         }
         return inventoryInstance;
     }
+
+    public static Inventory restartInventory()
+    {
+        inventoryInstance = new Inventory();
+        inventoryInstance.populateInventory();
+        return inventoryInstance;
+    }
+
 }

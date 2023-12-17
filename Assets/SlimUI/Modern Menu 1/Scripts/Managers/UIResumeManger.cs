@@ -95,12 +95,14 @@ public class UIResumeManger : MonoBehaviour
     {
         StartCoroutine(LoadAsynchronously("Mina"));
         Time.timeScale = 1.0f;
+        InventoryCreator.restartInventory();
     }
 
     public void ReturnMainMenu()
     {
         SceneManager.LoadScene("Main Menu");
         Time.timeScale = 1.0f;
+        InventoryCreator.restartInventory();
     }
 
     public void PlayHover()

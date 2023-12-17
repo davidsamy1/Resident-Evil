@@ -13,12 +13,17 @@ public class InteractionController : MonoBehaviour
 {
 
     public GameObject player;
-    public Boolean isPlayerInGrapple = false; // link to enemy part
+    public enemyScript enemyScript;
+    public Boolean isPlayerInGrapple = false;
     public Boolean isKnockDown = false; // link after throwing grenade
     public UIVisibility UIVisibility;
 
     private void Update()
     {
+        
+        isPlayerInGrapple = enemyScript.inGrapple;
+/*        isPlayerInGrapple = true;
+        Debug.Log("Grapplee" + isPlayerInGrapple);*/
         if (Input.GetKeyDown(KeyCode.E) && !UIVisibility.isInventoryOpened && !UIVisibility.isPaused)
         { 
 

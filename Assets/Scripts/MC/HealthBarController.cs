@@ -97,6 +97,7 @@ public class HealthBarController : MonoBehaviour
             PlayerAnimator.SetTrigger("death");
             PlayerDeath = true;
             starterAssetsInputs.enabled = false;
+            Cursor.lockState = CursorLockMode.None;
         }
 
     }

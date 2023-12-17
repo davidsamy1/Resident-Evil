@@ -10,6 +10,11 @@ public class KnifeInteractor : MonoBehaviour
     public static void InteractGrapple()
     {
         Debug.Log("Interacted with Grapple");
+        // Knife
+        // Decrease Knife Durability (enough durability aw error)
+        
+        // Grenade
+        // Lazem grenade teb2a equipped
     }
 
     public static void InteractKnockDown()

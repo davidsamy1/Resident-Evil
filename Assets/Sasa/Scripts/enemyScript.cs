@@ -21,7 +21,7 @@ public class enemyScript : MonoBehaviour
 
     public bool tryGrapple = false;
 
-    bool inGrapple=false;
+    public bool inGrapple=false;
 
 
     public float maxTime = 0.0f;
@@ -323,7 +323,7 @@ public class enemyScript : MonoBehaviour
             animator.SetBool("Grapple", true);
             Invoke("ResumeWalking", 6.0f); // Adjust the delay as needed
             //Invoke("GetComponentInChildren<EnemyDamageDealer>().EndDealDamage()", 4.0f)
-            tryGrapple= true;
+            tryGrapple = true;
             Debug.Log("Try grapple is true");
 
 
