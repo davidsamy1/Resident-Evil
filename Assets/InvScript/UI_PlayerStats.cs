@@ -48,6 +48,8 @@ public class UI_PlayerStats : MonoBehaviour
      
     }
 
+    
+
 public void RefreshPlayerStates(){
     /* 
     1. Refresh Gold by getting the Gold textmesh from the gold text game 
@@ -84,7 +86,7 @@ Transform KnifeImageCont=knifeEquiped.Find("item");
 Transform KnifeDurabilityCont=knifeEquiped.Find("amount");
 //Adding knife to the UI and updateing its durability
 Item knife=inventory.Knife;
-int KnifeDurability=knife.durability;
+int KnifeDurability=inventory.tpsController.knifeDurabilityGetter();
 KnifeImageCont.GetComponent<UnityEngine.UI.Image>().sprite=knife.sprite;
 KnifeDurabilityCont.GetComponent<TMPro.TextMeshProUGUI>().SetText(KnifeDurability.ToString());
 KnifeDurabilityCont.gameObject.SetActive(true);

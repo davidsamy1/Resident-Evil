@@ -33,7 +33,9 @@ public class Grenade : MonoBehaviour
     [SerializeField] private float throwForce = 10f; // force applied to throw the grenade
     [SerializeField] private Camera mainCamera; // reference to main camera
     [SerializeField] private float maxForce = 13f; // maximum force applied to throw the grenade
-    private bool hasThrown = false;
+    public bool hasThrown = false;
+
+    public bool InventoryHasGrenade = false;
     private GameObject createdGrenade = null;
 
 
@@ -55,19 +57,27 @@ public class Grenade : MonoBehaviour
     {
         this.isFlash = true;
         this.isExplodingGrenade = false;
+        this.InventoryHasGrenade = true;
     }
     public void isExplodingGrenadeSetter()
     {
         this.isExplodingGrenade = true;
         this.isFlash = false;
+        this.InventoryHasGrenade = true;
     }
     public bool isFlashGetter(){
         return this.isFlash;
     }
+
+public bool isExplodingGrenadeGetter(){
+        return this.isExplodingGrenade;
+    }
+
     private void Start()
     {
         starterAssetsInputs=GetComponent<StarterAssetsInputs>();
         countdown = explosionDelay;
+        InventoryCreator.getInstance().setGrenadeController(this);
     }
 
     private void Update()
@@ -92,8 +102,7 @@ public class Grenade : MonoBehaviour
         {
             if (isFlash)
             {
-                // if (createdGrenade != null)
-                //     Destroy(createdGrenade);
+               
                 createdGrenade = Instantiate(flashGrenadePrefab, grenadeSpawnPoint.position, grenadePrefab.transform.rotation);
             }
             else if (isExplodingGrenade)
@@ -104,7 +113,7 @@ public class Grenade : MonoBehaviour
             }
             createdGrenade.transform.parent = grenadeSpawnPoint.transform;
 
-            isFlash = false;
+            // isFlash = false;
             hasExploded = false;
             hasThrown = false;
             isCharging = true;
@@ -125,6 +134,7 @@ public class Grenade : MonoBehaviour
         {
             ReleaseThrow(createdGrenade);
             hasThrown = true;
+            InventoryHasGrenade=false;
             isCharging = false;
             PlayerAnimator.SetBool("HoldGrenade", false);
             PlayerAnimator.SetBool("ThrowGrenade", true);

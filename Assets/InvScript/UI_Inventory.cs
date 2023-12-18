@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UI_Inventory : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class UI_Inventory : MonoBehaviour
     private Transform UseBTN;
     private Transform DiscardBTN;
     private Transform CraftBTN;
-    private UI_PlayerStats uiPlayerStats;
+    public UI_PlayerStats uiPlayerStats;
     private UI_CraftCont uiCraftCont;
     // private TPSController tpsController;
 
@@ -215,7 +216,24 @@ RefreshInventoryItems();
 
 
 
+      public void setUIToolTip(Transform itemSlotRectTransform,Item inventoryItem ){
+                    //Get the ToolTip plane and then go to tis child and add a title and a description
+            Transform ToolTip=itemSlotRectTransform.Find("toolTip");
+            Transform Title=ToolTip.Find("Title");
+            Transform Description=ToolTip.Find("Desc");
+            Title.GetComponent<TMPro.TextMeshProUGUI>().SetText(inventoryItem.Title);
+            Description.GetComponent<TMPro.TextMeshProUGUI>().SetText(inventoryItem.Description);
+         
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerEnter;
+            entry.callback.AddListener((eventData) => {ToolTip.gameObject.SetActive(true);});   
+            itemSlotRectTransform.GetComponent<EventTrigger>().triggers.Add(entry);
 
+            EventTrigger.Entry entry2 = new EventTrigger.Entry();
+            entry2.eventID = EventTriggerType.PointerExit;
+            entry2.callback.AddListener((eventData) => {ToolTip.gameObject.SetActive(false);});
+            itemSlotRectTransform.GetComponent<EventTrigger>().triggers.Add(entry2);
+        }
 
 
     // Refresh Iventory 
@@ -230,6 +248,7 @@ RefreshInventoryItems();
             }
         }
 
+  
          
         foreach(Item inventoryItem in inventory.GetItemList()){            
 
@@ -241,6 +260,7 @@ RefreshInventoryItems();
               //Check if it is a knife then dont draw it as I dont want the knife to take place in the inv
                    
             itemSlotRectTransform.Find("item").GetComponent<UnityEngine.UI.Image>().sprite=inventoryItem.sprite;
+    
             //Get text field in a TextMesh pro called amount and edit the text and set the amount to be active
             if(inventoryItem.quantity>1){
 
@@ -255,6 +275,20 @@ RefreshInventoryItems();
             }
 
             itemSlotRectTransform.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(()=>{SelectedItem(inventoryItem);});
+            //On mouse enter set the ToolTip to be active in the event trigger on poinrter Enter 
+            //on mouse exit set the ToolTip to be inactive in the event trigger on poinrter Enter
+           setUIToolTip(itemSlotRectTransform,inventoryItem);
+
+
+    
+
+
+
+
+
+
+            
+            
         
             }
             else{

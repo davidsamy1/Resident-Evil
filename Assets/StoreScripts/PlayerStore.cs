@@ -40,6 +40,15 @@ public class PlayerStore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      if (Input.GetKeyDown(KeyCode.Z)){
+        if(InventoryCreator.getInstance()!=null){
+        InventoryCreator.getInstance().addGold(100);
+        uiInvStore.RefreshStoreInvItems();
+        uiStore.RefreshUIStore();
+
+        }
+
+        }
         
     }
 }

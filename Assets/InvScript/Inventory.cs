@@ -10,14 +10,19 @@ public class Inventory
     public UI_Inventory ui_inventory;
     public TPSController tpsController;
     public HealthBarController healthBarController;
+    public Grenade grenadeController;
     public Item Knife;
     private int gold=30;
+    private bool pistolFlag;
+    private bool revolverFlag;
+    private bool assaultRifleFlag;
+    private bool shotGunFlag;
+    
     public bool isCrafting=false;
 
 public Inventory(){
         itemsList=new List<Item>();
         Knife=new Item(ItemsAssests.Instance.KnifeSprite,100,100,1,Item.ItemType.knife);
-        Knife.durability=10;
          while(itemsList.Count<6){
             itemsList.Add(null);
         
@@ -27,10 +32,15 @@ public Inventory(){
 public void setTPSController(TPSController tpsController){
     this.tpsController=tpsController;
 }
-public void setHealthBarController(HealthBarController healthBarController){
-    this.healthBarController=healthBarController;
+
+public void setGrenadeController(Grenade grenadeController){
+    this.grenadeController=grenadeController;
 }
 
+public void setHealthBarController(HealthBarController healthBarController){
+    this.healthBarController=healthBarController;
+} 
+ 
 public Item.ItemType getAmmoTypeEQ(){
     if(tpsController.WeaponIndex==1){
         return Item.ItemType.pistolAmmo;
@@ -102,23 +112,52 @@ public int invToPlayerWeaponIndex(){
 }
 
 
+
+public void PlayerToInvChanges(){
+    setCurrentAmmoPlayerToInv();
+    setCurrentGrenadePlayerToInv();
+}
+
 public void setCurrentAmmoPlayerToInv(){
     Item.ItemType ammoType=getAmmoTypeEQ();
-        int AmmoAmount=getEqWeaponAmmoInventory();
-        if(ammoType!=Item.ItemType.knife){
-        foreach(Item item in itemsList){
-            if(item!=null&&item.itemType==ammoType){
-                item.quantity=AmmoAmount;
-                if(AmmoAmount==0){
-                    Remove(item);
-                }
-                return;
+    int AmmoAmount=getEqWeaponAmmoInventory();
+    if(ammoType!=Item.ItemType.knife){
+    foreach(Item item in itemsList){
+        if(item!=null&&item.itemType==ammoType){
+            item.quantity=AmmoAmount;
+            if(AmmoAmount==0){
+                Remove(item);
             }
+            return;
         }
-        }
+    }
+    }
 
     
     
+}
+
+public void setCurrentGrenadePlayerToInv(){
+    Debug.Log("..........................................");
+    Debug.Log("The grenade is thrown or not? "+grenadeController.InventoryHasGrenade);
+    Debug.Log("..........................................");
+    //Check if there is an equipped grenade in the inventory
+    //Check if this grenade type flag is false 
+    //if the flag is false thats mean that the grenade was equipped but used
+    //so remove this grenade from the inventory
+    //else do nothing
+    foreach(Item item in itemsList){
+        if(item!=null&&(item.itemType==Item.ItemType.handGrenade||item.itemType==Item.ItemType.flashGrenade)){
+            if(item.equipped==true){
+                if(!grenadeController.InventoryHasGrenade){
+                    Remove(item);
+                    return;
+                }
+            }
+        }
+    }
+
+
 }
 
 public void IncreaseAmmoInvToPlayer(Item.ItemType ammoType,int Ammoquantity){
@@ -201,7 +240,7 @@ Check if we can make the combination and if we can the remove the two items from
 */
 
 if(selectedItem.itemType==Item.ItemType.greenHerb && craftSelectedItem.itemType==Item.ItemType.greenHerb){
-    Item greenMix=new Item(ItemsAssests.Instance.GreenMixSprite,100,100,1,Item.ItemType.greenMix);
+    Item greenMix=Item.getGreenMix();
     this.Remove(selectedItem);
     this.Remove(craftSelectedItem);
     this.AddItem(greenMix);
@@ -210,7 +249,7 @@ if(selectedItem.itemType==Item.ItemType.greenHerb && craftSelectedItem.itemType=
 
 }
 else if(selectedItem.itemType==Item.ItemType.greenHerb && craftSelectedItem.itemType==Item.ItemType.redHerb){
-    Item redGreenMix=new Item(ItemsAssests.Instance.RedGreenMixSprite,100,100,1,Item.ItemType.redGreenMix);
+    Item redGreenMix=Item.getRedGreenMix();
     this.Remove(selectedItem);
     this.Remove(craftSelectedItem);
     this.AddItem(redGreenMix);
@@ -218,7 +257,7 @@ else if(selectedItem.itemType==Item.ItemType.greenHerb && craftSelectedItem.item
 
 }
 else if(selectedItem.itemType==Item.ItemType.redHerb && craftSelectedItem.itemType==Item.ItemType.greenHerb){
-    Item redGreenMix=new Item(ItemsAssests.Instance.RedGreenMixSprite,100,100,1,Item.ItemType.redGreenMix);
+    Item redGreenMix=Item.getRedGreenMix();
     this.Remove(selectedItem);
     this.Remove(craftSelectedItem);
     this.AddItem(redGreenMix);
@@ -226,7 +265,7 @@ else if(selectedItem.itemType==Item.ItemType.redHerb && craftSelectedItem.itemTy
 
 }
 else if(selectedItem.itemType==Item.ItemType.redHerb && craftSelectedItem.itemType==Item.ItemType.redHerb){
-    Item redMix=new Item(ItemsAssests.Instance.RedMixSprite,100,100,1,Item.ItemType.redMix);
+    Item redMix=Item.getRedMix();
     this.Remove(selectedItem);
     this.Remove(craftSelectedItem);
     this.AddItem(redMix);
@@ -234,7 +273,7 @@ else if(selectedItem.itemType==Item.ItemType.redHerb && craftSelectedItem.itemTy
 
 }
 else if(selectedItem.itemType==Item.ItemType.normalGunPowder && craftSelectedItem.itemType==Item.ItemType.normalGunPowder){
-    Item pistolAmmo=new Item(ItemsAssests.Instance.PistolAmmoSprite,100,100,12,Item.ItemType.pistolAmmo);
+    Item pistolAmmo=Item.getPistolAmmo();
     this.Remove(selectedItem);
     this.Remove(craftSelectedItem);
     this.AddItem(pistolAmmo);
@@ -242,7 +281,7 @@ else if(selectedItem.itemType==Item.ItemType.normalGunPowder && craftSelectedIte
 
 }
 else if(selectedItem.itemType==Item.ItemType.normalGunPowder && craftSelectedItem.itemType==Item.ItemType.highGradeGunPowder){
-    Item shotgunAmmo=new Item(ItemsAssests.Instance.ShotGunAmmoSprite,100,100,8,Item.ItemType.shotGunAmmo);
+    Item shotgunAmmo=Item.getShotGunAmmo();
     this.Remove(selectedItem);
     this.Remove(craftSelectedItem);
     this.AddItem(shotgunAmmo);
@@ -250,7 +289,7 @@ else if(selectedItem.itemType==Item.ItemType.normalGunPowder && craftSelectedIte
 
 }
 else if(selectedItem.itemType==Item.ItemType.highGradeGunPowder && craftSelectedItem.itemType==Item.ItemType.normalGunPowder){
-    Item shotgunAmmo=new Item(ItemsAssests.Instance.ShotGunAmmoSprite,100,100,8,Item.ItemType.shotGunAmmo);
+    Item shotgunAmmo=Item.getShotGunAmmo();
     this.Remove(selectedItem);
     this.Remove(craftSelectedItem);
     this.AddItem(shotgunAmmo);
@@ -258,7 +297,7 @@ else if(selectedItem.itemType==Item.ItemType.highGradeGunPowder && craftSelected
 
 }
 else if(selectedItem.itemType==Item.ItemType.highGradeGunPowder && craftSelectedItem.itemType==Item.ItemType.highGradeGunPowder){
-    Item assaultRifleAmmo=new Item(ItemsAssests.Instance.AssaultRifleAmmoSprite,100,100,30,Item.ItemType.assaultRifleAmmo);
+    Item assaultRifleAmmo=Item.getAssaultRifleAmmo();
     this.Remove(selectedItem);
     this.Remove(craftSelectedItem);
     this.AddItem(assaultRifleAmmo);
@@ -279,38 +318,38 @@ if(selectedItem==null){
     return null;
 }    
 if(selectedItem.itemType==Item.ItemType.greenHerb){
-    Item GreenMix=new Item(ItemsAssests.Instance.GreenMixSprite,100,100,1,Item.ItemType.greenMix);
-    Item RedGreenMix=new Item(ItemsAssests.Instance.RedGreenMixSprite,100,100,1,Item.ItemType.redGreenMix);
-    Item RedHerb=new Item(ItemsAssests.Instance.RedHerbSprite,100,100,1,Item.ItemType.redHerb);
-    Item GreenHerb=new Item(ItemsAssests.Instance.GreenHerbSprite,100,100,1,Item.ItemType.greenHerb);
-     ResultValue[0]=new Item[]{GreenHerb,RedGreenMix};
-        ResultValue[1]=new Item[]{RedHerb,GreenMix};
+    Item GreenMix=Item.getGreenMix();
+    Item RedGreenMix=Item.getRedGreenMix();
+    Item RedHerb=Item.getRedHerb();
+    Item GreenHerb=Item.getGreenHerb();
+    ResultValue[0]=new Item[]{GreenHerb,GreenMix};
+    ResultValue[1]=new Item[]{RedHerb,RedGreenMix};
     return ResultValue;
 }
 else if(selectedItem.itemType==Item.ItemType.redHerb){
-    Item RedMix=new Item(ItemsAssests.Instance.RedMixSprite,100,100,1,Item.ItemType.redMix);
-    Item RedGreenMix=new Item(ItemsAssests.Instance.RedGreenMixSprite,100,100,1,Item.ItemType.redGreenMix);
-    Item RedHerb=new Item(ItemsAssests.Instance.RedHerbSprite,100,100,1,Item.ItemType.redHerb);
-    Item GreenHerb=new Item(ItemsAssests.Instance.GreenHerbSprite,100,100,1,Item.ItemType.greenHerb);
-    ResultValue[0]=new Item[]{RedHerb,RedGreenMix};
-    ResultValue[1]=new Item[]{GreenHerb,RedMix};
+    Item RedMix=Item.getRedMix();
+    Item RedGreenMix=Item.getRedGreenMix();
+    Item RedHerb=Item.getRedHerb();
+    Item GreenHerb=Item.getGreenHerb();
+    ResultValue[0]=new Item[]{RedHerb,RedMix};
+    ResultValue[1]=new Item[]{GreenHerb,RedGreenMix};
     return ResultValue;
 }
 else if(selectedItem.itemType==Item.ItemType.normalGunPowder){
-    Item PistolAmmo=new Item(ItemsAssests.Instance.PistolAmmoSprite,100,100,12,Item.ItemType.pistolAmmo);
-    Item ShotgunAmmo=new Item(ItemsAssests.Instance.ShotGunAmmoSprite,100,100,8,Item.ItemType.shotGunAmmo);
-    Item NormalGunPowder=new Item(ItemsAssests.Instance.NormalGunPowderSprite,100,100,1,Item.ItemType.normalGunPowder);
-    Item HighGradeGunPowder=new Item(ItemsAssests.Instance.HighGradeGunPowderSprite,100,100,1,Item.ItemType.highGradeGunPowder);
+    Item PistolAmmo=Item.getPistolAmmo();
+    Item ShotgunAmmo=Item.getShotGunAmmo();
+    Item NormalGunPowder=Item.getNormalGunPowder();
+    Item HighGradeGunPowder=Item.getHighGunPowder();
     ResultValue[0]=new Item[]{NormalGunPowder,PistolAmmo};
     ResultValue[1]=new Item[]{HighGradeGunPowder,ShotgunAmmo};
     return ResultValue;
     // return [[NormalGunPowder,PistolAmmo],[HighGradeGunPowder,ShotgunAmmo]];
 }
 else if(selectedItem.itemType==Item.ItemType.highGradeGunPowder){
-    Item ShotgunAmmo=new Item(ItemsAssests.Instance.ShotGunAmmoSprite,100,100,8,Item.ItemType.shotGunAmmo);
-    Item AssaultRifleAmmo=new Item(ItemsAssests.Instance.AssaultRifleAmmoSprite,100,100,30,Item.ItemType.assaultRifleAmmo);
-    Item NormalGunPowder=new Item(ItemsAssests.Instance.NormalGunPowderSprite,100,100,1,Item.ItemType.normalGunPowder);
-    Item HighGradeGunPowder=new Item(ItemsAssests.Instance.HighGradeGunPowderSprite,100,100,1,Item.ItemType.highGradeGunPowder);
+    Item ShotgunAmmo=Item.getShotGunAmmo();
+    Item AssaultRifleAmmo=Item.getAssaultRifleAmmo();
+    Item NormalGunPowder=Item.getNormalGunPowder();
+    Item HighGradeGunPowder=Item.getHighGunPowder();
     // return [[NormalGunPowder,ShotgunAmmo],[HighGradeGunPowder,AssaultRifleAmmo]];
     ResultValue[0]=new Item[]{NormalGunPowder,ShotgunAmmo};
     ResultValue[1]=new Item[]{HighGradeGunPowder,AssaultRifleAmmo};
@@ -324,15 +363,32 @@ else{
 
 
 public void Fix(){
-    if(this.gold>=100){
-        Knife.durability=10;
+
+if(tpsController.knifeDurabilityGetter()==10){
+    //Error messag
+  
+    
+
+}
+else if(this.gold>=100){
+        tpsController.knifeDurabilitySetter(10);
         this.gold=this.gold-100;
     }
+    else{
+        //Error message
+    }
+
 
 }
 public void setGold(int gold){
     this.gold=gold;
 }
+
+public void addGold(int gold){
+    Debug.Log("I AM ADDING GOLD");
+    this.gold=this.gold+gold;
+}
+
 public int getGold(){
     return this.gold;
 }
@@ -373,6 +429,7 @@ public bool AddItem(Item item){
             }
             if(isFull()){
                 Debug.Log("Inventory is full");
+                //Error message
                 return false;
             }
             else{
@@ -394,19 +451,28 @@ public bool AddItem(Item item){
 
             if(isFull()){
                 Debug.Log("Inventory is full");
+                //Error message
                 return false;
             }
             else{
+                if(CheckWeaponExist(item)==true){
+                    Debug.Log("Weapon already exist");
+                    //Error message
+                    return false;
+                }
+                else{
                 for(int i=0;i<itemsList.Count;i++){
                     if(itemsList[i]==null){
                         itemsList[i]=item;
-                           if(ui_inventory!=null){
-                    // ui_inventory.RefreshInventoryItems();
-
-                    }
+                        setWeaponFlag(item);
                         return true;
                     }
                 }
+                }
+                
+
+
+             
             }
         }
 
@@ -418,7 +484,70 @@ return false;
         
         
     }
-  
+
+public void setWeaponFlag(Item weapon){
+    if(weapon.itemType==Item.ItemType.pistol){
+        pistolFlag=true;
+    }
+    else if(weapon.itemType==Item.ItemType.revolver){
+        revolverFlag=true;
+    }
+    else if(weapon.itemType==Item.ItemType.assaultRifle){
+        assaultRifleFlag=true;
+    }
+    else if(weapon.itemType==Item.ItemType.shotGun){
+        shotGunFlag=true;
+    }
+    else{
+        return;
+    }
+
+}
+
+public bool CheckWeaponExist(Item item){
+    //Check if the item is a weapon
+    if(item.itemType==Item.ItemType.pistol){
+        if(pistolFlag==true){
+            return true;
+        }
+        else{
+            pistolFlag=true;
+            return false;
+        }
+   
+    }
+    else if(item.itemType==Item.ItemType.revolver){
+        if(revolverFlag==true){
+            return true;
+        }
+        else{
+            revolverFlag=true;
+            return false;
+        }
+    }
+    else if(item.itemType==Item.ItemType.assaultRifle){
+        if(assaultRifleFlag==true){
+            return true;
+        }
+        else{
+            assaultRifleFlag=true;
+            return false;
+        }
+    }
+    else if(item.itemType==Item.ItemType.shotGun){
+        if(shotGunFlag==true){
+            return true;
+        }
+        else{
+            shotGunFlag=true;
+            return false;
+        }
+    }
+    else{
+        return false;
+    }
+    return false;
+}
  public List<Item> GetItemList(){
         return itemsList;
     }
@@ -473,6 +602,25 @@ public Item getSelected(){
 
 }
 
+public bool StoreToInv(Item item){
+    //Check the item type is weapon and set the flag to false
+    if(item.itemType==Item.ItemType.pistol){
+        pistolFlag=false;
+    }
+    else if(item.itemType==Item.ItemType.revolver){
+        revolverFlag=false;
+    }
+    else if(item.itemType==Item.ItemType.assaultRifle){
+        assaultRifleFlag=false;
+    }
+    else if(item.itemType==Item.ItemType.shotGun){
+        shotGunFlag=false;
+    }
+
+   return AddItem(item);
+
+
+}
 
 public void InvEquipToPlayer(Item item){
     int [] AllAmmoData=InvToPlayerAmmo();
@@ -492,6 +640,13 @@ public void InvEquipToPlayer(Item item){
     else if(item.itemType==Item.ItemType.shotGun){
         tpsController.SetWeaponIndex(4);
         tpsController.weaponsScriptableObjects[3].totalAmmoInInventory=AllAmmoData[3];
+    }
+    else if (item.itemType==Item.ItemType.flashGrenade){
+        grenadeController.isFlashSetter();
+        
+    }
+    else if (item.itemType==Item.ItemType.handGrenade){
+        grenadeController.isExplodingGrenadeSetter();
     }
     else{
         return;
@@ -531,9 +686,8 @@ public void EquippedItem(){
 
     //Now we set the selected item to be equipped
     getSelected().equipped=true;
-InvEquipToPlayer(getSelected());
+    InvEquipToPlayer(getSelected());
    
-
     //Now set everything to be not selected
     foreach(Item item in itemsList){
         if(item!=null&&item.selected==true){
@@ -546,17 +700,33 @@ InvEquipToPlayer(getSelected());
 }
 
 
+
 public void Buy(Item item){
     //Create new instance of the same Item
-Item itemToBuy=new Item(item.sprite,item.sellPrice,item.buyPrice,item.quantity,item.itemType);
+Item itemToBuy=Item.setItemBasedOnType(item.itemType);
     if(itemToBuy.buyPrice>gold){
         Debug.Log("Not enough gold");
+        // /*
+        // 1.Set the FeedbackError to be active
+        // 2.Set the text to be not enough gold
+        // 3.Set the text to be active for 2 seconds
+        // 4.Set the FeedbackError to be not active
+        //  */
+        // GameObject FeedbackError=GameObject.Find("FeedbackError");
+        // FeedbackError.SetActive(true);
+        // FeedbackError.transform.Find("Text").GetComponent<UnityEngine.UI.Text>().text="Not enough gold";
+
+        
         return;
     }
     else{
         bool isAdded=AddItem(itemToBuy);
         if(isAdded==true){
         gold=gold-itemToBuy.buyPrice;
+        }
+        else{
+            Debug.Log("Inventory is full");
+            Debug.Log("Weapon already exist");
         }
     }
    

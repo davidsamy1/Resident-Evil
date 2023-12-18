@@ -17,8 +17,7 @@ public class PlayerC : MonoBehaviour
     {
         
         inventory = InventoryCreator.getInstance();
-                inventory.setCurrentAmmoPlayerToInv();
-
+        inventory.PlayerToInvChanges();
     
         //UI Inventory Setter
         uiInventory.setInventory(inventory);
@@ -38,12 +37,14 @@ public class PlayerC : MonoBehaviour
         uiInventory.RefreshInventoryItems();        
     }
 
+
+
+
     void OnEnable(){
         //         Debug.Log("I AM ENABLING THE INVENTORY");
         // Debug.Log("TBS CONTROLLER IS" +tpsController.WeaponIndex);
         // tpsController.weaponsScriptableObjects[tpsController.WeaponIndex-1].totalAmmoInInventory=8;
-        inventory.setCurrentAmmoPlayerToInv();
-
+        inventory.PlayerToInvChanges();
         if(uiInventory.inventory!=null&&uiPlayerStats.inventory!=null){
     uiPlayerStats.RefreshPlayerStates();
         uiInventory.RefreshInventoryItems();   
@@ -55,9 +56,11 @@ public class PlayerC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-/*        uiInventory.setInventory(inventory);
-        uiPlayerStats.setInventory(inventory);
-        uiCraftCont.setInventory(inventory);
-        uiInventory.RefreshInventoryItems();*/
+      if (Input.GetKeyDown(KeyCode.Z)){
+        InventoryCreator.getInstance().addGold(100);
+        uiPlayerStats.RefreshPlayerStates();
+        uiInventory.RefreshInventoryItems();
+        
+        }
     }
 }

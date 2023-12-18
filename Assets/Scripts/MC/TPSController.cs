@@ -129,6 +129,13 @@ public class TPSController : MonoBehaviour
             PlayerAnimator.SetLayerWeight(2, 1);
         }
 
+        //If input is letter Z then increase inventory gold by 100
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            InventoryCreator.getInstance().addGold(100);
+        
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha0) )
         {
             SetWeaponIndex(0);
