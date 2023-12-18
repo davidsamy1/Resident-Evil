@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Text;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class EnemyInteractor : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class EnemyInteractor : MonoBehaviour
     public UIError uiError;
     public TPSController tpsController;
     public Grenade grenade;
+
+    public enemyScript enemy;
 
     void Start()
     {
@@ -30,6 +33,7 @@ public class EnemyInteractor : MonoBehaviour
             return;
         }
         tpsController.breakGrapple();
+        enemy.BreakGreapple("Knife");
         // Decrease Knife Durability by 2
         tpsController.knifeDurabilitySetter(currentKnifeDurability - 2);
  
@@ -50,17 +54,28 @@ public class EnemyInteractor : MonoBehaviour
         {
             Item thrownFlashGrenade = inventory.SearchItem(Item.ItemType.flashGrenade);
             inventory.Remove(thrownFlashGrenade);
+            enemy.BreakGreapple("Grenade");
         }
         else
         {
             Item thrownFlashGrenade = inventory.SearchItem(Item.ItemType.handGrenade);
             inventory.Remove(thrownFlashGrenade);
+            enemy.BreakGreapple("Grenade");
         }
     }
 
-    public void InteractKnockDown()
+    public void InteractKnockDown(enemyScript enemyKnock)
     {
         Debug.Log("Interacted with Knock Down");
+        int currentKnifeDurability = tpsController.knifeDurabilityGetter();
+        if (currentKnifeDurability < 1)
+        {
+            showInteractErrorMessage("Knife Durability is less than 1");
+            return;
+        }
+        tpsController.stabKnockedDownEnemy();
+        enemyKnock.Die();
+        tpsController.knifeDurabilitySetter(currentKnifeDurability - 1);
 
         // Player Stabs
         // Enemy Gets Hit (make sure range allows player to hit enemy)

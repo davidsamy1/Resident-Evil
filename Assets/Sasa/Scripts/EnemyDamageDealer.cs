@@ -13,7 +13,13 @@ public class EnemyDamageDealer : MonoBehaviour
 
     public InteractionController interactionController;
 
-    public bool inGrapple = false;
+    public EnemyInteractor interactor;
+
+    //public bool inGrapple = false;
+
+    public TPSController tPSController;
+
+    //public bool isGrappleAnimatationEnded = false;
 
     public enemyScript enemy;
     public bool throw1 = false;
@@ -35,15 +41,16 @@ public class EnemyDamageDealer : MonoBehaviour
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             // Debug.Log("distance to player: " + distanceToPlayer);
             if (distanceToPlayer > 2) { return; }
-            if (!inGrapple)
+            if (!tPSController.isPlayerInGrapple && !tPSController.isPlayerInGrappleStabAnimation)
             {
                 Debug.Log("enemy hit player");
                 if (enemy.tryGrapple)
                 {
-                    inGrapple = interactionController.isPlayerInGrapple= true;
-                    Debug.Log("pllayer in grapple");
+                    tPSController.isPlayerInGrapple = interactionController.isPlayerInGrapple= true;
+                    interactor.enemy = enemy;
+                    Debug.Log("player in grapple");
                     hasDealtDamage = true;
-                    Invoke("StartHitAnimationDelayed", 4.0f);
+                    Invoke("StartHitAnimationDelayed", 3.0f);
                 }
                 else
                 {
@@ -68,12 +75,15 @@ public class EnemyDamageDealer : MonoBehaviour
 
                 if (hit.transform.TryGetComponent(out HealthBarController HealthBarPlayer))
                 {
-                    Debug.Log("enter second loop");
-                    HealthBarPlayer.PlayerHealthSetter((HealthBarPlayer.PlayerHealth) - 3);
-                    //hasDealtDamage = true;
-                    throw1 = false;
-                    Debug.Log("enemy hit player");
-                    HealthBarPlayer.startHitAnimation();
+                    if (!tPSController.isPlayerInGrapple)
+                    {
+                        Debug.Log("enter second loop");
+                        HealthBarPlayer.PlayerHealthSetter((HealthBarPlayer.PlayerHealth) - 3);
+                        //hasDealtDamage = true;
+                        throw1 = false;
+                        Debug.Log("enemy hit player");
+                        HealthBarPlayer.startHitAnimation();
+                    }
                 }
             }
 
@@ -92,7 +102,7 @@ public class EnemyDamageDealer : MonoBehaviour
 
     private void StartHitAnimationDelayed()
     {
-        if (inGrapple)
+        if (tPSController.isPlayerInGrapple)
         {
             if ((HealthBarPlayer.PlayerHealth) - 5 < 0)
             {
@@ -105,12 +115,23 @@ public class EnemyDamageDealer : MonoBehaviour
 
             }
             HealthBarPlayer.startHitAnimation();
-            inGrapple = interactionController.isPlayerInGrapple = false;
-        }
-        else
-        {
-            inGrapple = interactionController.isPlayerInGrapple = false;
+            tPSController.isPlayerInGrapple = interactionController.isPlayerInGrapple = false;
         }
     }
 
+    public void GrappleBrokeThrough()
+    {
+        tPSController.isPlayerInGrapple = interactionController.isPlayerInGrapple = false;
+        //isGrappleAnimatationEnded = true;
+        Invoke("GrappleAnimatationEnded", 2.0f);
+        
+    }
+
+    public void GrappleAnimatationEnded()
+    {
+       // isGrappleAnimatationEnded = false;
+
+    }
+
+    
 }

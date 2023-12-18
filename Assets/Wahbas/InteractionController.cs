@@ -15,7 +15,7 @@ public class InteractionController : MonoBehaviour
     public GameObject player;
     //public EnemyDamageDealer enemyScript;
     public Boolean isPlayerInGrapple = false;
-    public Boolean isKnockDown = false;
+    public enemyScript knockDownEnemy = null;
     public UIVisibility UIVisibility;
     public EnemyInteractor enemyInteractor;
     public enemyScript enemyScript;
@@ -23,7 +23,7 @@ public class InteractionController : MonoBehaviour
 
     private void Update()
     {
-        isKnockDown = isKnockedDownEnemy(); // checks if player collides with any knocked down enemies
+        knockDownEnemy = isKnockedDownEnemy();// checks if player collides with any knocked down enemies
         if (Input.GetKeyDown(KeyCode.G) && !UIVisibility.isInventoryOpened  && !UIVisibility.isStoreOpened && !UIVisibility.isPaused)
         {
             if (isPlayerInGrapple)
@@ -39,14 +39,14 @@ public class InteractionController : MonoBehaviour
             if (isPlayerInGrapple)
             {
                 enemyInteractor.InteractGrappleWithKnife();
-               // isPlayerInGrapple = false;
+                //isPlayerInGrapple = false;
                 return;
             }
 
-            if (isKnockDown)
+            if (knockDownEnemy!=null)
             {
-                enemyInteractor.InteractKnockDown();
-                isKnockDown = false;
+                enemyInteractor.InteractKnockDown(knockDownEnemy);
+                knockDownEnemy = null;
                 return;
             }
 
@@ -85,14 +85,14 @@ public class InteractionController : MonoBehaviour
         return closestInteractable;
     }
 
-    public Boolean isKnockedDownEnemy()
+    public enemyScript isKnockedDownEnemy()
     {
         Collider collider = tpsController.getBulletCollider().collider;
         if (collider!=null && collider.TryGetComponent(out enemyScript enemyScript) && collider.gameObject.tag == "KnockedDown")
         {
-            return true;
+            return enemyScript;
         }
-        return false;
+        return null;
     }
 }
 

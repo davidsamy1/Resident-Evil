@@ -45,6 +45,8 @@ public class enemyScript : MonoBehaviour
 
     public bool isArmed;
 
+    bool breakgrapple = false;
+
     private EnemyDamageDealer dealer;
 
     public bool isPlayerInRange;
@@ -199,7 +201,11 @@ public class enemyScript : MonoBehaviour
 
             }
 
-            Throw();
+           // BreakGreapple("Grenade");
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            //BreakGreapple("Knife");
         }
 
         if (Input.GetKeyDown(KeyCode.L))
@@ -225,10 +231,19 @@ public class enemyScript : MonoBehaviour
             }
             else
             {
-                animator.SetTrigger("TakeDamage");
-                isHit = true;
-                agent.isStopped = true;
-                Invoke("ResumeWalking", 1.5f); // Adjust the delay as needed
+                if (isKnockedDown)
+                {
+                    isHit = true;
+                    agent.isStopped = true;
+                }
+                else
+                {
+                    animator.SetTrigger("TakeDamage");
+                    isHit = true;
+                    agent.isStopped = true;
+                    Invoke("ResumeWalking", 1.5f); // Adjust the delay as needed
+                }
+               
             }
         }
 
@@ -256,16 +271,16 @@ public class enemyScript : MonoBehaviour
 
     private void ResumeWalking()
     {
-        if (!isDead)
-        {
+         if (!isDead)
+         {
             // Resume the NavMeshAgent and reset the hit flag
-            agent.isStopped = false;
+            agent.isStopped = false;    
             isHit = false;
             animator.SetBool("Grapple", false);
             animator.SetBool("Attack", false);
             tryGrapple = false;
             Debug.Log("Try grapple is false");
-        }
+         } 
     }
 
     private void GetUp()
@@ -274,14 +289,13 @@ public class enemyScript : MonoBehaviour
         {
             animator.SetTrigger("GetUp");
             agent.isStopped = true;
-            Invoke("SetIsKnockedDownFalse", 2f);
+            Invoke("SetIsKnockedDownFalse", 3.0f);
             Invoke("ResumeWalking", 2.0f); // Adjust the delay as needed
         }
     }
 
     void SetIsKnockedDownFalse()
     {
-        // Set isKnockedDown to false
         isKnockedDown = false;
     }
 
@@ -304,12 +318,14 @@ public class enemyScript : MonoBehaviour
         if (!isDead)
         {
 
+            this.tag = "KnockedDown";
+
             animator.SetTrigger("KnockedDown");
             agent.isStopped = true;
-            Invoke("GetUp", 5.0f); // Adjust the delay as needed
+            Invoke("GetUp", 3.0f); // Adjust the delay as needed
             isKnockedDown = true;
-            EndGrapple();
-            tryGrapple =false;
+            //EndGrapple();
+            //tryGrapple =false;
         }
     }
 
@@ -340,15 +356,25 @@ public class enemyScript : MonoBehaviour
             agent.transform.rotation = Quaternion.Slerp(agent.transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
             agent.isStopped = true;
             animator.SetBool("Grapple", true);
-            Invoke("ResumeWalking", 6.0f); // Adjust the delay as needed
+            Invoke("GrappleHelper", 4.0f); // Adjust the delay as needed
             //Invoke("GetComponentInChildren<EnemyDamageDealer>().EndDealDamage()", 4.0f)
             tryGrapple = true;
             Debug.Log("Try grapple is true");
 
-
-
-
         }
+    }
+
+    private void GrappleHelper()
+    {
+        if (breakgrapple == true)
+        {
+            breakgrapple = false;
+        }
+        else
+        {
+            ResumeWalking();
+        }
+
     }
 
     private void SetAnimatorLayer()
@@ -419,7 +445,7 @@ public class enemyScript : MonoBehaviour
                 if (dealer.gameObject.name == "axe")
                 {
                     dealer.StartDealDamage();
-                   
+                   break;
                 }
                 
             }
@@ -432,7 +458,7 @@ public class enemyScript : MonoBehaviour
                 if (dealer.gameObject.name == "mixamorig5:RightHand")
                 {
                     dealer.StartDealDamage();
-
+                    break;
                 }
 
             }
@@ -449,9 +475,9 @@ public class enemyScript : MonoBehaviour
                 if (dealer.gameObject.name == "axe")
                 {
                     dealer.EndDealDamage();
-
+                    break;
                 }
-                return;
+                //return;
             }
         }
         else
@@ -463,7 +489,7 @@ public class enemyScript : MonoBehaviour
                     if (dealer.gameObject.name == "mixamorig5:RightHand")
                     {
                         dealer.EndDealDamage();
-                        
+                        break;   
                     }
 
            }
@@ -475,9 +501,23 @@ public class enemyScript : MonoBehaviour
         EnemyDamageDealer[] damageDealers = GetComponentsInChildren<EnemyDamageDealer>();
         foreach (EnemyDamageDealer dealer in damageDealers)
         {
-           dealer.inGrapple = false;
-           
+           dealer.GrappleBrokeThrough();
         }
+    }
+
+    public void BreakGreapple(String X)
+    {
+        if (X == "Grenade")
+        {
+            ResumeWalking();
+        }
+        else
+        {
+            TakeDamage(0);
+        }
+        breakgrapple = true;
+        EndGrapple();
+        tryGrapple = false;
     }
 
 

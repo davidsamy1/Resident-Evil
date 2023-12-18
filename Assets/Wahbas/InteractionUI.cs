@@ -29,7 +29,7 @@ public class InteractionUI : MonoBehaviour
             Show("Press 'E' to Stab Enemy or Press 'G' to use Grenade to Break Free");
             return;
         }
-        else if (interactionController.isKnockDown)
+        else if (interactionController.knockDownEnemy)
         {
             Show("Stab Enemy");
             return;

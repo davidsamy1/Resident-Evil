@@ -37,6 +37,10 @@ public class TPSController : MonoBehaviour
 
     public UIVisibility UIVisibility;
 
+
+    public bool isPlayerInGrapple = false;
+    public bool isPlayerInGrappleStabAnimation = false;
+
     private int knifeDurability = 10;
 
     private bool isInvincible = false;
@@ -334,7 +338,10 @@ public class TPSController : MonoBehaviour
         InputSystem.DisableDevice(Keyboard.current, false);
         PlayerAnimator.SetLayerWeight(5, 1);
         PlayerAnimator.SetTrigger("BreakGrapple");
+        isPlayerInGrapple = false;
+        isPlayerInGrappleStabAnimation = true;
         StartCoroutine(BreakGrapple());
+        
     }
     IEnumerator BreakGrapple()
     {
@@ -342,6 +349,7 @@ public class TPSController : MonoBehaviour
         InputSystem.EnableDevice(Keyboard.current);
         PlayerAnimator.SetLayerWeight(5, 0);
         weapons[0].gameObject.SetActive(false);
+        isPlayerInGrappleStabAnimation=false;
         weapons[WeaponIndex].gameObject.SetActive(true);
     }
     public void knifeDurabilitySetter(int value)
@@ -381,7 +389,7 @@ public class TPSController : MonoBehaviour
             //check if the ray hit within the fire range of the equiped gun
             if (BulletCollider.distance <= weaponsScriptableObjects[WeaponIndex - 1].range)
             {
-                if (BulletCollider.collider != null)
+                if (BulletCollider.collider != null )
 
                 {
                     enemyScript enemy = BulletCollider.collider.gameObject.GetComponent<enemyScript>();
