@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f1e4fe5b41c617349b74f704b2ff286d
+guid: 767d5286d99541641b4cc1d1e86a4d04
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: BeingGrappled
+      name: knockdown
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 46
-      lastFrame: 130
+      firstFrame: 39
+      lastFrame: 117
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -47,7 +47,7 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1

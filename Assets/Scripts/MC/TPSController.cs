@@ -5,6 +5,7 @@ using StarterAssets;
 using Cinemachine;
 using TMPro;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class TPSController : MonoBehaviour
 {
@@ -73,6 +74,17 @@ public class TPSController : MonoBehaviour
     {
         if (UIVisibility.isInventoryOpened || UIVisibility.isStoreOpened || UIVisibility.isPaused)
             return;
+        if (isPlayerInGrapple)
+        {
+            InputSystem.DisableDevice(Keyboard.current, false);
+            PlayerAnimator.SetBool("PlayerInGrapple", true);
+        }
+        else
+        {
+            InputSystem.EnableDevice(Keyboard.current);
+            PlayerAnimator.SetBool("PlayerInGrapple", false);
+
+        }
         if (Input.GetKeyDown(KeyCode.I))
         {
             isInvincible = !isInvincible;
@@ -141,61 +153,61 @@ public class TPSController : MonoBehaviour
             PlayerAnimator.SetLayerWeight(2, 1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            SetWeaponIndex(0);
-            if (reloadCoroutine != null)
-                StopCoroutine(reloadCoroutine);
-            PlayerAnimator.SetBool("isReload", false);
-            PlayerAnimator.SetBool("PistolReload", false);
-            PlayerAnimator.SetLayerWeight(4, 0);
-            isReloading = false;
-            PlayerAnimator.speed = 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            SetWeaponIndex(1);
-            if (reloadCoroutine != null)
-                StopCoroutine(reloadCoroutine);
-            PlayerAnimator.SetBool("isReload", false);
-            PlayerAnimator.SetBool("PistolReload", false);
-            PlayerAnimator.SetLayerWeight(4, 0);
-            isReloading = false;
-            PlayerAnimator.speed = 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            SetWeaponIndex(2);
-            if (reloadCoroutine != null)
-                StopCoroutine(reloadCoroutine);
-            PlayerAnimator.SetBool("isReload", false);
-            PlayerAnimator.SetBool("PistolReload", false);
-            PlayerAnimator.SetLayerWeight(4, 0);
-            isReloading = false;
-            PlayerAnimator.speed = 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            SetWeaponIndex(3);
-            if (reloadCoroutine != null)
-                StopCoroutine(reloadCoroutine);
-            PlayerAnimator.SetBool("isReload", false);
-            PlayerAnimator.SetBool("PistolReload", false);
-            PlayerAnimator.SetLayerWeight(4, 0);
-            isReloading = false;
-            PlayerAnimator.speed = 1;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            SetWeaponIndex(4);
-            if (reloadCoroutine != null)
-                StopCoroutine(reloadCoroutine);
-            PlayerAnimator.SetBool("isReload", false);
-            PlayerAnimator.SetBool("PistolReload", false);
-            PlayerAnimator.SetLayerWeight(4, 0);
-            isReloading = false;
-            PlayerAnimator.speed = 1;
-        }
+        // if (Input.GetKeyDown(KeyCode.Alpha0))
+        // {
+        //     SetWeaponIndex(0);
+        //     if (reloadCoroutine != null)
+        //         StopCoroutine(reloadCoroutine);
+        //     PlayerAnimator.SetBool("isReload", false);
+        //     PlayerAnimator.SetBool("PistolReload", false);
+        //     PlayerAnimator.SetLayerWeight(4, 0);
+        //     isReloading = false;
+        //     PlayerAnimator.speed = 1;
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha1))
+        // {
+        //     SetWeaponIndex(1);
+        //     if (reloadCoroutine != null)
+        //         StopCoroutine(reloadCoroutine);
+        //     PlayerAnimator.SetBool("isReload", false);
+        //     PlayerAnimator.SetBool("PistolReload", false);
+        //     PlayerAnimator.SetLayerWeight(4, 0);
+        //     isReloading = false;
+        //     PlayerAnimator.speed = 1;
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha2))
+        // {
+        //     SetWeaponIndex(2);
+        //     if (reloadCoroutine != null)
+        //         StopCoroutine(reloadCoroutine);
+        //     PlayerAnimator.SetBool("isReload", false);
+        //     PlayerAnimator.SetBool("PistolReload", false);
+        //     PlayerAnimator.SetLayerWeight(4, 0);
+        //     isReloading = false;
+        //     PlayerAnimator.speed = 1;
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha3))
+        // {
+        //     SetWeaponIndex(3);
+        //     if (reloadCoroutine != null)
+        //         StopCoroutine(reloadCoroutine);
+        //     PlayerAnimator.SetBool("isReload", false);
+        //     PlayerAnimator.SetBool("PistolReload", false);
+        //     PlayerAnimator.SetLayerWeight(4, 0);
+        //     isReloading = false;
+        //     PlayerAnimator.speed = 1;
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha4))
+        // {
+        //     SetWeaponIndex(4);
+        //     if (reloadCoroutine != null)
+        //         StopCoroutine(reloadCoroutine);
+        //     PlayerAnimator.SetBool("isReload", false);
+        //     PlayerAnimator.SetBool("PistolReload", false);
+        //     PlayerAnimator.SetLayerWeight(4, 0);
+        //     isReloading = false;
+        //     PlayerAnimator.speed = 1;
+        // }
 
         if (WeaponIndex != 0)
         {
@@ -227,6 +239,10 @@ public class TPSController : MonoBehaviour
 
     private void StartADS(Vector3 mouseWorldPosition)
     {
+        if (isPlayerInGrapple)
+        {
+            return;
+        }
         // print(BulletCollider.distance);
         //adabt the camera to the ADS camera
         ADSCamera.gameObject.SetActive(true);
@@ -269,6 +285,7 @@ public class TPSController : MonoBehaviour
 
     private void PlayADSAnimation()
     {
+
         if (WeaponIndex == 3 || WeaponIndex == 4)
         {
             PlayerAnimator.SetLayerWeight(2, 1);
@@ -341,7 +358,7 @@ public class TPSController : MonoBehaviour
         isPlayerInGrapple = false;
         isPlayerInGrappleStabAnimation = true;
         StartCoroutine(BreakGrapple());
-        
+
     }
     IEnumerator BreakGrapple()
     {
@@ -349,9 +366,18 @@ public class TPSController : MonoBehaviour
         InputSystem.EnableDevice(Keyboard.current);
         PlayerAnimator.SetLayerWeight(5, 0);
         weapons[0].gameObject.SetActive(false);
-        isPlayerInGrappleStabAnimation=false;
+        isPlayerInGrappleStabAnimation = false;
         weapons[WeaponIndex].gameObject.SetActive(true);
     }
+    // public void beingGrappled(){
+    //     weapons[WeaponIndex].gameObject.SetActive(false);
+    //     PlayerAnimator.SetLayerWeight(1, 0);
+    //     PlayerAnimator.SetLayerWeight(2, 0);
+    //     PlayerAnimator.SetLayerWeight(3, 0);
+    //     PlayerAnimator.SetLayerWeight(4, 0);
+
+    //     isPlayerInGrapple = true;
+    // }
     public void knifeDurabilitySetter(int value)
     {
         if (value < 0)
@@ -389,7 +415,7 @@ public class TPSController : MonoBehaviour
             //check if the ray hit within the fire range of the equiped gun
             if (BulletCollider.distance <= weaponsScriptableObjects[WeaponIndex - 1].range)
             {
-                if (BulletCollider.collider != null )
+                if (BulletCollider.collider != null)
 
                 {
                     enemyScript enemy = BulletCollider.collider.gameObject.GetComponent<enemyScript>();

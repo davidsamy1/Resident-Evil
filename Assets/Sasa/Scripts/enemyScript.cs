@@ -113,7 +113,8 @@ public class enemyScript : MonoBehaviour
         // Check if the enemy is close to the player to initiate an attack
         if (distanceToPlayer < attackRange)
         {
-            int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 10f));
+            // int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 10f));
+            int randomValue = 10;
             if (isArmed)
             {
                 if (attackTimer > attackOrgrappleCoolDown)
@@ -302,8 +303,8 @@ public class enemyScript : MonoBehaviour
         {
             animator.SetTrigger("GetUp");
             agent.isStopped = true;
-            Invoke("SetIsKnockedDownFalse", 3.0f);
-            Invoke("ResumeWalking", 2.0f); // Adjust the delay as needed
+            Invoke("SetIsKnockedDownFalse", 2.0f);
+            Invoke("ResumeWalking", 1.0f); // Adjust the delay as needed
         }
     }
 
@@ -395,12 +396,11 @@ public class enemyScript : MonoBehaviour
     {
         float baseLayerWeight = isArmed ? 0f : 1f;
         float armedLayerWeight = isArmed ? 1f : 0f;
-
-        animator.SetLayerWeight(0, baseLayerWeight);
+        animator.SetLayerWeight(2, baseLayerWeight);
         animator.SetLayerWeight(1, armedLayerWeight);
 
-        // Ensure that the current state in the other layer is set to 0 to avoid blending issues
-        animator.Play(animator.GetCurrentAnimatorStateInfo(isArmed ? 0 : 1).fullPathHash, isArmed ? 0 : 1, 0f);
+        // // Ensure that the current state in the other layer is set to 0 to avoid blending issues
+        // animator.Play(animator.GetCurrentAnimatorStateInfo(isArmed ? 0 : 1).fullPathHash, isArmed ? 0 : 1, 0f);
     }
 
     public void ThrowObject(GameObject objectToThrow, float throwForce)
@@ -432,7 +432,7 @@ public class enemyScript : MonoBehaviour
 
                 isArmed = false;
 
-                Invoke("SetAnimatorLayer",3.0f);
+                Invoke("SetAnimatorLayer",3f);
             }
             else
             {
@@ -455,7 +455,7 @@ public class enemyScript : MonoBehaviour
 
             foreach (EnemyDamageDealer dealer in damageDealers)
             {
-                Debug.Log("GameObject Name: " + dealer.gameObject.name);
+              
                 if (dealer.gameObject.name == "axe")
                 {
                     dealer.StartDealDamage();

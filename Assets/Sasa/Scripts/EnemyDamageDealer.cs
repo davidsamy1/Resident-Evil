@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class EnemyDamageDealer : MonoBehaviour
 {
     bool canDealDamage;
@@ -47,6 +46,10 @@ public class EnemyDamageDealer : MonoBehaviour
                 if (enemy.tryGrapple)
                 {
                     tPSController.isPlayerInGrapple = interactionController.isPlayerInGrapple= true;
+                    // player.position = transform.position;
+                    Vector3 direction= new Vector3(transform.position.x,player.position.y, transform.position.z);
+                    while (Vector3.Distance(transform.position,  player.position) > 0.01f)
+                        player.position = Vector3.Lerp(player.position, transform.position, 1 * Time.deltaTime);
                     interactor.enemy = enemy;
                     Debug.Log("player in grapple");
                     hasDealtDamage = true;
