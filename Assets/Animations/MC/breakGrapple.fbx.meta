@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4d6663a5b4abbd042b6ed91ea869ce1e
+guid: 8b321df74ebd6d54e956e14af6adec30
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: knifeStab
+      name: breakGrapple
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 115
+      lastFrame: 158
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
