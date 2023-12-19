@@ -14,6 +14,8 @@ public class PlayerStore : MonoBehaviour
     void Start()
     {
         Inventory inventory=InventoryCreator.getInstance();
+                inventory.PlayerToInvChanges();
+
         Store store=new Store();
         uiInvStore.setInventory(inventory);
         store.SetInventory(inventory);
@@ -28,7 +30,7 @@ public class PlayerStore : MonoBehaviour
 
     void OnEnable(){
         if(uiInvStore.inventory!=null&&uiStore.UIinvStore!=null){
-
+        InventoryCreator.getInstance().PlayerToInvChanges();
         Debug.Log("I AM ENABLING THE STORE");
          uiInvStore.RefreshStoreInvItems();
         uiStore.RefreshUIStore();

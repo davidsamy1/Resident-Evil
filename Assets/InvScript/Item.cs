@@ -82,7 +82,7 @@ public Item( Sprite sprite, int sellPrice, int buyPrice, int quantity, ItemType 
    
 }
 
-public static Item setItemBasedOnType(ItemType type){
+public static Item setItemBasedOnType(ItemType type, int quantity=-1){
     if(type==ItemType.pistol){
         return getPistol();
     }
@@ -123,16 +123,19 @@ public static Item setItemBasedOnType(ItemType type){
         return getRedGreenMix();
     }
     else if(type==ItemType.shotGunAmmo){
-        return getShotGunAmmo();
+        return getShotGunAmmo(quantity!=-1?quantity:8);
     }
     else if(type==ItemType.pistolAmmo){
-        return getPistolAmmo();
+       
+        return getPistolAmmo(quantity!=-1?quantity:12);
+
+        
     }
     else if(type==ItemType.assaultRifleAmmo){
-        return getAssaultRifleAmmo();
+        return getAssaultRifleAmmo(quantity!=-1?quantity:30);
     }
     else if(type==ItemType.revolverAmmo){
-        return getRevolverAmmo();
+        return getRevolverAmmo(quantity!=-1?quantity:6);
     }
     else if(type==ItemType.rubyTreasure){
         return getRubyTreasure();
@@ -296,46 +299,46 @@ public static Item getPistol(){
         int buyPrice=-1;
         int quantity=1;
         string Title="RedGreen Mix";
-        string Description="A mixture that can be used to heal 6 health";
+        string Description="A mixture that can be used to heal 8 health";
         ItemType itemType=ItemType.redGreenMix;
         return new Item(RedGreenMixSprite,sellPrice,buyPrice,quantity,itemType,Title,Description);
     }
 
-    public static Item getShotGunAmmo(){
+    public static Item getShotGunAmmo(int Quantity=8){
         Sprite ShotGunAmmoSprite=ItemsAssests.Instance.ShotGunAmmoSprite;
         int sellPrice=-1;
         int buyPrice=40;
-        int quantity=8;
+        int quantity=Quantity;
         string Title="ShotGun Ammo";
         string Description="Ammo for the shotgun";
         ItemType itemType=ItemType.shotGunAmmo;
         return new Item(ShotGunAmmoSprite,sellPrice,buyPrice,quantity,itemType,Title,Description);
     }
-    public static Item getPistolAmmo(){
+    public static Item getPistolAmmo(int Quantity=12){
         Sprite PistolAmmoSprite=ItemsAssests.Instance.PistolAmmoSprite;
         int sellPrice=-1;
         int buyPrice=30;
-        int quantity=12;
+        int quantity=Quantity;
         string Title="Pistol Ammo";
         string Description="Ammo for the pistol";
         ItemType itemType=ItemType.pistolAmmo;
         return new Item(PistolAmmoSprite,sellPrice,buyPrice,quantity,itemType,Title,Description);
     }
-    public static Item getAssaultRifleAmmo(){
+    public static Item getAssaultRifleAmmo(int Quantity=30){
         Sprite AssaultRifleAmmoSprite=ItemsAssests.Instance.AssaultRifleAmmoSprite;
         int sellPrice=-1;
         int buyPrice=50;
-        int quantity=30;
+        int quantity=Quantity;
         ItemType itemType=ItemType.assaultRifleAmmo;
         string Title="AssaultRifle Ammo";
         string Description="Ammo for the AssaultRifle";
         return new Item(AssaultRifleAmmoSprite,sellPrice,buyPrice,quantity,itemType,Title,Description);
     }
-    public static Item getRevolverAmmo(){
+    public static Item getRevolverAmmo(int Quantity=6){
         Sprite RevolverAmmoSprite=ItemsAssests.Instance.RevolverAmmoSprite;
         int sellPrice=-1;
         int buyPrice=70;
-        int quantity=6;
+        int quantity=Quantity;
         ItemType itemType=ItemType.revolverAmmo;
         string Title="RevolverAmmo";
         string Description="Ammo for the Revolver";

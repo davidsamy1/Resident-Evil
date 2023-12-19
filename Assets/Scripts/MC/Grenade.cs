@@ -56,12 +56,14 @@ public class Grenade : MonoBehaviour
 
     public void isFlashSetter()
     {
+        Debug.Log("isFlashSetter");
         this.isFlash = true;
         this.isExplodingGrenade = false;
         this.InventoryHasGrenade = true;
     }
     public void isExplodingGrenadeSetter()
     {
+        Debug.Log("isExplodingGrenadeSetter");
         this.isExplodingGrenade = true;
         this.isFlash = false;
         this.InventoryHasGrenade = true;
@@ -78,8 +80,8 @@ public class Grenade : MonoBehaviour
     private void Start()
     {
         starterAssetsInputs=GetComponent<StarterAssetsInputs>();
-        InventoryCreator.getInstance().setGrenadeController(this);
         countdown = explosionDelay;
+        InventoryCreator.getInstance().setGrenadeController(this);
     }
 
     private void Update()

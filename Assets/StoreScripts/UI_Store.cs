@@ -83,7 +83,7 @@ public void SetName(Store.StoreNameType storeName){
 
 public void HandleStoreClick(Item item){
     // Check if the Item type is any kind of ammo
-    Item ToAddItem=new Item(item.sprite,item.sellPrice,item.buyPrice,item.quantity,item.itemType);
+    Item ToAddItem=Item.setItemBasedOnType(item.itemType,item.quantity);
     if(item.itemType!=Item.ItemType.pistolAmmo&&item.itemType!=Item.ItemType.shotGunAmmo&&item.itemType!=Item.ItemType.assaultRifleAmmo&&item.itemType!=Item.ItemType.revolverAmmo){
         ToAddItem.quantity=1;
     }

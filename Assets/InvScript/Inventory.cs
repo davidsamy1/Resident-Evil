@@ -139,7 +139,7 @@ public void setCurrentAmmoPlayerToInv(){
 
 public void setCurrentGrenadePlayerToInv(){
     Debug.Log("..........................................");
-    Debug.Log("The grenade is thrown or not? "+grenadeController.InventoryHasGrenade);
+    Debug.Log("Do you have a grenade in the inv? "+grenadeController.InventoryHasGrenade);
     Debug.Log("..........................................");
     //Check if there is an equipped grenade in the inventory
     //Check if this grenade type flag is false 
