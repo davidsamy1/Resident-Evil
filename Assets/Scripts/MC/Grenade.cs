@@ -47,6 +47,8 @@ public class Grenade : MonoBehaviour
 
   [SerializeField]
     private bool isExplodingGrenade = false;
+
+    public bool InventoryHasGrenade=false;
     private StarterAssetsInputs starterAssetsInputs;
     public Animator PlayerAnimator;
     private float animcountdown = 1f;
@@ -56,11 +58,13 @@ public class Grenade : MonoBehaviour
     {
         this.isFlash = true;
         this.isExplodingGrenade = false;
+        this.InventoryHasGrenade = true;
     }
     public void isExplodingGrenadeSetter()
     {
         this.isExplodingGrenade = true;
         this.isFlash = false;
+        this.InventoryHasGrenade = true;
     }
     public bool isFlashGetter(){
         return this.isFlash;
@@ -74,6 +78,7 @@ public class Grenade : MonoBehaviour
     private void Start()
     {
         starterAssetsInputs=GetComponent<StarterAssetsInputs>();
+        InventoryCreator.getInstance().setGrenadeController(this);
         countdown = explosionDelay;
     }
 
@@ -137,6 +142,7 @@ public class Grenade : MonoBehaviour
                     tpsController.weapons[tpsController.WeaponIndex].gameObject.SetActive(true);
             InputSystem.EnableDevice(Mouse.current);
             ReleaseThrow(createdGrenade);
+            this.InventoryHasGrenade = false;
             hasThrown = true;
             isCharging = false;
             PlayerAnimator.SetBool("HoldGrenade", false);
