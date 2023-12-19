@@ -74,7 +74,7 @@ public class TPSController : MonoBehaviour
     {
         if (UIVisibility.isInventoryOpened || UIVisibility.isStoreOpened || UIVisibility.isPaused)
             return;
-        if (isPlayerInGrapple)
+        if (isPlayerInGrapple || isPlayerInGrappleStabAnimation)
         {
             InputSystem.DisableDevice(Keyboard.current, false);
             PlayerAnimator.SetBool("PlayerInGrapple", true);
@@ -239,7 +239,7 @@ public class TPSController : MonoBehaviour
 
     private void StartADS(Vector3 mouseWorldPosition)
     {
-        if (isPlayerInGrapple)
+        if (isPlayerInGrapple || isPlayerInGrappleStabAnimation)
         {
             return;
         }

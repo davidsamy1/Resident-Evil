@@ -113,8 +113,7 @@ public class enemyScript : MonoBehaviour
         // Check if the enemy is close to the player to initiate an attack
         if (distanceToPlayer < attackRange)
         {
-            // int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 10f));
-            int randomValue = 10;
+            int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 10f));
             if (isArmed)
             {
                 if (attackTimer > attackOrgrappleCoolDown)
@@ -532,6 +531,7 @@ public class enemyScript : MonoBehaviour
         breakgrapple = true;
         EndGrapple();
         tryGrapple = false;
+        attackOrgrappleCoolDown+=1.0f;
     }
 
 
