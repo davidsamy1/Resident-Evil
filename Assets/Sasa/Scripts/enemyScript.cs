@@ -253,13 +253,26 @@ public class enemyScript : MonoBehaviour
 
     public void Die()
     {
-        animator.SetTrigger("Die");
+        if (isKnockedDown)
+        {
+            Invoke("SetDieKnockTrigger", 1.0f);
+        }
+        else
+        {
+            animator.SetTrigger("Die");
+        }
+       
         isDead = true;
         Destroy(gameObject, 4f);
         Invoke("ActivateDroppedGold", 3f);
         tryGrapple = false;
         EndGrapple();
 
+    }
+
+    void SetDieKnockTrigger()
+    {
+        animator.SetTrigger("DieKnock");
     }
 
     void ActivateDroppedGold()
@@ -297,6 +310,7 @@ public class enemyScript : MonoBehaviour
     void SetIsKnockedDownFalse()
     {
         isKnockedDown = false;
+        this.tag = "AI";
     }
 
 
