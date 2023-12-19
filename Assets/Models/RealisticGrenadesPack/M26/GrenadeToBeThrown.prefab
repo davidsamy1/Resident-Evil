@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 6623730185139817569}
   - component: {fileID: 7764786374789600755}
   - component: {fileID: -2690785043337253086}
+  - component: {fileID: 9053693483073983982}
   m_Layer: 0
-  m_Name: grenade
-  m_TagString: Untagged
+  m_Name: GrenadeToBeThrown
+  m_TagString: throwGrenade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,3 +121,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectibleType: 13
   uiError: {fileID: 0}
+--- !u!114 &9053693483073983982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8719255258371184820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4df614ddca55d4791b9853da1677f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionEffectPrefab: {fileID: 0}
+  flashEffectPrefab: {fileID: 0}
+  explosionDelay: 3
+  explosionForce: 700
+  explosionRadius: 5
+  grenadePrefab: {fileID: 0}
+  flashGrenadePrefab: {fileID: 0}
+  grenadeSpawnPoint: {fileID: 0}
+  throwKey: 323
+  throwDirection: {x: 0, y: 1, z: 0}
+  throwForce: 10
+  mainCamera: {fileID: 0}
+  maxForce: 13
+  trajectoryLine: {fileID: 0}
+  isFlash: 0
+  isExplodingGrenade: 0
+  PlayerAnimator: {fileID: 0}
+  tpsController: {fileID: 0}

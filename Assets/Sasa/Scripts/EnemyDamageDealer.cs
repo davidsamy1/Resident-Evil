@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class EnemyDamageDealer : MonoBehaviour
 {
     bool canDealDamage;
@@ -11,7 +10,15 @@ public class EnemyDamageDealer : MonoBehaviour
     public float weaponLength = 0.8f;
     public float weaponDamage;
 
-    public static bool inGrapple = false;
+    public InteractionController interactionController;
+
+    public EnemyInteractor interactor;
+
+    //public bool inGrapple = false;
+
+    public TPSController tPSController;
+
+    //public bool isGrappleAnimatationEnded = false;
 
     public enemyScript enemy;
     public bool throw1 = false;
@@ -33,15 +40,20 @@ public class EnemyDamageDealer : MonoBehaviour
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             // Debug.Log("distance to player: " + distanceToPlayer);
             if (distanceToPlayer > 2) { return; }
-            if (!inGrapple)
+            if (!tPSController.isPlayerInGrapple && !tPSController.isPlayerInGrappleStabAnimation)
             {
                 Debug.Log("enemy hit player");
                 if (enemy.tryGrapple)
                 {
-                    inGrapple = true;
-                    Debug.Log("pllayer in grapple");
+                    tPSController.isPlayerInGrapple = interactionController.isPlayerInGrapple= true;
+                    // player.position = transform.position;
+                    Vector3 direction= new Vector3(transform.position.x,player.position.y, transform.position.z);
+                    while (Vector3.Distance(transform.position,  player.position) > 0.01f)
+                        player.position = Vector3.Lerp(player.position, transform.position, 1 * Time.deltaTime);
+                    interactor.enemy = enemy;
+                    Debug.Log("player in grapple");
                     hasDealtDamage = true;
-                    Invoke("StartHitAnimationDelayed", 4.0f);
+                    Invoke("StartHitAnimationDelayed", 3.0f);
                 }
                 else
                 {
@@ -66,12 +78,15 @@ public class EnemyDamageDealer : MonoBehaviour
 
                 if (hit.transform.TryGetComponent(out HealthBarController HealthBarPlayer))
                 {
-                    Debug.Log("enter second loop");
-                    HealthBarPlayer.PlayerHealthSetter((HealthBarPlayer.PlayerHealth) - 3);
-                    //hasDealtDamage = true;
-                    throw1 = false;
-                    Debug.Log("enemy hit player");
-                    HealthBarPlayer.startHitAnimation();
+                    if (!tPSController.isPlayerInGrapple)
+                    {
+                        Debug.Log("enter second loop");
+                        HealthBarPlayer.PlayerHealthSetter((HealthBarPlayer.PlayerHealth) - 3);
+                        //hasDealtDamage = true;
+                        throw1 = false;
+                        Debug.Log("enemy hit player");
+                        HealthBarPlayer.startHitAnimation();
+                    }
                 }
             }
 
@@ -90,18 +105,36 @@ public class EnemyDamageDealer : MonoBehaviour
 
     private void StartHitAnimationDelayed()
     {
-        if ((HealthBarPlayer.PlayerHealth) - 5 < 0)
+        if (tPSController.isPlayerInGrapple)
         {
-            HealthBarPlayer.PlayerHealthSetter(0);
-        }
+            if ((HealthBarPlayer.PlayerHealth) - 5 < 0)
+            {
+                HealthBarPlayer.PlayerHealthSetter(0);
+            }
 
-        else
-        {
-            HealthBarPlayer.PlayerHealthSetter((HealthBarPlayer.PlayerHealth) - 5);
+            else
+            {
+                HealthBarPlayer.PlayerHealthSetter((HealthBarPlayer.PlayerHealth) - 5);
 
+            }
+            HealthBarPlayer.startHitAnimation();
+            tPSController.isPlayerInGrapple = interactionController.isPlayerInGrapple = false;
         }
-        HealthBarPlayer.startHitAnimation();
-        inGrapple = false;
     }
 
+    public void GrappleBrokeThrough()
+    {
+        tPSController.isPlayerInGrapple = interactionController.isPlayerInGrapple = false;
+        //isGrappleAnimatationEnded = true;
+        Invoke("GrappleAnimatationEnded", 2.0f);
+        
+    }
+
+    public void GrappleAnimatationEnded()
+    {
+       // isGrappleAnimatationEnded = false;
+
+    }
+
+    
 }

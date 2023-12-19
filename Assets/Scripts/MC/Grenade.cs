@@ -33,9 +33,7 @@ public class Grenade : MonoBehaviour
     [SerializeField] private float throwForce = 10f; // force applied to throw the grenade
     [SerializeField] private Camera mainCamera; // reference to main camera
     [SerializeField] private float maxForce = 13f; // maximum force applied to throw the grenade
-    public bool hasThrown = false;
-
-    public bool InventoryHasGrenade = false;
+    private bool hasThrown = false;
     private GameObject createdGrenade = null;
 
 
@@ -52,24 +50,24 @@ public class Grenade : MonoBehaviour
     private StarterAssetsInputs starterAssetsInputs;
     public Animator PlayerAnimator;
     private float animcountdown = 1f;
+    [SerializeField] private TPSController tpsController;
 
     public void isFlashSetter()
     {
         this.isFlash = true;
         this.isExplodingGrenade = false;
-        this.InventoryHasGrenade = true;
     }
     public void isExplodingGrenadeSetter()
     {
         this.isExplodingGrenade = true;
         this.isFlash = false;
-        this.InventoryHasGrenade = true;
     }
     public bool isFlashGetter(){
         return this.isFlash;
     }
 
-public bool isExplodingGrenadeGetter(){
+    public bool isExplodingGrenadeGetter()
+    {
         return this.isExplodingGrenade;
     }
 
@@ -77,7 +75,6 @@ public bool isExplodingGrenadeGetter(){
     {
         starterAssetsInputs=GetComponent<StarterAssetsInputs>();
         countdown = explosionDelay;
-        InventoryCreator.getInstance().setGrenadeController(this);
     }
 
     private void Update()
@@ -98,12 +95,17 @@ public bool isExplodingGrenadeGetter(){
         //     createdGrenade.transform.parent = grenadeSpawnPoint.transform;
         //     isFlash = false;
         // }
-        if (Input.GetKeyDown(KeyCode.G) && (isExplodingGrenade || isFlash))
+
+        if (Input.GetKeyDown(KeyCode.G) && (isExplodingGrenade || isFlash) && !hasThrown )
         {
+  
+        tpsController.weapons[tpsController.WeaponIndex].gameObject.SetActive(false);
+                       InputSystem.DisableDevice(Mouse.current,false);
             if (isFlash)
             {
-               
-                createdGrenade = Instantiate(flashGrenadePrefab, grenadeSpawnPoint.position, grenadePrefab.transform.rotation);
+                // if (createdGrenade != null)
+                //     Destroy(createdGrenade);
+                createdGrenade = Instantiate(flashGrenadePrefab, grenadeSpawnPoint.position, flashGrenadePrefab.transform.rotation);
             }
             else if (isExplodingGrenade)
             {
@@ -113,7 +115,7 @@ public bool isExplodingGrenadeGetter(){
             }
             createdGrenade.transform.parent = grenadeSpawnPoint.transform;
 
-            // isFlash = false;
+            //isFlash = false;
             hasExploded = false;
             hasThrown = false;
             isCharging = true;
@@ -132,9 +134,10 @@ public bool isExplodingGrenadeGetter(){
         }
         if (Input.GetKeyUp(KeyCode.G) && (isFlash || isExplodingGrenade))
         {
+                    tpsController.weapons[tpsController.WeaponIndex].gameObject.SetActive(true);
+            InputSystem.EnableDevice(Mouse.current);
             ReleaseThrow(createdGrenade);
             hasThrown = true;
-            InventoryHasGrenade=false;
             isCharging = false;
             PlayerAnimator.SetBool("HoldGrenade", false);
             PlayerAnimator.SetBool("ThrowGrenade", true);
@@ -154,27 +157,29 @@ public bool isExplodingGrenadeGetter(){
                 }
                 if (countdown <= 0f)
                 {
-                    Explode(createdGrenade, isFlash);
+                    Explode(createdGrenade);
                     hasExploded = true;
                     hasThrown = false;
                 }
             }
         }
     }
-    void Explode(GameObject gr, bool isFlash)
+    void Explode(GameObject gr)
     {
         if (isFlash)
         {
             GameObject flashEffect = Instantiate(flashEffectPrefab, gr.transform.position, Quaternion.identity);
             Destroy(flashEffect, 1f);
-            isFlash = false;
+
         }
         else
         {
             GameObject explosionEffect = Instantiate(explosionEffectPrefab, gr.transform.position, Quaternion.identity);
             Destroy(explosionEffect, 1f);
-            isExplodingGrenade = false;
+
         }
+        isFlash = false;
+        isExplodingGrenade = false;
         //Play Sound Effect
         //Affect Other Physics Objects
         // NearbyForceApply();

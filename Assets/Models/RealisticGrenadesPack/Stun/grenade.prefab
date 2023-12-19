@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2664184076652057797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3456747099581846922}
+  - component: {fileID: 5246481518550431172}
+  m_Layer: 0
+  m_Name: grenade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3456747099581846922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2664184076652057797}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.85052794, y: 1.3035911, z: 0.20590857}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5246481518550431172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2664184076652057797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4df614ddca55d4791b9853da1677f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionEffectPrefab: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3,
+    type: 3}
+  flashEffectPrefab: {fileID: 1743301284569550, guid: ad2ab49d0a2a17148bd51c93d977bdbc,
+    type: 3}
+  explosionDelay: 3
+  explosionForce: 700
+  explosionRadius: 5
+  grenadePrefab: {fileID: 8719255258371184820, guid: 9645b2e0272314a48865839b4997d334,
+    type: 3}
+  flashGrenadePrefab: {fileID: 8591973470335352159, guid: c58a736f21bf5244ba48ec1c1ab8f5fa,
+    type: 3}
+  grenadeSpawnPoint: {fileID: 0}
+  throwKey: 103
+  throwDirection: {x: 0, y: 1, z: 0}
+  throwForce: 10
+  mainCamera: {fileID: 0}
+  maxForce: 13
+  trajectoryLine: {fileID: 0}
+  isFlash: 0
+  isExplodingGrenade: 0
+  PlayerAnimator: {fileID: 0}
+  tpsController: {fileID: 0}

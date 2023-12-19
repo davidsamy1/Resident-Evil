@@ -11,6 +11,9 @@ public class InteractionUI : MonoBehaviour
     public InteractionController interactionController;
     public TMP_Text interactMessageText;
     public UIVisibility UIVisibility;
+    public GameObject grappleUICanvas;
+    public GameObject OriginalEButtonContainer;
+    public GameObject TranslatedEButtonContainer;
 
     private void Update()
     {
@@ -23,10 +26,10 @@ public class InteractionUI : MonoBehaviour
 
         if (interactionController.isPlayerInGrapple) // Knife Interactions has higher priority than items priority
         {
-            Show("Break Free");
+            Show("Press 'E' to Stab Enemy or Press 'G' to use Grenade to Break Free");
             return;
         }
-        else if (interactionController.isKnockDown)
+        else if (interactionController.knockDownEnemy)
         {
             Show("Stab Enemy");
             return;
@@ -51,12 +54,31 @@ public class InteractionUI : MonoBehaviour
     {
         interactUICanvas.SetActive(true);
         interactMessageText.text = message;
+        if (interactionController.isPlayerInGrapple)
+        {
+            grappleUICanvas.SetActive(true);
+            OriginalEButtonContainer.SetActive(false);
+            TranslatedEButtonContainer.SetActive(true);
+        }
+        else
+        {
+            OriginalEButtonContainer.SetActive(true);
+            TranslatedEButtonContainer.SetActive(false);
+        }
+        
+
 
     }
 
     public void Hide()
     {
         interactUICanvas.SetActive(false);
+        if (grappleUICanvas.activeInHierarchy)
+            grappleUICanvas.SetActive(false);
+        if (OriginalEButtonContainer.activeInHierarchy)
+            OriginalEButtonContainer.SetActive(false);
+        if (TranslatedEButtonContainer.activeInHierarchy)
+            TranslatedEButtonContainer.SetActive(false);
     }
 
 
