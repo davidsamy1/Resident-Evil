@@ -15,7 +15,7 @@ public class Grenade : MonoBehaviour
     [Header("Explosion Settings")]
     [SerializeField] private float explosionDelay = 3f; // delay before explosion
     [SerializeField] private float explosionForce = 700f; // force applied by explosion
-    [SerializeField] private float explosionRadius = 5f; // radius of explosion
+    [SerializeField] private float explosionRadius = 50f; // radius of explosion
     [Header("Audio Effects")]
     private float countdown;
 
@@ -56,6 +56,7 @@ public class Grenade : MonoBehaviour
     public AudioSource grenadePull;
     public AudioSource grenade;
     public AudioSource flash;
+    public HealthBarController healthBarController;
 
     public void isFlashSetter()
     {
@@ -95,6 +96,7 @@ public class Grenade : MonoBehaviour
         if(InventoryCreator.getInstance().grenadeController==null){
         InventoryCreator.getInstance().setGrenadeController(this);
         }
+        healthBarController= GetComponent<HealthBarController>();
     }
 
     private void Update()
@@ -205,6 +207,7 @@ public class Grenade : MonoBehaviour
             grenade.Play();
 
         }
+        NearbyForceApply();
         isFlash = false;
         isExplodingGrenade = false;
         //Play Sound Effect
@@ -219,11 +222,25 @@ public class Grenade : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(createdGrenade.transform.position, explosionRadius);
         foreach (Collider nearbyObject in colliders)
         {
-            Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
-            if (rb != null)
+            if (nearbyObject.CompareTag("AI"))
             {
-                rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+                enemyScript enemy = nearbyObject.gameObject.GetComponent<enemyScript>();
+                if (isFlash)
+                {
+                    enemy.KnockdeDown();
+                }
+                else
+                {
+                    enemy.TakeDamage(4);
+                }
+                
             }
+            else if(nearbyObject.CompareTag("Player")&&isExplodingGrenade)
+            {
+                healthBarController.PlayerHealthSetter(healthBarController.PlayerHealthGetter() - 4);
+                healthBarController.startHitAnimation();
+            }
+            
         }
     }
     void StartThrowing()

@@ -336,7 +336,7 @@ public class enemyScript : MonoBehaviour
 
 
 
-    private void KnockdeDown()
+    public void KnockdeDown()
     {
         if (!isDead)
         {

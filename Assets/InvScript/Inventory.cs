@@ -12,7 +12,7 @@ public class Inventory
     public HealthBarController healthBarController;
     public Grenade grenadeController;
     public Item Knife;
-    private int gold=30;
+    private int gold=30000;
     private bool pistolFlag;
     private bool revolverFlag;
     private bool assaultRifleFlag;
