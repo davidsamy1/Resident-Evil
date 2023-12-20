@@ -8,6 +8,10 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
     public Item.ItemType collectibleType;
     private Coroutine errorMessageCoroutine;
     public UIError uiError;
+    public AudioSource goldSFX;
+    public AudioSource doorSFX;
+    public AudioSource collectSFX;
+
 
     void Start()
     {
@@ -26,6 +30,13 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
             Boolean isSuccessful = inventory.AddPickUpItem(collectibleType);
             if (isSuccessful)
             {
+                if (collectibleType == Item.ItemType.gold || collectibleType == Item.ItemType.goldTreasure)
+                {
+                    goldSFX.Play();
+                } else
+                {
+                    collectSFX.Play();
+                }
                 errorMessageCoroutine = null;
                 Destroy(gameObject);
             }

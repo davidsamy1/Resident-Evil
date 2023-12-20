@@ -53,6 +53,9 @@ public class Grenade : MonoBehaviour
     public Animator PlayerAnimator;
     private float animcountdown = 1f;
     [SerializeField] private TPSController tpsController;
+    public AudioSource grenadePull;
+    public AudioSource grenade;
+    public AudioSource flash;
 
     public void isFlashSetter()
     {
@@ -178,12 +181,13 @@ public class Grenade : MonoBehaviour
         {
             GameObject flashEffect = Instantiate(flashEffectPrefab, gr.transform.position, Quaternion.identity);
             Destroy(flashEffect, 1f);
-
+            flash.Play();
         }
         else
         {
             GameObject explosionEffect = Instantiate(explosionEffectPrefab, gr.transform.position, Quaternion.identity);
             Destroy(explosionEffect, 1f);
+            grenade.Play();
 
         }
         isFlash = false;
@@ -212,7 +216,7 @@ public class Grenade : MonoBehaviour
         Vector3 offset = new Vector3(-0.05f, -0.05f, -0.05f);
         // GameObject grenade2 = Instantiate(grenadePrefab, grenadeSpawnPoint.position + offset, grenadePrefab.transform.rotation);
         // grenade2.transform.parent = grenadeSpawnPoint.transform;
-        //Pull pin sound
+        grenadePull.Play();
         trajectoryLine.enabled = true;
 
 

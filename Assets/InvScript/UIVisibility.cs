@@ -16,6 +16,8 @@ public class UIVisibility : MonoBehaviour
     public Boolean isStoreOpened = false;
     public bool isPaused = false;
     private StarterAssetsInputs starterAssetsInputs;
+    public AudioSource openInventory;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -32,6 +34,7 @@ public class UIVisibility : MonoBehaviour
             {
                 ToggleStoreVisibility();
             }
+            openInventory.Play();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))

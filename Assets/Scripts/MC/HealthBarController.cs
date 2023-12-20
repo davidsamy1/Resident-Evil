@@ -16,6 +16,8 @@ public class HealthBarController : MonoBehaviour
     public Material SegmentInActiveMaterial;
     public Material SegmentActiveMaterial;
     private StarterAssetsInputs starterAssetsInputs;
+    public AudioSource playerGetHit;
+    public AudioSource playerDeath;
 
     public Animator PlayerAnimator;
     [SerializeField] private UnityEngine.UI.Image blood;
@@ -96,11 +98,13 @@ public class HealthBarController : MonoBehaviour
 
         if (PlayerHealthGetter() > 0)
         {
+            playerGetHit.Play();
             PlayerAnimator.SetTrigger("hit");
             Invoke("setWeight", 1.6f);
         }
         else
         {
+            playerDeath.Play();
             PlayerAnimator.SetTrigger("death");
             PlayerDeath = true;
             starterAssetsInputs.enabled = false;

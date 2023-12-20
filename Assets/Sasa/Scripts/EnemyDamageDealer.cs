@@ -45,11 +45,12 @@ public class EnemyDamageDealer : MonoBehaviour
                 Debug.Log("enemy hit player");
                 if (enemy.tryGrapple)
                 {
-                    tPSController.isPlayerInGrapple = interactionController.isPlayerInGrapple= true;
+                    tPSController.isPlayerInGrapple = interactionController.isPlayerInGrapple = true;
                     // player.position = transform.position;
-                    Vector3 direction= new Vector3(transform.position.x,player.position.y, transform.position.z);
-                    while (Vector3.Distance(transform.position,  player.position) > 0.01f)
-                        player.position = Vector3.Lerp(player.position, transform.position, 1 * Time.deltaTime);
+                    while (Vector3.Distance(new Vector3(transform.position.x, player.position.y, transform.position.z), player.position) > 0.1f)
+                    {
+                        player.position = Vector3.Lerp(player.position, new Vector3(transform.position.x, player.position.y, transform.position.z), 0.1f * Time.deltaTime);
+                    }
                     interactor.enemy = enemy;
                     Debug.Log("player in grapple");
                     hasDealtDamage = true;
@@ -127,14 +128,14 @@ public class EnemyDamageDealer : MonoBehaviour
         tPSController.isPlayerInGrapple = interactionController.isPlayerInGrapple = false;
         //isGrappleAnimatationEnded = true;
         Invoke("GrappleAnimatationEnded", 2.0f);
-        
+
     }
 
     public void GrappleAnimatationEnded()
     {
-       // isGrappleAnimatationEnded = false;
+        // isGrappleAnimatationEnded = false;
 
     }
 
-    
+
 }

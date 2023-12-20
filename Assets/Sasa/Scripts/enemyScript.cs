@@ -16,6 +16,9 @@ public class enemyScript : MonoBehaviour
     private NavMeshAgent agent;
     Animator animator;
     public GameObject axeThrow;
+    public AudioSource zombieFootsteps;
+    public AudioSource zombieGetHit;
+    public AudioSource zombieDeath;
 
 
 
@@ -113,8 +116,7 @@ public class enemyScript : MonoBehaviour
         // Check if the enemy is close to the player to initiate an attack
         if (distanceToPlayer < attackRange)
         {
-            // int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 10f));
-            int randomValue = 10;
+            int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 10f));
             if (isArmed)
             {
                 if (attackTimer > attackOrgrappleCoolDown)
@@ -219,6 +221,11 @@ public class enemyScript : MonoBehaviour
 
     }
 
+    public void playZombieFootstps()
+    {
+        zombieFootsteps.Play();
+    }
+
     public void TakeDamage(float damage)
     {
         if (currentHealth <= 0) { }
@@ -239,6 +246,7 @@ public class enemyScript : MonoBehaviour
                 }
                 else
                 {
+                    zombieGetHit.Play();
                     animator.SetTrigger("TakeDamage");
                     isHit = true;
                     agent.isStopped = true;
@@ -262,7 +270,7 @@ public class enemyScript : MonoBehaviour
         {
             animator.SetTrigger("Die");
         }
-       
+        zombieDeath.Play();
         isDead = true;
         Destroy(gameObject, 4f);
         Invoke("ActivateDroppedGold", 3f);
@@ -532,6 +540,7 @@ public class enemyScript : MonoBehaviour
         breakgrapple = true;
         EndGrapple();
         tryGrapple = false;
+        attackOrgrappleCoolDown+=1.0f;
     }
 
 
