@@ -40,8 +40,10 @@ public class HealthBarController : MonoBehaviour
         */
         starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         AdabtHPLevel();
-        InventoryCreator.getInstance().setHealthBarController(this);
         InputSystem.EnableDevice(Keyboard.current);
+        if(InventoryCreator.getInstance().healthBarController==null){
+        InventoryCreator.getInstance().setHealthBarController(this);
+        }
 
     }
 

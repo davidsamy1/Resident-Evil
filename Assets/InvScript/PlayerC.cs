@@ -18,6 +18,11 @@ public class PlayerC : MonoBehaviour
         
         inventory = InventoryCreator.getInstance();
         inventory.PlayerToInvChanges();
+        if(uiInventory==null||uiPlayerStats==null){
+            Debug.Log("NULL");
+            return;
+        }
+    
     
         //UI Inventory Setter
         uiInventory.setInventory(inventory);
@@ -41,14 +46,18 @@ public class PlayerC : MonoBehaviour
 
 
     void OnEnable(){
+        Debug.Log("I AM ENABELELEDLEWDLEDEL");
         //         Debug.Log("I AM ENABLING THE INVENTORY");
         // Debug.Log("TBS CONTROLLER IS" +tpsController.WeaponIndex);
         // tpsController.weaponsScriptableObjects[tpsController.WeaponIndex-1].totalAmmoInInventory=8;
-        inventory.PlayerToInvChanges();
-        if(uiInventory.inventory!=null&&uiPlayerStats.inventory!=null){
-    uiPlayerStats.RefreshPlayerStates();
-        uiInventory.RefreshInventoryItems();   
+        if(uiInventory==null||uiPlayerStats==null||inventory==null){
+            return;
+        
         }
+        inventory.PlayerToInvChanges();
+        uiPlayerStats.RefreshPlayerStates();
+        uiInventory.RefreshInventoryItems(); 
+        
             
 
     }
@@ -58,6 +67,10 @@ public class PlayerC : MonoBehaviour
     {
       if (Input.GetKeyDown(KeyCode.Z)){
         InventoryCreator.getInstance().addGold(100);
+        if(uiPlayerStats==null||uiInventory==null){
+            return;
+        }
+    
         uiPlayerStats.RefreshPlayerStates();
         uiInventory.RefreshInventoryItems();
         
