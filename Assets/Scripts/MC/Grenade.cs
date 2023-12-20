@@ -59,17 +59,25 @@ public class Grenade : MonoBehaviour
 
     public void isFlashSetter()
     {
+        Debug.Log("..........................................");
         Debug.Log("isFlashSetter");
         this.isFlash = true;
         this.isExplodingGrenade = false;
         this.InventoryHasGrenade = true;
+        Debug.Log("Is explodingGrenade "+isExplodingGrenade);
+        Debug.Log("Is flash "+isFlash);
+        Debug.Log("..........................................");
     }
     public void isExplodingGrenadeSetter()
     {
+        Debug.Log("..........................................");
         Debug.Log("isExplodingGrenadeSetter");
         this.isExplodingGrenade = true;
         this.isFlash = false;
         this.InventoryHasGrenade = true;
+        Debug.Log("Is explodingGrenade "+isExplodingGrenade);
+        Debug.Log("Is flash "+isFlash);
+        Debug.Log("..........................................");
     }
     public bool isFlashGetter(){
         return this.isFlash;
@@ -84,6 +92,7 @@ public class Grenade : MonoBehaviour
     {
         starterAssetsInputs=GetComponent<StarterAssetsInputs>();
         countdown = explosionDelay;
+        Debug.Log("HEY YO")
         InventoryCreator.getInstance().setGrenadeController(this);
     }
 
@@ -105,6 +114,11 @@ public class Grenade : MonoBehaviour
         //     createdGrenade.transform.parent = grenadeSpawnPoint.transform;
         //     isFlash = false;
         // }
+        // Debug.Log("..........................................");
+        // Debug.Log("Is explodingGrenade "+isExplodingGrenade);
+        // Debug.Log("Is flash "+isFlash);
+        // Debug.Log("has thrown "+hasThrown);
+        // Debug.Log("..........................................");
 
         if (Input.GetKeyDown(KeyCode.G) && (isExplodingGrenade || isFlash) && !hasThrown )
         {

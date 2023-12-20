@@ -33,7 +33,7 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
                 if (collectibleType == Item.ItemType.gold || collectibleType == Item.ItemType.goldTreasure)
                 {
                     goldSFX.Play();
-                } else
+                } else  
                 {
                     collectSFX.Play();
                 }

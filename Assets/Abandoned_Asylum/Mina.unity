@@ -11221,6 +11221,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 728487352}
     m_Modifications:
+    - target: {fileID: 4070229913850535564, guid: 83159a856da2fe641bdbe4edf84b1761,
+        type: 3}
+      propertyPath: doorSFX
+      value: 
+      objectReference: {fileID: 1795027638}
+    - target: {fileID: 4070229913850535564, guid: 83159a856da2fe641bdbe4edf84b1761,
+        type: 3}
+      propertyPath: goldSFX
+      value: 
+      objectReference: {fileID: 1758355162}
+    - target: {fileID: 4070229913850535564, guid: 83159a856da2fe641bdbe4edf84b1761,
+        type: 3}
+      propertyPath: collectSFX
+      value: 
+      objectReference: {fileID: 1434601428}
     - target: {fileID: 4454161756409938151, guid: 83159a856da2fe641bdbe4edf84b1761,
         type: 3}
       propertyPath: m_Name
@@ -50953,6 +50968,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 728487352}
     m_Modifications:
+    - target: {fileID: -7407988356893966839, guid: 3e29573f06c0a7e4fa986fff41de17af,
+        type: 3}
+      propertyPath: goldSFX
+      value: 
+      objectReference: {fileID: 1758355162}
     - target: {fileID: 2316811244612956051, guid: 3e29573f06c0a7e4fa986fff41de17af,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -52848,6 +52868,11 @@ PrefabInstance:
       propertyPath: grenade
       value: 
       objectReference: {fileID: 337031947}
+    - target: {fileID: 8143953265946433890, guid: 43c69210fa12a204ea7c458cf17e5309,
+        type: 3}
+      propertyPath: isFlash
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8143953265946433890, guid: 43c69210fa12a204ea7c458cf17e5309,
         type: 3}
       propertyPath: mainCamera
