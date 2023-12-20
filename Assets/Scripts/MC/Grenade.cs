@@ -92,8 +92,9 @@ public class Grenade : MonoBehaviour
     {
         starterAssetsInputs=GetComponent<StarterAssetsInputs>();
         countdown = explosionDelay;
-        Debug.Log("HEY YO")
+        if(InventoryCreator.getInstance().grenadeController==null){
         InventoryCreator.getInstance().setGrenadeController(this);
+        }
     }
 
     private void Update()
