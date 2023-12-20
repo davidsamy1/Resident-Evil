@@ -2,6 +2,7 @@
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
+using UnityEngine.Audio;
 
 /* Note: animations are called via the controller for both the character and capsule using animator null checks
  */
@@ -32,6 +33,10 @@ namespace StarterAssets
         public AudioClip LandingAudioClip;
         public AudioClip[] FootstepAudioClips;
         [Range(0, 1)] public float FootstepAudioVolume = 0.5f;
+
+        [Header("Audio Mixer")]
+        public AudioMixer audioMixer;
+        public string sfxVolumeParameter = "SFXVolume";
 
         [Space(10)]
         [Tooltip("The height the player can jump")]
@@ -377,7 +382,25 @@ namespace StarterAssets
                 if (FootstepAudioClips.Length > 0)
                 {
                     var index = Random.Range(0, FootstepAudioClips.Length);
-                    AudioSource.PlayClipAtPoint(FootstepAudioClips[index], transform.TransformPoint(_controller.center), FootstepAudioVolume);
+
+                    // Get the value of the Audio Mixer parameter "SFXVolume"
+                    float sfxVolume;
+                    if (audioMixer != null && audioMixer.GetFloat(sfxVolumeParameter, out sfxVolume))
+                    {
+                        // Adjust the volume of the clip using the SFXVolume parameter
+                        float adjustedVolume = Mathf.Pow(10.0f, sfxVolume / 20.0f); // Convert from dB to linear
+
+                        // Create a new AudioSource to adjust volume before playing
+                        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+                        audioSource.clip = FootstepAudioClips[index];
+                        audioSource.volume = adjustedVolume;
+
+                        // Play the adjusted volume clip
+                        audioSource.Play();
+
+                        // Destroy the temporary AudioSource to clean up
+                        Destroy(audioSource, audioSource.clip.length);
+                    }
                 }
             }
         }
@@ -386,7 +409,27 @@ namespace StarterAssets
         {
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
-                AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
+                if (LandingAudioClip != null)
+                {
+                    // Get the value of the Audio Mixer parameter "SFXVolume"
+                    float sfxVolume;
+                    if (audioMixer != null && audioMixer.GetFloat(sfxVolumeParameter, out sfxVolume))
+                    {
+                        // Adjust the volume of the clip using the SFXVolume parameter
+                        float adjustedVolume = Mathf.Pow(10.0f, sfxVolume / 20.0f); // Convert from dB to linear
+
+                        // Create a new AudioSource to adjust volume before playing
+                        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+                        audioSource.clip = LandingAudioClip;
+                        audioSource.volume = adjustedVolume;
+
+                        // Play the adjusted volume clip
+                        audioSource.Play();
+
+                        // Destroy the temporary AudioSource to clean up
+                        Destroy(audioSource, audioSource.clip.length);
+                    }
+                }
             }
         }
         public void setSens(float newSens)

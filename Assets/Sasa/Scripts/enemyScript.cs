@@ -16,6 +16,9 @@ public class enemyScript : MonoBehaviour
     private NavMeshAgent agent;
     Animator animator;
     public GameObject axeThrow;
+    public AudioSource zombieFootsteps;
+    public AudioSource zombieGetHit;
+    public AudioSource zombieDeath;
 
 
 
@@ -218,6 +221,11 @@ public class enemyScript : MonoBehaviour
 
     }
 
+    public void playZombieFootstps()
+    {
+        zombieFootsteps.Play();
+    }
+
     public void TakeDamage(float damage)
     {
         if (currentHealth <= 0) { }
@@ -238,6 +246,7 @@ public class enemyScript : MonoBehaviour
                 }
                 else
                 {
+                    zombieGetHit.Play();
                     animator.SetTrigger("TakeDamage");
                     isHit = true;
                     agent.isStopped = true;
@@ -261,7 +270,7 @@ public class enemyScript : MonoBehaviour
         {
             animator.SetTrigger("Die");
         }
-       
+        zombieDeath.Play();
         isDead = true;
         Destroy(gameObject, 4f);
         Invoke("ActivateDroppedGold", 3f);

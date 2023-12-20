@@ -35,6 +35,16 @@ public class TPSController : MonoBehaviour
     public TMP_Text InventoryAmmo;
     public List<GameObject> WeaponsHUD;
     private Coroutine reloadCoroutine = null;
+    public AudioSource pistolReload;
+    public AudioSource revolverReload;
+    public AudioSource rifleReload;
+    public AudioSource shotgunReload;
+    public AudioSource pistolFire;
+    public AudioSource revolverFire;
+    public AudioSource rifleFire;
+    public AudioSource shotgunFire;
+    public AudioSource hitWallSFX;
+    public AudioSource noAmmo;
 
     public UIVisibility UIVisibility;
 
@@ -401,8 +411,7 @@ public class TPSController : MonoBehaviour
         if (weaponsScriptableObjects[WeaponIndex - 1].currentAmmoInClip <= 0)
         {
             // reload();
-            // play sound no ammo
-
+            noAmmo.Play();
         }
         else
         {
@@ -410,7 +419,22 @@ public class TPSController : MonoBehaviour
             // weaponsScriptableObjects[WeaponIndex - 1].totalAmmoInInventory -= 1;
             GameObject muzzleFlasheffect = Instantiate(muzzleFlash, weapons[WeaponIndex].transform.GetChild(weapons[WeaponIndex].transform.childCount - 1).position, weapons[WeaponIndex].transform.GetChild(weapons[WeaponIndex].transform.childCount - 1).rotation);
             Destroy(muzzleFlasheffect, 0.5f);
-
+            if (WeaponIndex == 1)
+            {
+                pistolFire.Play();
+            }
+            else if (WeaponIndex == 2)
+            {
+                revolverFire.Play();
+            }
+            else if (WeaponIndex == 3)
+            {
+                rifleFire.Play();
+            }
+            else
+            {
+                shotgunFire.Play();
+            }
             //handle for enemy range later
             //check if the ray hit within the fire range of the equiped gun
             if (BulletCollider.distance <= weaponsScriptableObjects[WeaponIndex - 1].range)
@@ -428,6 +452,7 @@ public class TPSController : MonoBehaviour
                     }
                     else
                     {
+                        hitWallSFX.Play();
                         GameObject bulletHole = Instantiate(BulletHole
                             , BulletCollider.point + (BulletCollider.normal * 0.01f)
                             , Quaternion.FromToRotation(Vector3.up, BulletCollider.normal)
@@ -440,7 +465,6 @@ public class TPSController : MonoBehaviour
 
             }
         }
-
         //play sound
         //play particle effect
         //play muzzle flash
@@ -496,7 +520,7 @@ public class TPSController : MonoBehaviour
         }
         else if (weapon.totalAmmoInInventory <= 0)
         {
-            //play sound no ammo
+            noAmmo.Play();
             isReloading = false;
             return;
         }
@@ -505,6 +529,13 @@ public class TPSController : MonoBehaviour
             if (WeaponIndex == 1 || WeaponIndex == 2)
             {
                 // PlayerAnimator.SetLayerWeight(1, 1);
+                if (WeaponIndex == 1)
+                {
+                    pistolReload.Play();
+                } else
+                {
+                    revolverReload.Play();
+                }
                 PlayerAnimator.SetBool("PistolReload", true);
                 if (!PlayerAnimator.GetBool("ADS"))
                 {
@@ -516,6 +547,13 @@ public class TPSController : MonoBehaviour
             }
             else
             {
+                if (WeaponIndex == 3)
+                {
+                    rifleReload.Play();
+                } else
+                {
+                    shotgunReload.Play();
+                }
                 PlayerAnimator.SetBool("isReload", true);
 
                 // AnimatorStateInfo stateInfo = PlayerAnimator.GetCurrentAnimatorStateInfo(2);
