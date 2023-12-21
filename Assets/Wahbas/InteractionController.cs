@@ -18,7 +18,6 @@ public class InteractionController : MonoBehaviour
     public enemyScript knockDownEnemy = null;
     public UIVisibility UIVisibility;
     public EnemyInteractor enemyInteractor;
-    public enemyScript enemyScript;
     public TPSController tpsController;
 
     private void Update()
@@ -88,6 +87,10 @@ public class InteractionController : MonoBehaviour
     public enemyScript isKnockedDownEnemy()
     {
         Collider collider = tpsController.getBulletCollider().collider;
+        if(collider == null)
+        {
+            return null;
+        }
         float distanceToInteractable = Vector3.Distance(player.transform.position, collider.transform.position);
         if (collider!=null && collider.TryGetComponent(out enemyScript enemyScript) && collider.gameObject.tag == "KnockedDown" && distanceToInteractable < 1.5f && !enemyScript.isDead)
         {

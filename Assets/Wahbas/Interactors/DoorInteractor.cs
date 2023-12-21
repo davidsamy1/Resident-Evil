@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Text;
+using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class DoorInteractor : MonoBehaviour, Interactable
 { 
@@ -94,7 +96,13 @@ public class DoorInteractor : MonoBehaviour, Interactable
                 // Remove key from inventory
                 inventory.Remove(doorKey);
                 errorMessageCoroutine = null;
+                if(requiredKey==KeyType.Emblem)
+                {
+                    InputSystem.DisableDevice(Keyboard.current,false);
+                    SceneManager.LoadScene("WinScreenCredits");
+                    InventoryCreator.restartInventory();
 
+                }
             }
             else
             {

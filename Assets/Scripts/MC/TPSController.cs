@@ -63,8 +63,24 @@ public class TPSController : MonoBehaviour
     {
         return BulletCollider;
     }
-
-
+// generate getter and setter for reloadCoroutine
+    public Coroutine getReloadCoroutine()
+    {
+        return reloadCoroutine;
+    }
+    public void setReloadCoroutine(Coroutine reloadCoroutine)
+    {
+        this.reloadCoroutine = reloadCoroutine;
+    }
+// generate getter and setter for isReloading
+    public bool getIsReloading()
+    {
+        return isReloading;
+    }
+    public void setIsReloading(bool isReloading)
+    {
+        this.isReloading = isReloading;
+    }
     // Start is called before the first frame update
     private void Awake()
     {
