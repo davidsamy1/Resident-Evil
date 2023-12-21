@@ -213,7 +213,7 @@ public class HealthBarController : MonoBehaviour
         if (PlayerDeath)
         {
             // PlayerAnimator.SetTrigger("death");
-            Invoke("LoadGameOverScene", 2f);
+            Invoke("LoadGameOverScene", 3f);
             //LoadGameOverScene();
             InventoryCreator.restartInventory();
             InputSystem.DisableDevice(Keyboard.current,false);
