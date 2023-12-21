@@ -17,6 +17,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 87e302db3b24caf4780298d0110c4c83, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 87e302db3b24caf4780298d0110c4c83, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 87e302db3b24caf4780298d0110c4c83, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 87e302db3b24caf4780298d0110c4c83, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -55,6 +67,10 @@ PrefabInstance:
     - target: {fileID: 400004, guid: 87e302db3b24caf4780298d0110c4c83, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400004, guid: 87e302db3b24caf4780298d0110c4c83, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2300002, guid: 87e302db3b24caf4780298d0110c4c83, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -100,6 +116,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectibleType: 6
+  uiError: {fileID: 0}
+  goldSFX: {fileID: 0}
+  doorSFX: {fileID: 0}
+  collectSFX: {fileID: 0}
 --- !u!65 &5634388817975159506
 BoxCollider:
   m_ObjectHideFlags: 0

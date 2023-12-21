@@ -20,6 +20,7 @@ public class HealthBarController : MonoBehaviour
     public AudioSource playerDeath;
 
     public Animator PlayerAnimator;
+        private bool isInvincible = false;
     [SerializeField] private UnityEngine.UI.Image blood;
 
     public enum HPLevel
@@ -55,7 +56,9 @@ public class HealthBarController : MonoBehaviour
             PlayerHealthSetter(PlayerHealthGetter() + 4);
 
         }
-
+        if(Input.GetKeyDown(KeyCode.I)){
+            isInvincible = !isInvincible;
+        }
         if (Input.GetKeyDown(KeyCode.KeypadMinus))
         {
             PlayerHealthSetter(PlayerHealthGetter() - 1);
@@ -95,6 +98,9 @@ public class HealthBarController : MonoBehaviour
 
     public void startHitAnimation()
     {
+        if(isInvincible){
+            return;
+        }
         //PlayerHealthSetter(PlayerHealthGetter() - 1);
         PlayerAnimator.SetLayerWeight(6, 1);
 
@@ -187,8 +193,12 @@ public class HealthBarController : MonoBehaviour
     }
     public void PlayerHealthSetter(int HP)
     {
-        if (HP < PlayerHealth)
+
+        if (HP < PlayerHealth )
         {
+            if(isInvincible){
+                return;
+            }
             StartCoroutine(FadeOutRedScreen());
         }
         if (HP >= 0)
@@ -205,6 +215,7 @@ public class HealthBarController : MonoBehaviour
             // PlayerAnimator.SetTrigger("death");
             Invoke("LoadGameOverScene", 2f);
             //LoadGameOverScene();
+            InventoryCreator.restartInventory();
             InputSystem.DisableDevice(Keyboard.current,false);
             //InputSystem.EnableDevice(Keyboard.current);
         }

@@ -102,6 +102,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectibleType: 16
+  uiError: {fileID: 0}
+  goldSFX: {fileID: 0}
+  doorSFX: {fileID: 0}
+  collectSFX: {fileID: 0}
 --- !u!65 &2364000930603597174
 BoxCollider:
   m_ObjectHideFlags: 0

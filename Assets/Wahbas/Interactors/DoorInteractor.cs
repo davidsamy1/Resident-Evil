@@ -11,7 +11,8 @@ public class DoorInteractor : MonoBehaviour, Interactable
         Emblem,
         KeyCard,
         Spade,
-        Heart
+        Heart,
+        None
     }
     private Boolean isDoorLocked = true;
     public KeyType requiredKey;
@@ -31,11 +32,26 @@ public class DoorInteractor : MonoBehaviour, Interactable
 
     public void Interact()
     {
+
         Item doorKey = null;
         Inventory inventory = InventoryCreator.getInstance();
         Debug.Log("Door Key Needed: " + requiredKey.ToString());
         if (isDoorLocked) 
         {
+        if(requiredKey == KeyType.None)
+        {
+            isDoorLocked = false;
+            if (doorAnimator != null)
+            {
+                doorAnimator.SetTrigger("Unlock");
+            }
+
+            if (doorCollider != null)
+            {
+                doorCollider.enabled = false;
+            }
+            return;
+        }
             switch(requiredKey)
             {
                 case KeyType.Emblem:

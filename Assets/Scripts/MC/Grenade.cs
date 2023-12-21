@@ -57,7 +57,7 @@ public class Grenade : MonoBehaviour
     public AudioSource grenade;
     public AudioSource flash;
     public HealthBarController healthBarController;
-
+    public GameObject zombieBloodPrefab;
     public void isFlashSetter()
     {
         Debug.Log("..........................................");
@@ -222,7 +222,14 @@ public class Grenade : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(createdGrenade.transform.position, explosionRadius);
         foreach (Collider nearbyObject in colliders)
         {
-            if (nearbyObject.CompareTag("AI"))
+            if(nearbyObject.CompareTag("KnockedDown") && isExplodingGrenade)
+            {
+                enemyScript enemy = nearbyObject.gameObject.GetComponent<enemyScript>();
+                enemy.TakeDamage(4);
+                //  GameObject zomboeBlood = Instantiate(zombieBloodPrefab, nearbyObject.transform.position, Quaternion.identity);
+                //         Destroy(zomboeBlood, 1f);
+            }
+            else if (nearbyObject.CompareTag("AI"))
             {
                 enemyScript enemy = nearbyObject.gameObject.GetComponent<enemyScript>();
                 if (isFlash)
@@ -232,6 +239,8 @@ public class Grenade : MonoBehaviour
                 else
                 {
                     enemy.TakeDamage(4);
+                        //              GameObject zomboeBlood = Instantiate(zombieBloodPrefab, nearbyObject.transform.position, Quaternion.identity);
+                        // Destroy(zomboeBlood, 1f);
                 }
                 
             }
@@ -239,6 +248,7 @@ public class Grenade : MonoBehaviour
             {
                 healthBarController.PlayerHealthSetter(healthBarController.PlayerHealthGetter() - 4);
                 healthBarController.startHitAnimation();
+                
             }
             
         }

@@ -24,18 +24,16 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
         Debug.Log("Interacted with " + formatCollectibleTypeName(collectibleType));
 
         // Valid if Not Revolver OR Revolver with Key Card in Inventory
-        if (collectibleType!= Item.ItemType.revolver || 
-            (collectibleType == Item.ItemType.revolver && inventory.SearchItem(Item.ItemType.cardKey)!=null))
-        {
+
             Boolean isSuccessful = inventory.AddPickUpItem(collectibleType);
             if (isSuccessful)
             {
                 if (collectibleType == Item.ItemType.gold || collectibleType == Item.ItemType.goldTreasure)
                 {
-                    goldSFX.Play();
+                    // goldSFX.Play();
                 } else  
                 {
-                    collectSFX.Play();
+                    // collectSFX.Play();
                 }
                 errorMessageCoroutine = null;
                 Destroy(gameObject);
@@ -45,11 +43,6 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
                 showInteractErrorMessage("Inventory is full!");
             }
             
-        }
-        else if (collectibleType == Item.ItemType.revolver && inventory.SearchItem(Item.ItemType.cardKey) == null)
-        {
-            showInteractErrorMessage("Key Card Required!");
-        }
         
     }
 

@@ -54,12 +54,10 @@ public class TPSController : MonoBehaviour
 
     private int knifeDurability = 10;
 
-    private bool isInvincible = false;
+
     private bool isSlowMotion = false;
-    public bool isInvincibleGetter()
-    {
-        return isInvincible;
-    }
+    public GameObject zombieBloodPrefab;
+
 
     public RaycastHit getBulletCollider()
     {
@@ -97,10 +95,7 @@ public class TPSController : MonoBehaviour
             PlayerAnimator.SetBool("PlayerInGrapple", false);
 
         }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            isInvincible = !isInvincible;
-        }
+
         if (Input.GetKeyDown(KeyCode.O))
         {
             isSlowMotion = !isSlowMotion;
@@ -454,9 +449,12 @@ public class TPSController : MonoBehaviour
                     if (enemy != null)
                     {
                         float damage = weaponsScriptableObjects[WeaponIndex - 1].damageAmount;
-
-                        // Apply damage to the enemy (you may replace this with your own damage logic)
                         enemy.TakeDamage(damage);
+                        GameObject zomboeBlood = Instantiate(zombieBloodPrefab
+                            , BulletCollider.point + (BulletCollider.normal * 0.01f)
+                            , Quaternion.FromToRotation(Vector3.up, BulletCollider.normal)
+                            );
+                        Destroy(zomboeBlood, 1f);
                     }
                     else
                     {

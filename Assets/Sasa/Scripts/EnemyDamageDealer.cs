@@ -68,30 +68,29 @@ public class EnemyDamageDealer : MonoBehaviour
 
         if (throw1)
         {
-            RaycastHit hit;
-            Debug.Log("first");
-            //int layerMask = 1 << 8;
-            //if(hit.distance > weaponLength) { }
-            int ThrowLength = 30;
-            if (Physics.Raycast(transform.position, -transform.up, out hit, ThrowLength))
-            {
-                Debug.Log("enter first loop");
-
-                if (hit.transform.TryGetComponent(out HealthBarController HealthBarPlayer))
-                {
-                    if (!tPSController.isPlayerInGrapple)
+             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            // Debug.Log("distance to player: " + distanceToPlayer);
+            if (distanceToPlayer > 1.25) { return; }
+            // RaycastHit hit;
+            // Debug.Log("first");
+            // //int layerMask = 1 << 8;
+            // //if(hit.distance > weaponLength) { }
+            // int ThrowLength = 30;
+            // if (Physics.Raycast(transform.position, -transform.up, out hit, ThrowLength))
+            // {
+                // if (hit.transform.TryGetComponent(out HealthBarController HealthBarPlayer))
+                // {
+                    if (!tPSController.isPlayerInGrapple && !tPSController.isPlayerInGrappleStabAnimation)
                     {
-                        Debug.Log("enter second loop");
                         HealthBarPlayer.PlayerHealthSetter((HealthBarPlayer.PlayerHealth) - 3);
                         //hasDealtDamage = true;
                         throw1 = false;
-                        Debug.Log("enemy hit player");
                         HealthBarPlayer.startHitAnimation();
                     }
                 }
-            }
+            // }
 
-        }
+        // }
     }
     public void StartDealDamage()
     {

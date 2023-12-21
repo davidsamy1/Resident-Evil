@@ -41,7 +41,7 @@ public class enemyScript : MonoBehaviour
 
     public float currentHealth = 5;
 
-    private bool isDead = false;
+    public bool isDead = false;
     private bool isHit = false;
     private bool isKnockedDown = false;
     public float attackRange;
@@ -112,9 +112,8 @@ public class enemyScript : MonoBehaviour
             agent.isStopped = true;
         }
 
-
         // Check if the enemy is close to the player to initiate an attack
-        if (distanceToPlayer < attackRange)
+        if (distanceToPlayer < attackRange && isPlayerInRange)
         {
             int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 10f));
             if (isArmed)
@@ -151,7 +150,7 @@ public class enemyScript : MonoBehaviour
             }
 
         }
-        else if (distanceToPlayer < throwDistance && attackTimer > attackOrgrappleCoolDown)
+        else if (distanceToPlayer < throwDistance && attackTimer > attackOrgrappleCoolDown && isPlayerInRange)
         {
             int randomValue = Mathf.RoundToInt(UnityEngine.Random.Range(0f, 1f));
             attackTimer = 1;
@@ -186,39 +185,6 @@ public class enemyScript : MonoBehaviour
              timer = maxTime;
         }
         animator.SetFloat("Speed", agent.velocity.magnitude);
-
-
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            if (isArmed)
-            {
-                //GameObject objectToThrow = Instantiate(axeThrow, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), Quaternion.identity);
-
-
-                //axeThrow.SetActive(false);
-
-                //Destroy(axeThrow);
-
-
-                //ThrowObject(objectToThrow, throwForce);
-
-            }
-
-           // BreakGreapple("Grenade");
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            //BreakGreapple("Knife");
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            KnockdeDown();
-        }
-
-        
-
-
     }
 
     public void playZombieFootstps()

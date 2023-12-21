@@ -14,6 +14,8 @@ TagManager:
   - UnequippedGrenade
   - throwGrenade
   - KnockedDown
+  - Fire
+  - keycard
   layers:
   - Default
   - TransparentFX
