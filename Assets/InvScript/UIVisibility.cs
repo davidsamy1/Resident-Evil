@@ -80,20 +80,20 @@ public class UIVisibility : MonoBehaviour
     {
         ToggleCursorVisibility(); // cursor is visibile when UI is on and off otherwise
         starterAssetsInputs.cursorInputForLook = !starterAssetsInputs.cursorInputForLook;
-        Debug.Log(storeUICanvas);
+        // Debug.Log(storeUICanvas);
         if (storeUICanvas != null)
         {
             if (storeUICanvas.activeInHierarchy)
             {
                 storeUICanvas.SetActive(false);
                 ResumeGame();
-                Debug.Log("Store Not active now");
+                // Debug.Log("Store Not active now");
             }
             else
             {
                 storeUICanvas.SetActive(true);
                 PauseGame();
-                Debug.Log("Store active now");
+                // Debug.Log("Store active now");
 
             }
         }

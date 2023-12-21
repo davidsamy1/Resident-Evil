@@ -11,7 +11,7 @@ public class RoomTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player entered the room");
+            // Debug.Log("Player entered the room");
             // Player entered the room, start following for each enemy
             foreach (enemyScript enemy in enemiesInRoom)
             {
@@ -24,7 +24,7 @@ public class RoomTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player left the room");
+            // Debug.Log("Player left the room");
             // Player exited the room, stop following for each enemy
             foreach (enemyScript enemy in enemiesInRoom)
             {
@@ -39,7 +39,7 @@ public class RoomTrigger : MonoBehaviour
         if (!enemiesInRoom.Contains(enemy))
         {
             enemiesInRoom.Add(enemy);
-            Debug.Log("Enemy registered with the room.");
+            // Debug.Log("Enemy registered with the room.");
         }
     }
 
@@ -47,6 +47,6 @@ public class RoomTrigger : MonoBehaviour
     public void UnregisterEnemy(enemyScript enemy)
     {
         enemiesInRoom.Remove(enemy);
-        Debug.Log("Enemy removed from a room.");
+        // Debug.Log("Enemy removed from a room.");
     }
 }

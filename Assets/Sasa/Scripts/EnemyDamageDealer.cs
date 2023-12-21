@@ -42,7 +42,7 @@ public class EnemyDamageDealer : MonoBehaviour
             if (distanceToPlayer > 2) { return; }
             if (!tPSController.isPlayerInGrapple && !tPSController.isPlayerInGrappleStabAnimation)
             {
-                Debug.Log("enemy hit player");
+                // Debug.Log("enemy hit player");
                 if (enemy.tryGrapple)
                 {
                     tPSController.isPlayerInGrapple = interactionController.isPlayerInGrapple = true;
@@ -52,7 +52,7 @@ public class EnemyDamageDealer : MonoBehaviour
                         player.position = Vector3.Lerp(player.position, new Vector3(transform.position.x, player.position.y, transform.position.z), 0.1f * Time.deltaTime);
                     }
                     interactor.enemy = enemy;
-                    Debug.Log("player in grapple");
+                    // Debug.Log("player in grapple");
                     hasDealtDamage = true;
                     Invoke("StartHitAnimationDelayed", 3.0f);
                 }

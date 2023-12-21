@@ -9,7 +9,6 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
     private Coroutine errorMessageCoroutine;
     public UIError uiError;
     public AudioSource goldSFX;
-    public AudioSource doorSFX;
     public AudioSource collectSFX;
 
 
@@ -21,7 +20,7 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
     public void Interact()
     {
         Inventory inventory = InventoryCreator.getInstance();
-        Debug.Log("Interacted with " + formatCollectibleTypeName(collectibleType));
+        // Debug.Log("Interacted with " + formatCollectibleTypeName(collectibleType));
 
         // Valid if Not Revolver OR Revolver with Key Card in Inventory
 
@@ -30,10 +29,10 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
             {
                 if (collectibleType == Item.ItemType.gold || collectibleType == Item.ItemType.goldTreasure)
                 {
-                    // goldSFX.Play();
+                    goldSFX.Play();
                 } else  
                 {
-                    // collectSFX.Play();
+                    collectSFX.Play();
                 }
                 errorMessageCoroutine = null;
                 Destroy(gameObject);

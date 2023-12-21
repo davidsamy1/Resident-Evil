@@ -10,7 +10,7 @@ public class InventoryCreator
             inventoryInstance = new Inventory();
             inventoryInstance.populateInventory();
             
-            Debug.Log("Inventory Instance Created");
+            // Debug.Log("Inventory Instance Created");
         }
         return inventoryInstance;
     }

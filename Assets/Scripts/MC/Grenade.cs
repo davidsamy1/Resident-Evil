@@ -60,25 +60,25 @@ public class Grenade : MonoBehaviour
     public GameObject zombieBloodPrefab;
     public void isFlashSetter()
     {
-        Debug.Log("..........................................");
-        Debug.Log("isFlashSetter");
+        // Debug.Log("..........................................");
+        // Debug.Log("isFlashSetter");
         this.isFlash = true;
         this.isExplodingGrenade = false;
         this.InventoryHasGrenade = true;
-        Debug.Log("Is explodingGrenade "+isExplodingGrenade);
-        Debug.Log("Is flash "+isFlash);
-        Debug.Log("..........................................");
+        // Debug.Log("Is explodingGrenade "+isExplodingGrenade);
+        // Debug.Log("Is flash "+isFlash);
+        // Debug.Log("..........................................");
     }
     public void isExplodingGrenadeSetter()
     {
-        Debug.Log("..........................................");
-        Debug.Log("isExplodingGrenadeSetter");
+        // Debug.Log("..........................................");
+        // Debug.Log("isExplodingGrenadeSetter");
         this.isExplodingGrenade = true;
         this.isFlash = false;
         this.InventoryHasGrenade = true;
-        Debug.Log("Is explodingGrenade "+isExplodingGrenade);
-        Debug.Log("Is flash "+isFlash);
-        Debug.Log("..........................................");
+        // Debug.Log("Is explodingGrenade "+isExplodingGrenade);
+        // Debug.Log("Is flash "+isFlash);
+        // Debug.Log("..........................................");
     }
     public bool isFlashGetter(){
         return this.isFlash;

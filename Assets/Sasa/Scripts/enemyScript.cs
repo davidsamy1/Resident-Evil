@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.AI;
 using UnityEngine.AI;
 using StarterAssets;
 using System;
@@ -76,7 +75,7 @@ public class enemyScript : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("No RoomTrigger found in the scene.");
+            // Debug.LogWarning("No RoomTrigger found in the scene.");
         }
         SetAnimatorLayer();
     }
@@ -267,7 +266,7 @@ public class enemyScript : MonoBehaviour
             animator.SetBool("Grapple", false);
             animator.SetBool("Attack", false);
             tryGrapple = false;
-            Debug.Log("Try grapple is false");
+            // Debug.Log("Try grapple is false");
          } 
     }
 
@@ -294,7 +293,7 @@ public class enemyScript : MonoBehaviour
         if (!isDead)
         {
             animator.SetTrigger("Throw");
-            Debug.Log("throw animation");
+            // Debug.Log("throw animation");
             agent.isStopped = true;
             Invoke("ResumeWalking", 2.0f); // Adjust the delay as needed
         }
@@ -348,7 +347,7 @@ public class enemyScript : MonoBehaviour
             Invoke("GrappleHelper", 4.0f); // Adjust the delay as needed
             //Invoke("GetComponentInChildren<EnemyDamageDealer>().EndDealDamage()", 4.0f)
             tryGrapple = true;
-            Debug.Log("Try grapple is true");
+            // Debug.Log("Try grapple is true");
 
         }
     }
@@ -410,12 +409,12 @@ public class enemyScript : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("The object does not have a Rigidbody component.");
+                // Debug.LogWarning("The object does not have a Rigidbody component.");
             }
         }
         else
         {
-            Debug.LogWarning("The enemy is dead or the object to throw is null.");
+            // Debug.LogWarning("The enemy is dead or the object to throw is null.");
         }
     }
 

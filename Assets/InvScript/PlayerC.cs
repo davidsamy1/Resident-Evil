@@ -19,7 +19,7 @@ public class PlayerC : MonoBehaviour
         inventory = InventoryCreator.getInstance();
         inventory.PlayerToInvChanges();
         if(uiInventory==null||uiPlayerStats==null){
-            Debug.Log("NULL");
+            // Debug.Log("NULL");
             return;
         }
     
@@ -46,7 +46,7 @@ public class PlayerC : MonoBehaviour
 
 
     void OnEnable(){
-        Debug.Log("I AM ENABELELEDLEWDLEDEL");
+        // Debug.Log("I AM ENABELELEDLEWDLEDEL");
         //         Debug.Log("I AM ENABLING THE INVENTORY");
         // Debug.Log("TBS CONTROLLER IS" +tpsController.WeaponIndex);
         // tpsController.weaponsScriptableObjects[tpsController.WeaponIndex-1].totalAmmoInInventory=8;

@@ -6,6 +6,7 @@ using Cinemachine;
 using TMPro;
 using UnityEngine.InputSystem;
 using Unity.VisualScripting;
+using UnityEngine.Analytics;
 
 public class TPSController : MonoBehaviour
 {
@@ -410,7 +411,8 @@ public class TPSController : MonoBehaviour
     public void knifeDurabilitySetter(int value)
     {
         if (value < 0)
-            print("knife needs repair");
+            // print("knife needs repair");
+            return;
         else
             knifeDurability = value;
     }
@@ -493,6 +495,22 @@ public class TPSController : MonoBehaviour
         //play bullet
         //play recoil
         SetCurrentWeaponAmmo();
+    }
+    public void StopReloadRoutine(){
+            //         if (tpsController.getReloadCoroutine() != null)
+            //     // StopCoroutine(tpsController.getReloadCoroutine());
+            // tpsController.PlayerAnimator.SetBool("isReload", false);
+            // tpsController.PlayerAnimator.SetBool("PistolReload", false);
+            // tpsController.PlayerAnimator.SetLayerWeight(4, 0);
+            // tpsController.setIsReloading(false);
+            // tpsController.PlayerAnimator.speed = 1;
+            if (reloadCoroutine != null)
+                StopCoroutine(reloadCoroutine);
+            PlayerAnimator.SetBool("isReload", false);
+            PlayerAnimator.SetBool("PistolReload", false);
+            PlayerAnimator.SetLayerWeight(4, 0);
+            isReloading = false;
+            PlayerAnimator.speed = 1;
     }
     IEnumerator ReloadCooldown(bool isPistol)
     {

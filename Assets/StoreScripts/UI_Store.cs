@@ -95,7 +95,7 @@ public void HandleStoreClick(Item item){
         RefreshUIStore();
     }
     else{
-        Debug.Log("Inventory is full");
+        // Debug.Log("Inventory is full");
     }
   
 }

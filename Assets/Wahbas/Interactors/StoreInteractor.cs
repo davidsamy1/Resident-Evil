@@ -11,7 +11,7 @@ public class StoreInteractor : MonoBehaviour, Interactable
     }
     public void Interact()
     {
-        Debug.Log("Interacted with Store");
+        // Debug.Log("Interacted with Store");
         uiVisibility.ToggleStoreVisibility();
         if(uiVisibility.isInventoryOpened)
         {

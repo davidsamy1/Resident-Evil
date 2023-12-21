@@ -67,7 +67,7 @@ public class Store : MonoBehaviour
         //Loop on the StorgeItmest and check if the item is already there
         //If it is there then add the quantity
         //If it is not there then add it to the list
-        Debug.Log("I am hereE");
+        // Debug.Log("I am hereE");
         bool found=false;
         foreach(Item storageItem in StorageItems){
             if(storageItem.itemType==item.itemType){
@@ -76,7 +76,7 @@ public class Store : MonoBehaviour
             }
         }
         if(found==false){
-            Debug.Log("I am here ADDING");
+            // Debug.Log("I am here ADDING");
             StorageItems.Add(item);
         }
 

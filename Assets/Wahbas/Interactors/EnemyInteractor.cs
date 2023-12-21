@@ -24,9 +24,9 @@ public class EnemyInteractor : MonoBehaviour
 
     public void InteractGrappleWithKnife()
     {
-        Debug.Log("Interacted with Grapple With Knife");
+        // Debug.Log("Interacted with Grapple With Knife");
         int currentKnifeDurability = tpsController.knifeDurabilityGetter();
-        Debug.Log("Current Knife Durability" + currentKnifeDurability);
+        // Debug.Log("Current Knife Durability" + currentKnifeDurability);
         if (currentKnifeDurability < 2)
         {
             showInteractErrorMessage("Knife Durability is less than 2");
@@ -41,7 +41,7 @@ public class EnemyInteractor : MonoBehaviour
 
     public void InteractGrappleWithGrenade()
     {
-        Debug.Log("Interacted with Grapple With Grenade");
+        // Debug.Log("Interacted with Grapple With Grenade");
         //grenade.isFlashSetter();
         if (!grenade.isFlashGetter() && !grenade.isExplodingGrenadeGetter())
         {
@@ -66,7 +66,7 @@ public class EnemyInteractor : MonoBehaviour
 
     public void InteractKnockDown(enemyScript enemyKnock)
     {
-        Debug.Log("Interacted with Knock Down");
+        // Debug.Log("Interacted with Knock Down");
         int currentKnifeDurability = tpsController.knifeDurabilityGetter();
         if (currentKnifeDurability < 1)
         {

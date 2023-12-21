@@ -12,7 +12,7 @@ public class Inventory
     public HealthBarController healthBarController;
     public Grenade grenadeController;
     public Item Knife;
-    private int gold = 30000;
+    private int gold = 30;
     private bool pistolFlag;
     private bool revolverFlag;
     private bool assaultRifleFlag;
@@ -171,9 +171,9 @@ public class Inventory
 
     public void setCurrentGrenadePlayerToInv()
     {
-        Debug.Log("..........................................");
-        Debug.Log("Do you have a grenade in the inv? " + grenadeController.InventoryHasGrenade);
-        Debug.Log("..........................................");
+        // Debug.Log("..........................................");
+        // Debug.Log("Do you have a grenade in the inv? " + grenadeController.InventoryHasGrenade);
+        // Debug.Log("..........................................");
         //Check if there is an equipped grenade in the inventory
         //Check if this grenade type flag is false 
         //if the flag is false thats mean that the grenade was equipped but used
@@ -454,7 +454,7 @@ public class Inventory
 
     public void addGold(int gold)
     {
-        Debug.Log("I AM ADDING GOLD");
+        // Debug.Log("I AM ADDING GOLD");
         this.gold = this.gold + gold;
     }
 
@@ -508,7 +508,7 @@ public class Inventory
             }
             if (isFull())
             {
-                Debug.Log("Inventory is full");
+                // Debug.Log("Inventory is full");
                 //Error message
                 return false;
             }
@@ -534,7 +534,7 @@ public class Inventory
 
             if (isFull())
             {
-                Debug.Log("Inventory is full");
+                // Debug.Log("Inventory is full");
                 //Error message
                 return false;
             }
@@ -542,7 +542,7 @@ public class Inventory
             {
                 if (CheckWeaponExist(item) == true)
                 {
-                    Debug.Log("Weapon already exist");
+                    // Debug.Log("Weapon already exist");
                     //Error message
                     return false;
                 }
@@ -757,43 +757,29 @@ public class Inventory
         if (item.itemType == Item.ItemType.pistol)
         {
             tpsController.SetWeaponIndex(1);
+            tpsController.StopReloadRoutine();
             tpsController.weaponsScriptableObjects[0].totalAmmoInInventory = AllAmmoData[0];
-            tpsController.PlayerAnimator.SetBool("isReload", false);
-            tpsController.PlayerAnimator.SetBool("PistolReload", false);
-            tpsController.PlayerAnimator.SetLayerWeight(4, 0);
-            tpsController.setIsReloading(false);
-            tpsController.PlayerAnimator.speed = 1;
-
         }
         else if (item.itemType == Item.ItemType.revolver)
         {
             tpsController.SetWeaponIndex(2);
+            tpsController.StopReloadRoutine();
             tpsController.weaponsScriptableObjects[1].totalAmmoInInventory = AllAmmoData[1];
-            tpsController.PlayerAnimator.SetBool("isReload", false);
-            tpsController.PlayerAnimator.SetBool("PistolReload", false);
-            tpsController.PlayerAnimator.SetLayerWeight(4, 0);
-            tpsController.setIsReloading(false);
-            tpsController.PlayerAnimator.speed = 1;
+
         }
         else if (item.itemType == Item.ItemType.assaultRifle)
         {
             tpsController.SetWeaponIndex(3);
+            tpsController.StopReloadRoutine();
             tpsController.weaponsScriptableObjects[2].totalAmmoInInventory = AllAmmoData[2];
-            tpsController.PlayerAnimator.SetBool("isReload", false);
-            tpsController.PlayerAnimator.SetBool("PistolReload", false);
-            tpsController.PlayerAnimator.SetLayerWeight(4, 0);
-            tpsController.setIsReloading(false);
-            tpsController.PlayerAnimator.speed = 1;
+
         }
         else if (item.itemType == Item.ItemType.shotGun)
         {
             tpsController.SetWeaponIndex(4);
+            tpsController.StopReloadRoutine();
             tpsController.weaponsScriptableObjects[3].totalAmmoInInventory = AllAmmoData[3];
-            tpsController.PlayerAnimator.SetBool("isReload", false);
-            tpsController.PlayerAnimator.SetBool("PistolReload", false);
-            tpsController.PlayerAnimator.SetLayerWeight(4, 0);
-            tpsController.setIsReloading(false);
-            tpsController.PlayerAnimator.speed = 1;
+
         }
         else if (item.itemType == Item.ItemType.flashGrenade)
         {
@@ -875,7 +861,7 @@ public class Inventory
         Item itemToBuy = Item.setItemBasedOnType(item.itemType);
         if (itemToBuy.buyPrice > gold)
         {
-            Debug.Log("Not enough gold");
+            // Debug.Log("Not enough gold");
             // /*
             // 1.Set the FeedbackError to be active
             // 2.Set the text to be not enough gold
@@ -898,8 +884,8 @@ public class Inventory
             }
             else
             {
-                Debug.Log("Inventory is full");
-                Debug.Log("Weapon already exist");
+                // Debug.Log("Inventory is full");
+                // Debug.Log("Weapon already exist");
             }
         }
 
@@ -1012,9 +998,9 @@ public class Inventory
             case Item.ItemType.gold:
                 {
                     int randomGoldIncrement = new System.Random().Next(5, 51);// random num between [5,50]
-                    Debug.Log("Gold Added: " + randomGoldIncrement);
+                    // Debug.Log("Gold Added: " + randomGoldIncrement);
                     gold += randomGoldIncrement;
-                    Debug.Log("Current Gold: " + gold);
+                    // Debug.Log("Current Gold: " + gold);
                     return true;
                 }
             default: return true;
