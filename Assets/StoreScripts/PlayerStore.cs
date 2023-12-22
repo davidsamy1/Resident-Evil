@@ -31,7 +31,7 @@ public class PlayerStore : MonoBehaviour
     void OnEnable(){
         if(uiInvStore.inventory!=null&&uiStore.UIinvStore!=null){
         InventoryCreator.getInstance().PlayerToInvChanges();
-        Debug.Log("I AM ENABLING THE STORE");
+        // Debug.Log("I AM ENABLING THE STORE");
          uiInvStore.RefreshStoreInvItems();
         uiStore.RefreshUIStore();
         }
