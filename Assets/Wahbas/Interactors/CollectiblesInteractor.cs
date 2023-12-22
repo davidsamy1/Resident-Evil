@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Text;
-using UnityEditor.Experimental.GraphView;
 
 public class CollectiblesInteractor : MonoBehaviour, Interactable
 {
@@ -11,6 +8,9 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
     public Item.ItemType collectibleType;
     private Coroutine errorMessageCoroutine;
     public UIError uiError;
+    public AudioSource goldSFX;
+    public AudioSource collectSFX;
+
 
     void Start()
     {
@@ -20,15 +20,20 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
     public void Interact()
     {
         Inventory inventory = InventoryCreator.getInstance();
-        Debug.Log("Interacted with " + formatCollectibleTypeName(collectibleType));
+        // Debug.Log("Interacted with " + formatCollectibleTypeName(collectibleType));
 
         // Valid if Not Revolver OR Revolver with Key Card in Inventory
-        if (collectibleType!= Item.ItemType.revolver || 
-            (collectibleType == Item.ItemType.revolver && inventory.SearchItem(Item.ItemType.cardKey)!=null))
-        {
+
             Boolean isSuccessful = inventory.AddPickUpItem(collectibleType);
             if (isSuccessful)
             {
+                if (collectibleType == Item.ItemType.gold || collectibleType == Item.ItemType.goldTreasure)
+                {
+                    goldSFX.Play();
+                } else  
+                {
+                    collectSFX.Play();
+                }
                 errorMessageCoroutine = null;
                 Destroy(gameObject);
             }
@@ -37,11 +42,6 @@ public class CollectiblesInteractor : MonoBehaviour, Interactable
                 showInteractErrorMessage("Inventory is full!");
             }
             
-        }
-        else if (collectibleType == Item.ItemType.revolver && inventory.SearchItem(Item.ItemType.cardKey) == null)
-        {
-            showInteractErrorMessage("Key Card Required!");
-        }
         
     }
 

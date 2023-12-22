@@ -10,7 +10,7 @@ public class UIError : MonoBehaviour
 
      public IEnumerator ShowErrorMessage(string message, float duration)
     {
-        Debug.Log("Error Message: " + message);
+        // Debug.Log("Error Message: " + message);
         errorMsgText.text = message;
         errorCanvas.SetActive(true); // show msg
 

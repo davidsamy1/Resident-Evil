@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+
 
 public class UI_Store : MonoBehaviour
 {
@@ -43,6 +45,8 @@ public class UI_Store : MonoBehaviour
         this.UIinvStore = UIinvStore;
     }
 
+
+
     public void handleBuyClick(Item item){
         store.inventory.Buy(item);
         UIinvStore.RefreshStoreInvItems();
@@ -79,21 +83,19 @@ public void SetName(Store.StoreNameType storeName){
 
 public void HandleStoreClick(Item item){
     // Check if the Item type is any kind of ammo
-        Item ToAddItem=new Item(item.sprite,item.sellPrice,item.buyPrice,item.quantity,item.itemType);
+    Item ToAddItem=Item.setItemBasedOnType(item.itemType,item.quantity);
     if(item.itemType!=Item.ItemType.pistolAmmo&&item.itemType!=Item.ItemType.shotGunAmmo&&item.itemType!=Item.ItemType.assaultRifleAmmo&&item.itemType!=Item.ItemType.revolverAmmo){
         ToAddItem.quantity=1;
-        
     }
 
-    bool isAdded=store.inventory.AddItem(ToAddItem);
+    bool isAdded=store.inventory.StoreToInv(ToAddItem);
     if(isAdded==true){
         UIinvStore.RefreshStoreInvItems();
-                store.RemoveFromStorage(ToAddItem);
-
+        store.RemoveFromStorage(ToAddItem);
         RefreshUIStore();
     }
     else{
-        Debug.Log("Inventory is full");
+        // Debug.Log("Inventory is full");
     }
   
 }
@@ -140,6 +142,44 @@ public void DrawStorage(){
         }
 }
 
+      public void setUIToolTip(Transform itemSlotRectTransform,int index,Item item ){
+                    //Get the ToolTip plane and then go to tis child and add a title and a description
+
+            Transform Parent=itemSlotRectTransform.parent.parent;
+            //Create a new toolTip and set its parent to be the parent
+            Transform ToolTip=Instantiate(Parent.Find("toolTip")).GetComponent<RectTransform>();
+            //set the parent to be the parent
+            ToolTip.SetParent(Parent,false);
+            // Transform ToolTip=Parent.Find("toolTip");
+            Transform Title=ToolTip.Find("Title");
+            Transform Description=ToolTip.Find("Desc");
+            Title.GetComponent<TMPro.TextMeshProUGUI>().SetText(item.Title);
+            Description.GetComponent<TMPro.TextMeshProUGUI>().SetText(item.Description);
+          /* 
+          1.Get the position X-195 of each child in the grid, the width of each box is 120 and they have a gap or 5 between them and
+          each Row fit 6 items so I want when the row end to start from the beginning of the row
+           
+
+          2.Get the poistion of Y of each child in the grid, the height of each box is 120 and they have a gap or 5 between them and each row
+           fit 5 elements so divide the current index by 5 then multiply by 125
+          
+          */
+            float Xpoistion=(index%6)*125-195;
+            float Ypoistion=((index/6)*-125)-20;
+
+            ToolTip.GetComponent<RectTransform>().anchoredPosition=new Vector2(Xpoistion,Ypoistion);
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerEnter;
+            entry.callback.AddListener((eventData) => {ToolTip.gameObject.SetActive(true);});   
+            itemSlotRectTransform.GetComponent<EventTrigger>().triggers.Add(entry);
+
+            EventTrigger.Entry entry2 = new EventTrigger.Entry();
+            entry2.eventID = EventTriggerType.PointerExit;
+            entry2.callback.AddListener((eventData) => {ToolTip.gameObject.SetActive(false);});
+            itemSlotRectTransform.GetComponent<EventTrigger>().triggers.Add(entry2);
+        }
+
+
 public void DrawBuy(){
         BuyView.gameObject.SetActive(true);
         SellView.gameObject.SetActive(false);
@@ -152,10 +192,16 @@ public void DrawBuy(){
                 Destroy(BuyItemCont.GetChild(i).gameObject);
             }
         }
+       for(int i=0;i<BuyView.childCount;i++){
+           if(BuyView.GetChild(i).name.Equals("toolTip(Clone)")){
+               Destroy(BuyView.GetChild(i).gameObject);
+           }
+       }
         // Transform itemSprite=itemCont1.Find("item");
         // Transform itemAmount=itemCont1.Find("amount");
         // Transform itemPrice=itemCont1.Find("price");
         foreach(Item item in store.BuyItems){
+            int index=store.BuyItems.IndexOf(item);
             //Initialize a new ItemCont1 and set its parent to be BuyItemCont
             Transform itemSlotRectTransform=Instantiate(itemCont1).GetComponent<RectTransform>();
             //Set Active to true
@@ -174,7 +220,8 @@ public void DrawBuy(){
             itemSlotRectTransform.Find("price").GetComponent<TMPro.TextMeshProUGUI>().SetText(item.buyPrice.ToString());
             //Add a listener to the button
             itemSlotRectTransform.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(()=>{handleBuyClick(item);});
-            
+                        setUIToolTip(itemSlotRectTransform,index,item);
+
 
             
         }
@@ -187,8 +234,7 @@ public void DrawFix(){
     Transform RepairButton=FixView.Find("Button");
     Transform itemSprint=FixView.Find("itemCont1");
     Transform DurabilityText=itemSprint.Find("amount");
-    int KnifeDurability=store.inventory.Knife.durability;
-
+    int KnifeDurability=store.inventory.tpsController.knifeDurabilityGetter();
 
     //Add Listner
     RepairButton.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(()=>{HandleFixClick();});

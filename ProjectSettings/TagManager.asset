@@ -9,7 +9,13 @@ TagManager:
   - image
   - Revolver
   - EquippedRevolver
+  - eventSystemM
   - AI
+  - UnequippedGrenade
+  - throwGrenade
+  - KnockedDown
+  - Fire
+  - keycard
   layers:
   - Default
   - TransparentFX
@@ -18,8 +24,8 @@ TagManager:
   - Water
   - UI
   - Camera
-  - AI
   - Room
+  - 
   - 
   - 
   - 

@@ -15,7 +15,7 @@ MonoBehaviour:
   firingMode: 0
   damageAmount: 1
   timeBetweenShots: 0.2
-  range: 20
+  range: 15
   clipCapacity: 30
   currentAmmoInClip: 30
   totalAmmoInInventory: 5

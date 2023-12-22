@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
-using System.Text;
-using UnityEditor.PackageManager;
 
 public class StoreInteractor : MonoBehaviour, Interactable
 {
@@ -16,8 +11,12 @@ public class StoreInteractor : MonoBehaviour, Interactable
     }
     public void Interact()
     {
-        Debug.Log("Interacted with Store");
+        // Debug.Log("Interacted with Store");
         uiVisibility.ToggleStoreVisibility();
+        if(uiVisibility.isInventoryOpened)
+        {
+            uiVisibility.ToggleInventoryVisibility();
+        }
     }
 
     public string GetInteractMessage()

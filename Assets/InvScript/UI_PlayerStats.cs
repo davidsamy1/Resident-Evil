@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UI_PlayerStats : MonoBehaviour
 {
-    private Inventory inventory;
+    public Inventory inventory;
     private int PlayerGold;
     private int PlayerHealth;
     private Transform EquipedItems;
@@ -48,6 +48,8 @@ public class UI_PlayerStats : MonoBehaviour
      
     }
 
+    
+
 public void RefreshPlayerStates(){
     /* 
     1. Refresh Gold by getting the Gold textmesh from the gold text game 
@@ -71,9 +73,8 @@ public void RefreshPlayerStates(){
          3.Access to the (amount) component inside the AmmoEquiped/WeaponEquiped and set it to inactive 
     
     */
-
 GoldText.GetComponent<TMPro.TextMeshProUGUI>().SetText("Gold : "+inventory.getGold());
-HealthText.GetComponent<TMPro.TextMeshProUGUI>().SetText("Health : "+100);    
+HealthText.GetComponent<TMPro.TextMeshProUGUI>().SetText("Health : "+inventory.healthBarController.PlayerHealthGetter());    
 bool weaponFlag=false;
 bool revolverFlag=false;
 bool grenadeFlag=false;
@@ -85,17 +86,17 @@ Transform KnifeImageCont=knifeEquiped.Find("item");
 Transform KnifeDurabilityCont=knifeEquiped.Find("amount");
 //Adding knife to the UI and updateing its durability
 Item knife=inventory.Knife;
-int KnifeDurability=knife.durability;
+int KnifeDurability=inventory.tpsController.knifeDurabilityGetter();
 KnifeImageCont.GetComponent<UnityEngine.UI.Image>().sprite=knife.sprite;
 KnifeDurabilityCont.GetComponent<TMPro.TextMeshProUGUI>().SetText(KnifeDurability.ToString());
 KnifeDurabilityCont.gameObject.SetActive(true);
 //
-
+// quantityInWeapon
 foreach(Item inventoryItem in inventory.GetItemList()){
     if(inventoryItem!=null&&inventoryItem.equipped==true){
         if(inventoryItem.itemType==Item.ItemType.pistol){
             weaponFlag=true;
-            int AmmoAmount=inventory.getItemAmount(Item.ItemType.pistolAmmo);
+            int AmmoAmount=inventory.getAmmoInWeaponAmount(Item.ItemType.pistolAmmo);
             WeaponImageCont.GetComponent<UnityEngine.UI.Image>().sprite=inventoryItem.sprite;
                 AmmoImageCont.GetComponent<UnityEngine.UI.Image>().sprite=ItemsAssests.Instance.PistolAmmoSprite;
                 AmmoAmountCont.GetComponent<TMPro.TextMeshProUGUI>().SetText(AmmoAmount.ToString());
@@ -104,7 +105,7 @@ foreach(Item inventoryItem in inventory.GetItemList()){
             }
             else if(inventoryItem.itemType==Item.ItemType.shotGun){
                 weaponFlag=true;
-                int AmmoAmount=inventory.getItemAmount(Item.ItemType.shotGunAmmo);
+                int AmmoAmount=inventory.getAmmoInWeaponAmount(Item.ItemType.shotGunAmmo);
                 WeaponImageCont.GetComponent<UnityEngine.UI.Image>().sprite=inventoryItem.sprite;
                 AmmoImageCont.GetComponent<UnityEngine.UI.Image>().sprite=ItemsAssests.Instance.ShotGunAmmoSprite;
                 AmmoAmountCont.GetComponent<TMPro.TextMeshProUGUI>().SetText(AmmoAmount.ToString());
@@ -112,7 +113,7 @@ foreach(Item inventoryItem in inventory.GetItemList()){
             }
             else if(inventoryItem.itemType==Item.ItemType.assaultRifle){
                 weaponFlag=true;
-                int AmmoAmount=inventory.getItemAmount(Item.ItemType.assaultRifleAmmo);
+                int AmmoAmount=inventory.getAmmoInWeaponAmount(Item.ItemType.assaultRifleAmmo);
                 WeaponImageCont.GetComponent<UnityEngine.UI.Image>().sprite=inventoryItem.sprite;
                 AmmoImageCont.GetComponent<UnityEngine.UI.Image>().sprite=ItemsAssests.Instance.AssaultRifleAmmoSprite;
                 AmmoAmountCont.GetComponent<TMPro.TextMeshProUGUI>().SetText(AmmoAmount.ToString());
@@ -121,7 +122,7 @@ foreach(Item inventoryItem in inventory.GetItemList()){
             else if(inventoryItem.itemType==Item.ItemType.revolver){
                 weaponFlag=true;
                 revolverFlag=true;
-                int AmmoAmount=inventory.getItemAmount(Item.ItemType.revolverAmmo);
+                int AmmoAmount=inventory.getAmmoInWeaponAmount(Item.ItemType.revolverAmmo);
                 WeaponImageCont.GetComponent<UnityEngine.UI.Image>().sprite=inventoryItem.sprite;
                 AmmoImageCont.GetComponent<UnityEngine.UI.Image>().sprite=ItemsAssests.Instance.RevolverAmmoSprite;
                 AmmoAmountCont.GetComponent<TMPro.TextMeshProUGUI>().SetText(AmmoAmount.ToString());

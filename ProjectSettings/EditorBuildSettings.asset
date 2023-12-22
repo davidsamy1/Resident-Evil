@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Sasa/sasa.unity
-    guid: a64b7d358e0fa8e4691578a570e7082b
+    path: Assets/Abandoned_Asylum/Main Menu.unity
+    guid: 8bcf1c37d9b1b4ff3b862e10e7f1af41
+  - enabled: 1
+    path: Assets/Abandoned_Asylum/Mina.unity
+    guid: 30fb6719a9eb1d84a807a42d598b16f8
+  - enabled: 1
+    path: Assets/Abandoned_Asylum/GameOverMenu.unity
+    guid: eb625a941e0324d1c8346446d504e2f0
+  - enabled: 1
+    path: Assets/Abandoned_Asylum/WinScreenCredits.unity
+    guid: 038ffb54451434545918364b1bc95d3e
   m_configObjects: {}

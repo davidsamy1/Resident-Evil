@@ -149,3 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectibleType: 5
+  uiError: {fileID: 0}
+  goldSFX: {fileID: 0}
+  doorSFX: {fileID: 0}
+  collectSFX: {fileID: 0}

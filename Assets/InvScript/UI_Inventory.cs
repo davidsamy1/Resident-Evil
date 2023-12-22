@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UI_Inventory : MonoBehaviour
 {
-    private Inventory inventory;
+    public Inventory inventory;
     private Transform itemCont1;
     private Transform EquipBTN;
     private Transform UseBTN;
     private Transform DiscardBTN;
     private Transform CraftBTN;
-    private UI_PlayerStats uiPlayerStats;
+    public UI_PlayerStats uiPlayerStats;
     private UI_CraftCont uiCraftCont;
+    // private TPSController tpsController;
 
 
 
@@ -21,6 +23,11 @@ public class UI_Inventory : MonoBehaviour
     public void setUIPlayerStats(UI_PlayerStats uiPlayerStats){
         this.uiPlayerStats=uiPlayerStats;
     }
+
+    // public void setTpsController(TPSController tpsController){
+    //     this.tpsController=tpsController;
+    // }
+    
     public void setUICraftCont(UI_CraftCont uiCraftCont){
         this.uiCraftCont=uiCraftCont;
     }
@@ -34,7 +41,7 @@ public class UI_Inventory : MonoBehaviour
         CraftBTN=transform.Find("craftBTN");
         //Add a listener to each button
         EquipBTN.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(()=>{HandleEquipBTN();});
-        UseBTN.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(()=>{inventory.UseItem();});
+        UseBTN.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(()=>{HandleUse();});
         DiscardBTN.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(()=>{HandleDiscard();});
         CraftBTN.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(()=>{HandleCraft();});
 
@@ -43,6 +50,7 @@ public class UI_Inventory : MonoBehaviour
 
     }
 
+  
 
 public void ResetSelected(){
     foreach(Item inventoryItem in inventory.GetItemList()){
@@ -72,6 +80,13 @@ public void HandleDiscard(){
     ResetSelected();
 }
 
+public void HandleUse(){
+    inventory.UseItem();
+    RefreshInventoryItems();
+    uiPlayerStats.RefreshPlayerStates();
+    ResetSelected();
+
+}
 
 public void HandleCraft(){
     inventory.isCrafting=true;
@@ -151,22 +166,29 @@ When can I Use when i click no a redmix/greenmix/redgreenmix
         CraftBTN.gameObject.SetActive(false);
         }
     }
-    else if(toBeSelected.itemType==Item.ItemType.greenHerb||toBeSelected.itemType==Item.ItemType.redHerb||toBeSelected.itemType==Item.ItemType.normalGunPowder||toBeSelected.itemType==Item.ItemType.highGradeGunPowder){
+    else if(toBeSelected.itemType==Item.ItemType.redHerb||toBeSelected.itemType==Item.ItemType.normalGunPowder||toBeSelected.itemType==Item.ItemType.highGradeGunPowder){
         //Activate all buttons but the Use one
         EquipBTN.gameObject.SetActive(false);
         UseBTN.gameObject.SetActive(false);
         DiscardBTN.gameObject.SetActive(true);
         CraftBTN.gameObject.SetActive(true);
     }
-    else if(toBeSelected.itemType==Item.ItemType.greenMix||toBeSelected.itemType==Item.ItemType.redMix||toBeSelected.itemType==Item.ItemType.redGreenMix){
+    else if(toBeSelected.itemType==Item.ItemType.greenHerb){
+        EquipBTN.gameObject.SetActive(false);
+        UseBTN.gameObject.SetActive(true);
+        DiscardBTN.gameObject.SetActive(true);
+        CraftBTN.gameObject.SetActive(true);
+    }
+    else if(toBeSelected.itemType==Item.ItemType.greenMix||toBeSelected.itemType==Item.ItemType.redGreenMix){
         //Activate all buttons but the Use one
         EquipBTN.gameObject.SetActive(false);
         UseBTN.gameObject.SetActive(true);
         DiscardBTN.gameObject.SetActive(true);
         CraftBTN.gameObject.SetActive(false);
     }
-    else if (toBeSelected.itemType==Item.ItemType.pistolAmmo||toBeSelected.itemType==Item.ItemType.shotGunAmmo||toBeSelected.itemType==Item.ItemType.assaultRifleAmmo||toBeSelected.itemType==Item.ItemType.revolverAmmo){
-        //Activate all buttons but the Use one
+ 
+    else if (toBeSelected.itemType!=Item.ItemType.emblemKey&&toBeSelected.itemType!=Item.ItemType.cardKey&&toBeSelected.itemType!=Item.ItemType.spadeKey&&toBeSelected.itemType!=Item.ItemType.heartKey&&toBeSelected.itemType!=Item.ItemType.diamondKey&&toBeSelected.itemType!=Item.ItemType.clubKey){
+   
         EquipBTN.gameObject.SetActive(false);
         UseBTN.gameObject.SetActive(false);
         DiscardBTN.gameObject.SetActive(true);
@@ -194,13 +216,31 @@ RefreshInventoryItems();
 
 
 
+      public void setUIToolTip(Transform itemSlotRectTransform,Item inventoryItem ){
+                    //Get the ToolTip plane and then go to tis child and add a title and a description
+            Transform ToolTip=itemSlotRectTransform.Find("toolTip");
+            Transform Title=ToolTip.Find("Title");
+            Transform Description=ToolTip.Find("Desc");
+            Title.GetComponent<TMPro.TextMeshProUGUI>().SetText(inventoryItem.Title);
+            Description.GetComponent<TMPro.TextMeshProUGUI>().SetText(inventoryItem.Description);
+         
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = EventTriggerType.PointerEnter;
+            entry.callback.AddListener((eventData) => {ToolTip.gameObject.SetActive(true);});   
+            itemSlotRectTransform.GetComponent<EventTrigger>().triggers.Add(entry);
 
+            EventTrigger.Entry entry2 = new EventTrigger.Entry();
+            entry2.eventID = EventTriggerType.PointerExit;
+            entry2.callback.AddListener((eventData) => {ToolTip.gameObject.SetActive(false);});
+            itemSlotRectTransform.GetComponent<EventTrigger>().triggers.Add(entry2);
+        }
 
 
     // Refresh Iventory 
     public void RefreshInventoryItems(){
         int x=0;
         int Poistion=-500; 
+
         //Delete all any itemCont1(Clone) in the scene
         foreach(Transform child in transform){
             if(child.name.Equals("itemCont1(Clone)")){
@@ -208,6 +248,7 @@ RefreshInventoryItems();
             }
         }
 
+  
          
         foreach(Item inventoryItem in inventory.GetItemList()){            
 
@@ -219,9 +260,13 @@ RefreshInventoryItems();
               //Check if it is a knife then dont draw it as I dont want the knife to take place in the inv
                    
             itemSlotRectTransform.Find("item").GetComponent<UnityEngine.UI.Image>().sprite=inventoryItem.sprite;
+    
             //Get text field in a TextMesh pro called amount and edit the text and set the amount to be active
+            if(inventoryItem.quantity>1){
+
             itemSlotRectTransform.Find("amount").GetComponent<TMPro.TextMeshProUGUI>().SetText(inventoryItem.quantity.ToString());
             itemSlotRectTransform.Find("amount").gameObject.SetActive(true);
+            }
             if(inventoryItem.selected==true){
                 itemSlotRectTransform.Find("Selected").gameObject.SetActive(true);
             }
@@ -230,6 +275,20 @@ RefreshInventoryItems();
             }
 
             itemSlotRectTransform.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(()=>{SelectedItem(inventoryItem);});
+            //On mouse enter set the ToolTip to be active in the event trigger on poinrter Enter 
+            //on mouse exit set the ToolTip to be inactive in the event trigger on poinrter Enter
+           setUIToolTip(itemSlotRectTransform,inventoryItem);
+
+
+    
+
+
+
+
+
+
+            
+            
         
             }
             else{

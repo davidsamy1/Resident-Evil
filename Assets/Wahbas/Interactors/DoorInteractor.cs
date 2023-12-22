@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Text;
+using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class DoorInteractor : MonoBehaviour, Interactable
-{ 
+{
     public enum KeyType
     {
         Emblem,
         KeyCard,
         Spade,
-        Heart
+        Heart,
+        None
     }
     private Boolean isDoorLocked = true;
     public KeyType requiredKey;
-        private Animator doorAnimator;
-        private Collider doorCollider;
+    private Animator doorAnimator;
+    private Collider doorCollider;
+    public AudioSource doorSFX;
 
     // Errors
     private Coroutine errorMessageCoroutine;
@@ -31,12 +35,28 @@ public class DoorInteractor : MonoBehaviour, Interactable
 
     public void Interact()
     {
+
         Item doorKey = null;
         Inventory inventory = InventoryCreator.getInstance();
-        Debug.Log("Door Key Needed: " + requiredKey.ToString());
-        if (isDoorLocked) 
+        // Debug.Log("Door Key Needed: " + requiredKey.ToString());
+        if (isDoorLocked)
         {
-            switch(requiredKey)
+            if (requiredKey == KeyType.None)
+            {
+                isDoorLocked = false;
+                if (doorAnimator != null)
+                {
+                    doorAnimator.SetTrigger("Unlock");
+                }
+
+                if (doorCollider != null)
+                {
+                    doorCollider.enabled = false;
+                }
+                doorSFX.Play();
+                return;
+            }
+            switch (requiredKey)
             {
                 case KeyType.Emblem:
                     {
@@ -63,7 +83,7 @@ public class DoorInteractor : MonoBehaviour, Interactable
             if (doorKey != null)
             {
                 isDoorLocked = false;
-                Debug.Log("Door Unlocked");
+                // Debug.Log("Door Unlocked");
 
                 if (doorAnimator != null)
                 {
@@ -74,11 +94,18 @@ public class DoorInteractor : MonoBehaviour, Interactable
                 {
                     doorCollider.enabled = false;
                 }
+                doorSFX.Play();
 
                 // Remove key from inventory
                 inventory.Remove(doorKey);
                 errorMessageCoroutine = null;
+                if (requiredKey == KeyType.Emblem)
+                {
+                    InputSystem.DisableDevice(Keyboard.current, false);
+                    SceneManager.LoadScene("WinScreenCredits");
+                    InventoryCreator.restartInventory();
 
+                }
             }
             else
             {
@@ -91,11 +118,11 @@ public class DoorInteractor : MonoBehaviour, Interactable
                 errorMessageCoroutine = StartCoroutine(uiError.ShowErrorMessage(errorMessage, 2f));
             }
 
-            
-            
-            
 
-            
+
+
+
+
         }
 
     }

@@ -15,7 +15,7 @@ public class DoorCheat : MonoBehaviour
 
     void OpenAllDoors()
     {
-        Debug.Log("Opening All doors");
+        // Debug.Log("Opening All doors");
         DoorController[] doorControllers = FindObjectsOfType<DoorController>();
         foreach (DoorController doorController in doorControllers)
         {

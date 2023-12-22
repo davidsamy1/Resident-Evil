@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UI_InvStore : MonoBehaviour
 {
-    private Inventory inventory;
+    public Inventory inventory;
     private Transform GoldText;
 
     private UI_Store uiStore;
@@ -29,13 +29,13 @@ public void HandleInventoryToStorage(Item item){
         return;
     }
     inventory.Remove(item);
-    Debug.Log("Item Removed");
+    // Debug.Log("Item Removed");
     uiStore.store.AddToStorage(item);
-    Debug.Log("Item Added to Storage");
+    // Debug.Log("Item Added to Storage");
     uiStore.RefreshUIStore();
-    Debug.Log("UI Store Refreshed");
+    // Debug.Log("UI Store Refreshed");
      RefreshStoreInvItems();
-    Debug.Log("UI Inventory Refreshed");
+    // Debug.Log("UI Inventory Refreshed");
 
 }
 
