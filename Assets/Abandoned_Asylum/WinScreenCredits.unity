@@ -1403,7 +1403,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15.06, y: -26.8}
+  m_AnchoredPosition: {x: 10.4, y: -26.8}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &879833493
@@ -1448,10 +1448,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "                    Ubisoft l 8alaba\n\nMohamed Salem         49-0357\n\nMostafa
-    Ashraf              49-3737\n\nMina Magdy                  49-17730\n\nMichel
-    Raouf                49-0831   \n\nAhmed  Wahba             49-5423\n\nAhmad
+    Ashraf             49-3737\n\nMina Magdy                  49-17730\n\nMichel
+    Raouf                 49-0831   \n\nAhmed  Wahba             49-5423\n\nAhmad
     Haytham           49-3571 \n\nAhmed Reda                 49-13168\n              
-    \nDavid Samy                  49-15918          \n\n      "
+    \nDavid Samy                   49-15918          \n      "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1478,8 +1478,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1718,7 +1718,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -255, y: 2}
+  m_AnchoredPosition: {x: -540, y: 2}
   m_SizeDelta: {x: 900, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1026069418
@@ -1862,7 +1862,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 513, y: -166}
+  m_AnchoredPosition: {x: 477, y: -166}
   m_SizeDelta: {x: 570, y: 122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1184801708
