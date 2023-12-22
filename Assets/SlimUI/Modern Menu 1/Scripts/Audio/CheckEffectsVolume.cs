@@ -18,10 +18,14 @@ public class CheckEffectsVolume : MonoBehaviour
         return (value - originalMin) / (originalMax - originalMin) * (newMax - newMin) + newMin;
     }
 
-    public void UpdateEffects()
+public void UpdateEffects()
     {
         float musicVolume = PlayerPrefs.GetFloat("EffectsVolume");
-        float mappedVolume = MapToRange(musicVolume, 0f, 1f, -80f, 0f);
+        float mappedVolume = -80f;
+        if (musicVolume > 0.05)
+        {
+            mappedVolume = MapToRange(musicVolume, 0.05f, 1f, -45f, -8f);
+        }
         audioMixer.SetFloat(exposedParameter, mappedVolume);
     }
 }
