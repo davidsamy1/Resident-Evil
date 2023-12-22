@@ -208,8 +208,11 @@ public class Grenade : MonoBehaviour
 
         }
         NearbyForceApply();
-        isFlash = false;
-        isExplodingGrenade = false;
+        if(!InventoryHasGrenade){
+                    isFlash = false;
+                isExplodingGrenade = false;
+        }
+
         //Play Sound Effect
         //Affect Other Physics Objects
         // NearbyForceApply();
