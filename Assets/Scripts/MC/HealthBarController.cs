@@ -116,6 +116,7 @@ public class HealthBarController : MonoBehaviour
             PlayerAnimator.SetTrigger("death");
             PlayerDeath = true;
             starterAssetsInputs.enabled = false;
+            InputSystem.DisableDevice(Keyboard.current,false);
             Cursor.lockState = CursorLockMode.None;
         }
 

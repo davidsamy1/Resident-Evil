@@ -127,7 +127,7 @@ public class Grenade : MonoBehaviour
         {
   
         tpsController.weapons[tpsController.WeaponIndex].gameObject.SetActive(false);
-                       InputSystem.DisableDevice(Mouse.current,false);
+                    //    InputSystem.DisableDevice(Mouse.current,false);
             if (isFlash)
             {
                 // if (createdGrenade != null)
@@ -162,7 +162,7 @@ public class Grenade : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.G) && (isFlash || isExplodingGrenade))
         {
                     tpsController.weapons[tpsController.WeaponIndex].gameObject.SetActive(true);
-            InputSystem.EnableDevice(Mouse.current);
+            // InputSystem.EnableDevice(Mouse.current);
             ReleaseThrow(createdGrenade);
             this.InventoryHasGrenade = false;
             hasThrown = true;

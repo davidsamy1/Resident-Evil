@@ -8568,6 +8568,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &91601444
 GameObject:
   m_ObjectHideFlags: 0
@@ -11493,6 +11494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!114 &132428824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11528,6 +11530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &139643788
 GameObject:
   m_ObjectHideFlags: 0
@@ -11644,6 +11647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1001 &150771163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13640,6 +13644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &154927771
 GameObject:
   m_ObjectHideFlags: 0
@@ -14111,6 +14116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &172989061
 GameObject:
   m_ObjectHideFlags: 0
@@ -14257,6 +14263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!4 &175577774 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7375295583869028950, guid: 5e419997862d2cd4f996454232bb0143,
@@ -14432,6 +14439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &179593293
 GameObject:
   m_ObjectHideFlags: 0
@@ -16373,6 +16381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!114 &278808377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16408,6 +16417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!114 &287015313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16443,6 +16453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1001 &287438811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20034,6 +20045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &337031945
 GameObject:
   m_ObjectHideFlags: 0
@@ -22389,6 +22401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &344802995
 GameObject:
   m_ObjectHideFlags: 0
@@ -22558,6 +22571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &354076945
 GameObject:
   m_ObjectHideFlags: 0
@@ -24580,6 +24594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &358725235
 GameObject:
   m_ObjectHideFlags: 0
@@ -26090,6 +26105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &408476616
 GameObject:
   m_ObjectHideFlags: 0
@@ -26518,6 +26534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!114 &420150410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26553,6 +26570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &424903163
 GameObject:
   m_ObjectHideFlags: 0
@@ -40042,6 +40060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &577725428
 GameObject:
   m_ObjectHideFlags: 0
@@ -40543,6 +40562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &619195461
 GameObject:
   m_ObjectHideFlags: 0
@@ -42910,6 +42930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &638130396 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4839600035230332376, guid: b271b095e52eaf048bc3d70c58f0e60c,
@@ -48733,6 +48754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!224 &713122438 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5206668379868315107, guid: 817319833dd713d45af5c2121e9649c7,
@@ -48909,6 +48931,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &726366635
 GameObject:
   m_ObjectHideFlags: 0
@@ -49318,6 +49341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &755756204
 GameObject:
   m_ObjectHideFlags: 0
@@ -49489,6 +49513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &767303141
 GameObject:
   m_ObjectHideFlags: 0
@@ -50045,6 +50070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &782097632
 GameObject:
   m_ObjectHideFlags: 0
@@ -50201,6 +50227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &789599530
 GameObject:
   m_ObjectHideFlags: 0
@@ -50892,6 +50919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &806486738
 GameObject:
   m_ObjectHideFlags: 0
@@ -51473,6 +51501,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!4 &835389722 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 463688, guid: f7aa267c231a8d0449ac6eeef3425ca3,
@@ -51635,6 +51664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &854893581
 GameObject:
   m_ObjectHideFlags: 0
@@ -52133,6 +52163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &897781572
 GameObject:
   m_ObjectHideFlags: 0
@@ -53062,6 +53093,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 507333703}
+    - targetCorrespondingSourceObject: {fileID: 8944336655422409503, guid: f6d148d888ffbf54b9afe9936dfaec1f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1308217938}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8944336655422409498, guid: f6d148d888ffbf54b9afe9936dfaec1f,
         type: 3}
@@ -53326,6 +53361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &926253545
 GameObject:
   m_ObjectHideFlags: 0
@@ -53844,6 +53880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &947612995
 GameObject:
   m_ObjectHideFlags: 0
@@ -57306,6 +57343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!114 &1044263864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57780,6 +57818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1053937302
 GameObject:
   m_ObjectHideFlags: 0
@@ -57965,6 +58004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1058876388
 GameObject:
   m_ObjectHideFlags: 0
@@ -60585,6 +60625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1085620569
 GameObject:
   m_ObjectHideFlags: 0
@@ -64709,6 +64750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1001 &1147522019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70747,6 +70789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1234970405
 GameObject:
   m_ObjectHideFlags: 0
@@ -71385,6 +71428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!114 &1257498302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71420,6 +71464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1262301618
 GameObject:
   m_ObjectHideFlags: 0
@@ -72830,6 +72875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!95 &1303311014
 Animator:
   serializedVersion: 5
@@ -72907,6 +72953,135 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1447346116}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1308217937
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1308217938}
+  - component: {fileID: 1308217939}
+  m_Layer: 6
+  m_Name: lightFlicker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1308217938
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308217937}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 806668584}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1308217939
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308217937}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -7128067719386893152, guid: 204ae77320b536d459d12c2126255a73,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 5c15a2210cb3e2d4e8301301a33fce02, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1313016573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -73385,6 +73560,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1340409509
 GameObject:
   m_ObjectHideFlags: 0
@@ -78112,6 +78288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1001 &1414129684
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -81036,6 +81213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1001 &1447346116
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83655,6 +83833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1472358998
 GameObject:
   m_ObjectHideFlags: 0
@@ -84236,6 +84415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1495730410
 GameObject:
   m_ObjectHideFlags: 0
@@ -84469,6 +84649,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!4 &1504569604 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 463688, guid: f7aa267c231a8d0449ac6eeef3425ca3,
@@ -85357,6 +85538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1537662619
 GameObject:
   m_ObjectHideFlags: 0
@@ -85576,6 +85758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!114 &1549859914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85611,6 +85794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1555482877
 GameObject:
   m_ObjectHideFlags: 0
@@ -88106,6 +88290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1610329008
 GameObject:
   m_ObjectHideFlags: 0
@@ -88259,6 +88444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1618872219
 GameObject:
   m_ObjectHideFlags: 0
@@ -97637,6 +97823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!114 &1673338480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97760,6 +97947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1676471246
 GameObject:
   m_ObjectHideFlags: 0
@@ -102422,6 +102610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1714251499
 GameObject:
   m_ObjectHideFlags: 0
@@ -102705,6 +102894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1727198770
 GameObject:
   m_ObjectHideFlags: 0
@@ -103343,6 +103533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1758355160
 GameObject:
   m_ObjectHideFlags: 0
@@ -103824,6 +104015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1784708388
 GameObject:
   m_ObjectHideFlags: 0
@@ -103983,6 +104175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 1308217939}
 --- !u!1 &1795027636
 GameObject:
   m_ObjectHideFlags: 0
@@ -105368,6 +105561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1847133449
 GameObject:
   m_ObjectHideFlags: 0
@@ -105693,6 +105887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1867739841
 GameObject:
   m_ObjectHideFlags: 0
@@ -105834,6 +106029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1873556118
 GameObject:
   m_ObjectHideFlags: 0
@@ -107239,6 +107435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &1941332399
 GameObject:
   m_ObjectHideFlags: 0
@@ -108887,6 +109084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &2036173368
 GameObject:
   m_ObjectHideFlags: 0
@@ -109063,6 +109261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &2041982935
 GameObject:
   m_ObjectHideFlags: 0
@@ -109559,6 +109758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!114 &2056818579 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3437755356747571813, guid: 43c69210fa12a204ea7c458cf17e5309,
@@ -109642,6 +109842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!114 &2069971258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109677,6 +109878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &2070869189
 GameObject:
   m_ObjectHideFlags: 0
@@ -109950,6 +110152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1001 &2083262905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112616,6 +112819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &2101347359 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1834273080343609003, guid: c800e81a78bbe514cab94c826c91fe1e,
@@ -112927,6 +113131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &2115536683
 GameObject:
   m_ObjectHideFlags: 0
@@ -113556,6 +113761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc03c89f76cdf643aecdba961440836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flickerSound: {fileID: 0}
 --- !u!1 &2144515970
 GameObject:
   m_ObjectHideFlags: 0

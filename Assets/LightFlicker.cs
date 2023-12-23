@@ -1,7 +1,9 @@
 using UnityEngine;
 
-public class FlickeringLight : MonoBehaviour
+public class FlickeringLightWithSound : MonoBehaviour
 {
+    public AudioSource flickerSound;
+    
     private Light pointLight;
     private bool isLightOn = true;
     private float nextFlickerTime;
@@ -19,6 +21,10 @@ public class FlickeringLight : MonoBehaviour
             if (isLightOn)
             {
                 pointLight.enabled = false;
+                if (flickerSound != null && !flickerSound.isPlaying)
+                {
+                    flickerSound.Play();
+                }
             }
             else
             {
