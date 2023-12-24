@@ -6,11 +6,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class UIGameOverManager : MonoBehaviour
+public class UIResumeManger : MonoBehaviour
 {
+
+    // campaign button sub menu
     [Header("MENUS")]
-    public GameObject gameOverMenu;
+    public GameObject resumeMenu;
     public GameObject firstMenu;
+    public GameObject restartMenu;
+    public GameObject mainMenu;
 
     public enum Theme { custom1, custom2, custom3 };
     [Header("THEME SETTINGS")]
@@ -19,7 +23,7 @@ public class UIGameOverManager : MonoBehaviour
     public ThemedUIData themeController;
 
     [Header("PANELS")]
-    public GameObject gameOverCanvas;
+    public GameObject resumeCanvas;
 
     [Header("LOADING SCREEN")]
     public bool waitForInput = true;
@@ -36,8 +40,10 @@ public class UIGameOverManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameOverMenu.SetActive(true);
+        resumeMenu.SetActive(true);
         firstMenu.SetActive(true);
+        restartMenu.SetActive(false);
+        mainMenu.SetActive(false);
         SetThemeColors();
     }
 
@@ -66,16 +72,37 @@ public class UIGameOverManager : MonoBehaviour
         }
     }
 
+    public void ReturnMenu()
+    {
+        restartMenu.SetActive(false);
+        mainMenu.SetActive(false);
+        resumeMenu.SetActive(true);
+    }
+
+    public void AreYouSureRestart()
+    {
+        restartMenu.SetActive(true);
+        mainMenu.SetActive(false);
+    }
+
+    public void AreYouSureMainMenu()
+    {
+        restartMenu.SetActive(false);
+        mainMenu.SetActive(true);
+    }
+
     public void Restart()
     {
         StartCoroutine(LoadAsynchronously("Mina"));
         Time.timeScale = 1.0f;
+        InventoryCreator.restartInventory();
     }
 
-    public void MainMenu()
+    public void ReturnMainMenu()
     {
         SceneManager.LoadScene("Main Menu");
         Time.timeScale = 1.0f;
+        InventoryCreator.restartInventory();
     }
 
     public void PlayHover()
@@ -97,7 +124,7 @@ public class UIGameOverManager : MonoBehaviour
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
         operation.allowSceneActivation = false;
-        gameOverCanvas.SetActive(false);
+        resumeCanvas.SetActive(false);
         loadingMenu.SetActive(true);
 
         while (!operation.isDone)
