@@ -3,7 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - CinemachineTarget
+  - amount
+  - image
+  - Revolver
+  - EquippedRevolver
+  - eventSystemM
+  - AI
+  - UnequippedGrenade
+  - throwGrenade
+  - KnockedDown
+  - Fire
+  - keycard
   layers:
   - Default
   - TransparentFX
@@ -11,8 +23,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Camera
+  - Room
   - 
   - 
   - 
